@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/video.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="logo"><h1 class="icon">🎭</h1><span class="fun">fun</span><span class="key">key</span></h1>
+  </header>
+  <video id="video" width="420">
+    <source src="assets/ed.mp4" type="video/mp4">
+    <!-- <source src="mov_bbb.ogg" type="video/ogg"> -->
+    Your browser does not support HTML5 video.
+  </video>
+
+  <div class="container">
+    <div class="overlay" id="overlay">
+    </div>
+    <button id="start" onclick="start()">▶️</button>
+    <div class="textbox" id="textbox">
+    </div>
+  </div>
+
+  <!-- <script src="scripts/script.js"></script> -->
+  <script src="scripts/video.js"></script>
+</body>
+</html>
