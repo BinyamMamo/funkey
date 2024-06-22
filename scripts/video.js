@@ -17,6 +17,7 @@ function start() {
 
   // begin music
   begin_music();
+  setInterval(timer, 1000);
 }
 
 function begin_music() {
@@ -94,4 +95,30 @@ function easy(line) {
   line = line.toLowerCase();
 
   return line;
+}
+
+let time = 0;
+function timer() {
+	const time_cont = document.getElementById("timer");
+
+	sec = time / 1000;
+	min = Math.floor(sec / 60);
+	let output = "";
+
+	sec = sec % 60;
+
+	if (min < 10)
+		output += `0${min}`;
+	else
+		output += `${min}`;
+
+	output += ":";
+
+	if (sec < 10)
+		output += `0${sec}`;
+	else
+		output += `${sec}`;
+
+	time_cont.innerHTML = output;
+	time += 1000;
 }

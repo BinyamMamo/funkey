@@ -23,7 +23,7 @@
 #start:hover {
   scale: 0.99;
   opacity: 0.88;
-  box-shadow: 2px 2px #000;
+  box-shadow: 2px 2px #1e1e1eaa;
 }
 
 .overlay {
@@ -55,4 +55,15 @@
   top: 90%;
   /* text-align: center; */
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.timer {
+	display: block;
+	position: fixed;
+	right: 0;
+	top: 2em;
+
+	color: tomato;
+	font-size: 35px;
 }
