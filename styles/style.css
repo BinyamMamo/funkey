@@ -6,7 +6,7 @@
 body {
   background-color: #1e1e1e;
   color: #f1f1f1;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   /* font-weight: bold; */
   font-size: 24px;
 }
@@ -72,42 +72,55 @@ header {
 }
 
 .logo {
-  position: absolute;
-  /* left: 100%; */
-  font-size: 35px;
-  color: #00a6ed;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-weight: bolder;
-  /* letter-spacing: 3px; */
-  /* text-transform: uppercase; */
-
-  opacity: 0.9;
+	width: fit-content;
+	position: relative;
+	padding: 1px 10px;
 }
 
 .icon {
   display: block;
   width: 100%;
-  position: relative;
   margin: auto;
+  text-align: center;
   opacity: 0.85;
+  /* background-color: #fff2; */
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
-.fun, .key {
+.funkey {
+  width: 100%;
+  /* background-image: linear-gradient(to left, #00a6ed44, #ffb02e44); */
+  opacity: 1;
   font-size: 20px;
   font-weight: bold;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  letter-spacing: 1px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 2px;
+  /* color: white; */
+  color: #f7f7f7aa;
+  border-radius: 5px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  mix-blend-mode: screen;
 }
 
 .fun {
-  /* color: #00a6ed; */
-  color: #9597d5;
+  /* color: #9597d5; */
   /* color: #ccc; */
   /* text-shadow: 2px 2px #00a6ed20; */
+  font-family: cursive;
+  text-transform: capitalize;
+  color: #ffb02ecc;
 }
 
 .key {
-  text-shadow: 1px 1px #ffb02e20;
+  color: #00a6ed;
+  /* text-shadow: 1px 1px #ffb02e20; */
+  /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+  font-family: sans-serif;
+  /* font-weight: bolder; */
+  /* text-transform: up; */
+  letter-spacing: 1px;
   /* color: #ffb02e; */
-  color: #ffb02ecc;
+  /* font-weight: bolder; */
 }

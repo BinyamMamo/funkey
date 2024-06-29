@@ -1,11 +1,44 @@
+.start-container {
+	z-index: 1000;
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	width: fit-content;
+}
+
+#level-slider {
+	display: block;
+	margin: 0.75rem auto;
+}
+
+.label-slider {
+	display: block;
+	width: 100%;
+	height: max-content;
+	position: relative;
+	margin: 4rem auto;
+}
+
+.label-slider .label {
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	position: absolute;
+	display: block;
+
+	text-transform: l;
+	
+	left: 50%;
+	
+	transform: translate(-50%);
+}
+
 #start {
-  z-index: 1000;
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+	display: block;
   cursor: pointer;
+	margin: auto;
+
   font-size: 40px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
@@ -37,9 +70,8 @@
   height: 100vh;
 }
 
-
 #video {
-  z-index: -1000;
+  z-index: 1000;
   width: 100vw;
   height: 100vh;
   /* min-width: 100%; */
@@ -52,6 +84,7 @@
 }
 
 #textbox {
+	z-index: 1001;
   top: 90%;
   /* text-align: center; */
   justify-content: center;
@@ -59,11 +92,11 @@
 }
 
 .timer {
-	display: block;
-	position: fixed;
-	right: 0;
-	top: 2em;
+  display: block;
+  position: fixed;
+  right: 0;
+  top: 2em;
 
-	color: tomato;
-	font-size: 35px;
+  color: tomato;
+  font-size: 35px;
 }

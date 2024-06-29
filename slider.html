@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>slider</title>
+
+	<style>
+		* {
+			--slider-width: 20rem;
+			--slider-height: 2rem;
+			--gap: calc(100% / 3);
+			padding: 0;
+			margin: 0;
+		}
+
+		.center {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.slider-container {
+			/* background-color: #f772; */
+			position: relative;
+			width: var(--slider-width);
+			height: var(--slider-height);
+		}
+
+		.slider {
+			-webkit-appearance: none;
+			width: 100%;
+			height: 100%;
+			background: #d3d3d3;
+			background: #00a6ed50;
+			outline: none;
+			-webkit-transition: .2s;
+			transition: opacity .2s;
+			
+			/* border-radius: 5px; */
+			border-radius: 15px;
+		}
+		
+		.slider:hover { background: #00a6ed5a; }
+		.slider::-webkit-slider-thumb:hover { background: #00a6edbb; }
+		
+		.slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: var(--slider-height);
+			height: var(--slider-height);
+			background: #00a6edaa;
+			cursor: pointer;
+
+			border-radius: 10px;
+			transform: rotate(45deg);
+			/* border-radius: va; */
+			/* border-radius: 50%; */
+		}
+		
+		.slider::-moz-range-thumb {
+			width: var(--slider-height);
+			height: var(--slider-height);
+			background: #00a6ed;
+			cursor: pointer;
+		}
+		
+		.slider-bump {
+			position: absolute;
+			left: 0%;
+			top: 0%;
+			
+			width: calc(var(--slider-height));
+			height: calc(var(--slider-height));
+			/* background-color: #00a6ed55; */
+			background-color: #00a6ed99;
+			/* background-color: #ffa6ed; */
+			opacity: 0.25;
+			border-radius: 10px;
+			transform: rotate(45deg);
+			/* border-radius: 50%; */
+		}
+
+		.bump-33 {left: var(--gap); translate: -50%;}
+		.bump-66 {left: calc(var(--gap) * 2); translate: -50%;}
+		.bump-100 {left: calc(100%); transform: translateX(-100%);}
+	</style>
+</head>
+
+<body>
+	<div class="center">
+		<div class="slider-container">
+			<span class="slider-bump bump-0"></span>
+			<span class="slider-bump bump-33"></span>
+			<span class="slider-bump bump-66"></span>
+			<span class="slider-bump bump-100"></span>
+			<input class="slider" type="range" name="slider" id="slider" min="0" max="3" value="1">
+		</div>
+	</div>
+</body>
+
+</html>

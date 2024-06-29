@@ -1,0 +1,92 @@
+:root {
+	--slider-size: 15px;
+	--slider-thumb-size: calc(var(--slider-size) + 7px);
+
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 25rem;
+  height: var(--slider-size);
+  background: #d3d3d3;
+  background: #00a6ed77;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+
+	border-radius: 5px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  background: #00a6edaa;
+  cursor: pointer;
+
+	border-radius: 10px;
+}
+
+.slider::before, .slider::after {
+	content: "";
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  background: inherit;
+  cursor: pointer;
+
+	border-radius: 50%;
+	/* transform: rotate2D(20deg); */
+
+	background-color: #00a6ed99;
+
+
+	position: absolute;
+	/* left: 50%; */
+	top: 50%;
+	width: calc(var(--slider-size) + 2px);
+  height: calc(var(--slider-size) + 2px);
+  cursor: pointer;
+
+	transform: translate(0%, -50%);
+}
+
+.slider::after { left: 25%; }
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #00a6ed;
+  cursor: pointer;
+}
+
+.before {
+  appearance: none;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  background: inherit;
+  cursor: pointer;
+
+	border-radius: 50%;
+	/* transform: rotate2D(20deg); */
+
+	background-color: #00a6ed55;
+
+
+	position: absolute;
+	/* left: 50%; */
+	top: 50%;
+	left: 75%;
+	width: calc(var(--slider-size) + 2px);
+  height: calc(var(--slider-size) + 2px);
+  cursor: pointer;
+
+	transform: translate(-50%, -50%);
+}
