@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Level Selector</title>
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="styles/basics.css">
+	<link rel="stylesheet" href="styles/lyrics.css">
+
+</head>
+
+<body>
+
+	<header>
+		<img class="logo" src="assets/img/logo.png">
+	</header>
+
+	<!-- Overlay / Loader... -->
+	<div class="overlay-loader" style="display: none;">
+		<div class="overlay-content center">
+			<div class="spinner-border text-warning" style="opacity: 0.5; width: 3rem; height: 3rem;" role="status">
+				<span class="visually-hidden"></span>
+			</div>
+
+			<!-- <div class="spinner-grow text-warning" style="width: 3rem; height: 3rem;" role="status">
+				<span class="visually-hidden"></span>
+			</div> -->
+		</div>
+	</div>
+	
+	<div class="whole-body">
+		<video src="assets/ed.mp4" controls></video>
+
+
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="scripts/levels.js"></script>
+	
+	<script src="scripts/import.js"></script>
+</body>
+
+</html>

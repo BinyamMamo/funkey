@@ -1,34 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<style>
-.siblings * { 
-  display: block;
-  border: 2px solid lightgrey;
-  color: lightgrey;
-  padding: 5px;
-  margin: 15px;
-}
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-  $(".start").next(".dog").css({"color": "red", "border": "2px solid red"});
-});
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Tutor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .keyboard {
+            width: 700px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .key {
+            margin: 5px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #fff;
+            transition: background-color 0.1s ease-in-out;
+        }
+
+        .key.active {
+            background-color: #eee;
+        }
+
+        .key.pressed {
+            background-color: #ddd;
+            animation: keypress 0.1s ease-in-out;
+        }
+
+        @keyframes keypress {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="keyboard">
+        <div class="key" data-key="a">A</div>
+        <div class="key" data-key="b">B</div>
+        <div class="key" data-key="z">Z</div>
+    </div>
 
-<div style="width:500px;" class="siblings">
-  <ul>ul (parent)  
-    <li>li (sibling)</li>
-    <li>li (sibling)</li>
-    <li class="start">li (sibling with class name "start")</li>
-    <li>li (the next sibling of li with class name "start")</li>
-    <li class="start dog">li (sibling)</li>
-    <li class="start dog">li (sibling)</li>
-  </ul>   
-</div>
+    <script>
+        const keys = document.querySelectorAll('.key');
 
+        document.addEventListener('keydown', (event) => {
+            const pressedKey = event.key.toLowerCase();
+            const matchingKey = document.querySelector(`.key[data-key="${pressedKey}"]`);
+
+            if (matchingKey) {
+                matchingKey.classList.add('pressed');
+                setTimeout(() => matchingKey.classList.remove('pressed'), 100);
+            }
+        });
+
+        keys.forEach(key => {
+            key.addEventListener('mousedown', () => key.classList.add('active'));
+            key.addEventListener('mouseup', () => key.classList.remove('active'));
+        });
+    </script>
 </body>
 </html>

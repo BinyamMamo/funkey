@@ -1,0 +1,31 @@
+.overlay-loader, .whole-body {
+	width: 100vw;
+  height: 100vh;
+	
+  left: 0;
+  top: 0;
+}
+
+.overlay-loader {
+	position: fixed;
+  background-color: #1e1e1eed;
+  z-index: calc(var(--logo-z-index) + 100);
+}
+
+.whole-body {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	z-index: calc(var(--logo-z-index) - 1);
+}
+
+video {
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+
+	opacity: 0.75;
+}
