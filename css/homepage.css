@@ -1,0 +1,168 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
+* {
+	--brand-color: #e75e8d;
+	--brand-color: #5e8de7;
+	--brand-color-2: #ec6090;
+	--brand-color-2: #5e8de7;
+}
+
+.header-area {
+  z-index: 100;
+  background-color: transparent;
+  position: relative;
+  height: 70px;
+  -webkit-transition: all .5s ease 0s;
+  -moz-transition: all .5s ease 0s;
+  -o-transition: all .5s ease 0s;
+  transition: all .5s ease 0s;
+
+	margin-bottom: 50px;
+	/* background-color: red; */
+}
+
+.header-area .main-nav {
+  /* min-height: 80px; */
+  background: transparent;
+	/* width: 100vw; */
+  display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+  padding: 15px 0px;
+	gap: 1rem;
+  border-radius: 50px;
+}
+
+.logo {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	align-items: center;
+	-webkit-transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
+	-o-transition: all 0.3s ease 0s;
+	transition: all 0.3s ease 0s;
+}
+
+.logo img {
+	width: 75px;
+	/* mix-blend-mode: overlay; */
+}
+
+.logo-header {
+	font-family: "Rubik Glitch Pop", system-ui;
+	font-weight: normal;
+	font-size: 2.25rem;
+	color: #b2b2b2;
+	/* color: #5e8de7; */
+	/* color: #cbc;
+	color: #d6b08b;
+	color: teal; */
+	/* color: #f3f5e2; */
+	/* mix-blend-mode: overlay; */
+}
+
+.header-text h6 {
+	font-size: 1.75rem !important;
+	color: #e1e1e1;
+}
+
+.header-text h6 em {
+	font-style: normal;
+	font-weight: bold;
+	color: #5e8de7;
+}
+
+.play-icon-container {
+	/* display: none; */
+	/* visibility: none; */
+	border-radius: 23px;
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	display: block;
+	background-color: #5e8de755;
+	background-color: #4447;
+	
+	
+	z-index: 1000;
+	font-size: 3rem;
+	opacity: 0;
+	cursor: pointer;
+	transition: 1s opacity;
+}
+
+.play-icon-container:hover {
+	opacity: 1;
+}
+
+.play-icon-container i {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	/* color: #444; */
+	color: #f7f78d;
+	color: gold;
+
+	text-shadow: #4447 3px 3px;
+}
+
+.thumbnail {
+	/* background-color: red; */
+	/* background-image: url('https://external-preview.redd.it/b5R5gXGYfBVWVIppxnX5T0Bdtt1hJSK7XnUN6ypf_9s.jpg?width=640&crop=smart&auto=webp&s=eb12b986353e8b1bf2bfa6c8928707d8194dfc06'); */
+	background-position: top;
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: relative;
+	/* height: 12rem; */
+	height: 12rem;
+	width: 100%;
+	border-radius: 23px;
+	/* background-color: red; */
+	overflow: hidden;
+}
+.thumbnail img {
+	/* min-height: 100%;
+	min-width: 100%; */
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.upload {
+	background-color: #5e8de7;
+	position: relative;
+	display: block;
+	height: 12rem;
+
+	border-radius: 23px;
+	color: #e1e1e1;
+	cursor: pointer;
+	transition: 1s color ease-in-out;
+	transition: 1s background-color;
+}
+
+.upload i {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+
+	transform: translate(-50%, -50%);
+	font-size: 5rem;
+}
+
+.upload:hover {
+	color: gold;
+	background-color: #4447;
+}
+
+.upload-caption li {
+	/* color: red !important; */
+	/* font-size: 15px !important; */
+
+
+}
+
