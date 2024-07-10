@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   req.on('data', (chunk) => {
     uploadedBytes += chunk.length;
     const progress = (uploadedBytes / req.headers['content-length']) * 100;
-    console.log(`Upload progress: ${progress.toFixed(2)}%`);
+    // console.log(`Upload progress: ${progress.toFixed(2)}%`);
   });
   next();
 });
@@ -39,26 +39,24 @@ app.get('/upload', async (request, response) => {
 
 app.post('/upload', upload.single('file'), (req, res) => {
   try {
-    // Validate file type (ensure it's an image)
-    // if (!req.file) {
-    //   return res.status(400).json({ error: 'No file uploaded.' });
-    // }
+    // Validate file type (ensure it's an image, video, or lyrics)
+    // const allowedMimeTypes = ['image/*', 'video/*', 'text/plain', 'text/lrc', 'text/srt'];
+    const allowedMimeTypes = {
+			image: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
+			video: ['video/mp4', 'video/webm', 'video/ogg'],
+			lyrics: ['text/plain', 'text/lrc', 'text/srt'],
+		};		
 
-    // // Check if the file is an image (you can use more robust checks here)
-    // const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    // if (!allowedMimeTypes.includes(req.file.mimetype)) {
-    //   return res.status(400).json({ error: 'Invalid file type. Only images are allowed.' });
-    // }
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded.' });
+    }
 
-    // Process the file (e.g., save it to disk or perform further actions)
-    // ...
+    if (!allowedMimeTypes[req.body.type].includes(req.file.mimetype)) {
+      return res.status(400).json({ error: 'Invalid file type.' });
+    }
 
     // Respond with success message
-    // res.status(200).json({ filename: req.file.filename });
-		console.log('req.file:', req.file);
-    res
-      .status(200)
-      .json(req.file);
+    res.status(200).json(req.file);
   } catch (error) {
     console.error('Error handling file upload:', error);
     res.status(500).json({ error: 'Internal server error.' });

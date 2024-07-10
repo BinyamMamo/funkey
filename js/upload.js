@@ -31,31 +31,9 @@ $(document).ready(function () {
   });
 
   $('#thumbnail-upload').on('change', function () {
-    const formData = new FormData();
-    console.log('this:', this);
-    formData.append('file', this.files[0]);
+    let element = $(this).prev();
 
-    // Use AJAX to send the file to the server
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/upload', true);
-
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        // Handle server response (if needed)
-        console.log('Upload complete!');
-        let response = JSON.parse(xhr.response);
-        $('.thumbnail').css(
-          'background-image',
-          `url('/uploads/${response.filename}')`
-        );
-        toastSuccess('Thumbnail uploaded successfully!');
-      } else if (xhr.readyState == 4) {
-        let response = JSON.parse(xhr.response);
-        toastDanger(response.error);
-      }
-    };
-
-    xhr.send(formData);
+    uploadFile(this.files[0], element[0]);
   });
 
   $('.drop-browse').on('cancel', () => {
@@ -63,7 +41,6 @@ $(document).ready(function () {
   });
 
   $('.drop-browse').on('change', function () {
-    console.log('this:', this);
     let element = $(this).parent().parent();
 
     uploadFile(this.files[0], element[0]);
@@ -86,7 +63,6 @@ $(document).ready(function () {
     element.addEventListener('drop', function (event) {
       event.preventDefault();
       element.classList.remove('hover');
-      console.log('event:', event);
       var files = event.dataTransfer.files;
       handlesFiles(files, element);
     });
@@ -96,18 +72,19 @@ $(document).ready(function () {
     if (files.length > 1) {
       toastDanger('Upload one file only');
     } else {
-			uploadFile(files[0], element);
-		}
-
-    // for (var count = 0; count < files.length; count++) {
-    //   var file = files[count];
-    // }
+      uploadFile(files[0], element);
+    }
   }
 
   function uploadFile(file, element) {
+    let type = element.dataset.type;
+
+		if (!validFile(file, type))
+			return;
+
     var formData = new FormData();
     formData.append('file', file);
-
+    formData.append('type', type);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/upload', true);
 
@@ -124,7 +101,6 @@ $(document).ready(function () {
         // Handle server response (if needed)
         console.log('Upload complete!');
         let response = JSON.parse(xhr.response);
-				console.log('response:', response);
         handleFileDetails(element, response);
       } else if (xhr.readyState == 4) {
         let response = JSON.parse(xhr.response);
@@ -135,10 +111,35 @@ $(document).ready(function () {
     xhr.send(formData);
   }
 
+	function validFile(file, type) {
+		const allowedMimeTypes = {
+			image: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
+			video: ['video/mp4', 'video/webm', 'video/ogg'],
+			lyrics: ['text/plain', 'text/lrc', 'text/srt'],
+		};
+		
+
+    if (!file) {
+      toastDanger('No file uploaded.');
+      console.log('error: No file uploaded.');
+
+      return false;
+    }
+
+    if (!allowedMimeTypes[type].includes(file.type)) {
+			let allowedTypes = allowedMimeTypes[type].map(mimeType => '.' + mimeType.replace(`${type}/`, '')).join(', ');
+			if (type === 'lyrics')
+				allowedTypes = '.txt'; 
+      toastDanger(`Invalid file type! <br> Upload ${type} type(${allowedTypes}) only.`);
+      console.log('error: Invalid file type.');
+      return false;
+    }
+
+		return true;
+	}
+
   function handleProgress(element, percentComplete) {
-    if ($(element).is('.thumbnail')) {
-      console.log('yes it is');
-    } else {
+    if (!$(element).is('.thumbnail')) {
       const progressContainer = $(element).find('.progress-container');
       const progressBar = $(element).find('.progress-bar');
       const percentDisplay = $(element).find('.progress-text');
@@ -148,44 +149,38 @@ $(document).ready(function () {
       percentDisplay.html(`${Math.round(percentComplete)}%`);
     }
   }
+	function handleFileDetails(element, file) {
+		let type = element.dataset.type.toString().split('/')[0];
+		type = type.charAt(0).toUpperCase() + type.slice(1)
+
+		if ($(element).is('.thumbnail')) {
+			$('.thumbnail').css('background-image', `url('/${file.path}')`);
+			toastSuccess('Thumbnail uploaded successfully!');
+		} else {
+			toastSuccess(`${type} uploaded successfully!`);
+	
+			const fileDetails = $(element).find('.file-details');
+			const fileName = $(element).find('.file-name');
+			const progressContainer = $(element).find('.progress-container');
+			const closeBtn = $(element).find('button.close');
+	
+			closeBtn.css('color', 'red');
+			closeBtn.click(function (e) {
+				e.preventDefault();
+				let icon = $(element).find('i');
+				$(icon[0]).show();
+				fileDetails.hide();
+				toastInfo('Upload removed');
+			});
+			
+			progressContainer.hide();
+			$(element).find('.progress-bar').css('width', '0%');
+			let icon = $(element).find('i');
+			$(icon[0]).hide();
+			
+			fileDetails.show();
+			fileName.html(`${file.originalname}`);
+		}
+	}
 });
 
-function handleFileDetails(element, file) {
-  if ($(element).is('.thumbnail')) {
-    $('.thumbnail').css(
-      'background-image',
-      `url('/${file.path}')`
-    );
-    toastSuccess('Thumbnail uploaded successfully!');
-  } else {
-    if ($(element).is('.video-drop'))
-      toastSuccess('Video uploaded successfully!');
-    else if ($(element).is('.lyrics-drop'))
-      toastSuccess('Lyrics uploaded successfully!');
-    else toastSuccess('File uploaded successfully!');
-
-    const fileDetails = $(element).find('.file-details');
-    const fileName = $(element).find('.file-name');
-    const progressContainer = $(element).find('.progress-container');
-    const closeBtn = $(element).find('button.close');
-
-    closeBtn.css('color', 'red');
-    closeBtn.click(function (e) {
-      e.preventDefault();
-      let icon = $(element).find('i');
-      $(icon[0]).show();
-      progressContainer.hide();
-      fileDetails.hide();
-			toastInfo('Removed upload');
-    });
-
-    let icon = $(element).find('i');
-    $(icon[0]).hide();
-    progressContainer.hide();
-    $(element).find('.progress-bar').css('width', '0%');
-    fileDetails.show();
-    fileName.html(`${file.originalname}`);
-		
-		console.log('file:', file);
-  }
-}
