@@ -149,6 +149,7 @@ $(document).ready(function () {
       percentDisplay.html(`${Math.round(percentComplete)}%`);
     }
   }
+
 	function handleFileDetails(element, file) {
 		let type = element.dataset.type.toString().split('/')[0];
 		type = type.charAt(0).toUpperCase() + type.slice(1)
@@ -172,7 +173,7 @@ $(document).ready(function () {
 				fileDetails.hide();
 				toastInfo('Upload removed');
 			});
-			
+3
 			progressContainer.hide();
 			$(element).find('.progress-bar').css('width', '0%');
 			let icon = $(element).find('i');
@@ -183,4 +184,3 @@ $(document).ready(function () {
 		}
 	}
 });
-
