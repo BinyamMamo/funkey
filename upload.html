@@ -1,92 +1,132 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css"
-		integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Music Modal</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-	<title>Drag and Drop File Upload</title>
-	<style>
-		#drop_zone {
-			width: 100%;
-			min-height: 200px;
-			border: 2px dashed #ccc;
-			border-radius: 10px;
-			padding: 20px;
-			box-sizing: border-box;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-		}
-
-		#drop_zone.hover {
-			background-color: #f0f0f0;
-		}
-	</style>
-
-	<link rel="stylesheet" href="css/upload.css">
-
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="lab/lab.css">
+	<link rel="stylesheet" href="lab/lab2.css">
 </head>
 
 <body>
+	<div class="container mt-5">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#musicModal">
+			Open Music Modal
+		</button>
 
-	<div class="container">
-		<h1 class="text-center mb-5 mt-5"><b>Drag and Drop File Upload in Node.js</b></h1>
-
-		<div>
-			<p>Drag and drop files here</p>
-		</div>
-		<br />
-		<div class="card mb-5">
-			<div class="card-header">
-				<div class="row">
-					<div class="col col-6">Uploaded File</div>
-					<div class="col col-6"></div>
-				</div>
-			</div>
-			<div id="uploadedImage" class="card-body">
-
-			</div>
-		</div>
-	</div>
-
-	<div class="wrapper">
-		<div class="container">
-			<h1>Upload a file</h1>
-			<div class="upload-container" id="drop_zone">
-				<div class="border-container">
-					<div class="icons fa-4x">
-						<i class="fas fa-file-image" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
-						<i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
-						<i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+		<!-- Modal #TODO - ADD faded -->
+		<div class="modal" id="musicModal" tabindex="-1" role="dialog" aria-labelledby="musicModalLabel" aria-hidden="true"
+			style="display: none">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="musicModalLabel">Upload Music</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
-					<input type="file" id="file-upload" style="visibility: hidden;">
-					<p>Drag and drop files here, or
-						<a href="javascript:void(0)" id="file-browser">browse</a> your computer.
-					</p>
+					<div class="modal-body">
+						<div class="left-side">
+							<div class="thumbnail drop-zone"
+								data-image-url="https://tse2.mm.bing.net/th?id=OIG2.5dM5XXn27bsOWSTcjIWe&pid=ImgGn">
+								<div class="play-icon-container">
+									<i class="fa fa-file-image" aria-hidden="true"></i>
+								</div>
+							</div>
+							<input type="file" accept="image/*" name="thumbnail" id="thumbnail-upload" style="display: none;">
+							<div class="drag-drop artist-music-name">
+								<span>Unknown</span> - <span class="music-name">Track</span>
+							</div>
+						</div>
+
+						<div class="inputs right-side">
+							<!-- <h4 class="upload-title">Upload Music Here</h4> -->
+							<div class="input-group">
+								<input name="artistName" type="text" class="form-control" placeholder="Artist Name"
+									pattern="[A-Za-z\s]+" title="Enter a valid artist name (letters and spaces only)" required>
+							</div>
+							<div class="input-group">
+								<input name="musicName" type="text" class="form-control" placeholder="Music Name"
+									pattern="[A-Za-z0-9\s]+" title="Enter a valid music name (letters, numbers, and spaces only)"
+									required>
+							</div>
+							<div class="drag-drop drop-zone video-drop">
+								<span>
+									<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+									Drop video here, or <a href="javascript:void(0)">browse</a>
+									<input class="drop-browse" type="file" name="video" accept="video/*" style="display: none">.
+								</span>
+								<div class="progress-container" style="display: none">
+									<div class="progress-bar"></div>
+									<div class="progress-text"></div>
+								</div>
+								<div class="file-details" style="display: none">
+									<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+									<div class="file-name text-truncate" id="fileName">filename_1234.mp4</div>
+									<button type="button" class="close" data-dismiss="file-name" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+							<div class="drag-drop drop-zone lyrics-drop">
+								<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+								<span>Drop Lyrics here, or <a href="javascript:void(0)">browse</a>
+									<input class="drop-browse" type="file" name="video" accept="text/*" style="display: none">.
+								</span>
+								<div class="progress-container" style="display: none">
+									<div class="progress-bar"></div>
+									<div class="progress-text"></div>
+								</div>
+								<div class="file-details" style="display: none">
+									<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+									<div class="file-name text-truncate" id="fileName"></div>
+									<button type="button" class="close" data-dismiss="file-name" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="modal-footer"> -->
+					<div class="modal-footer border-0">
+						<button type="button" class="btn btn-outline-primary"><i
+								class="fas fa-cloud-upload-alt"></i>&nbsp;Upload</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- Bootstrap JS and dependencies -->
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<div class="toast-container" id="toast-container">
+
+	</div>
+
+	<!-- Bootstrap and jquery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+		console.clear();
 
+		$(document).ready(function () {
+			const toasts = $('.toast');
+			$.each(toasts, function (index, toast) {
+				toast = new bootstrap.Toast(toast);
+				toast.show();
+			});
+
+			// Attach the event handler to all text inputs
+			$('input[type="text"]').on('dragover', function (event) {
+				event.preventDefault(); // Prevent default drag-and-drop behavior
+			});
+
+		});
+	</script>
 	<script src="js/upload.js"></script>
-
+	<script src="lab/lab2.js"></script>
 </body>
 
 </html>
