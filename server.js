@@ -40,7 +40,6 @@ app.get('/upload', async (request, response) => {
 app.post('/upload', upload.single('file'), (req, res) => {
   try {
     // Validate file type (ensure it's an image, video, or lyrics)
-    // const allowedMimeTypes = ['image/*', 'video/*', 'text/plain', 'text/lrc', 'text/srt'];
     const allowedMimeTypes = {
 			image: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
 			video: ['video/mp4', 'video/webm', 'video/ogg'],
