@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.toast-container {
+	z-index: 10000000000000000;
+	font-family: "Poppins", sans-serif;
+	/* background-color: red; */
+	border: 2px dashed #f9ffff;
+	border: 2px dashed #4442;
+	border-radius: 5px;
+	position: fixed;
+	left: 1em;
+	bottom: 1em;
+	/* width: max-content; */
+	padding: 0.25em 0.25em;
+}
+
+.hover {
+	transition: 1s;
+	/* background-color: red !important; */
+	border-style: solid;
+}
+
+.progress-container {
+	display: block;
+	margin-top: 15px;
+	position: relative;
+	height: 20px;
+	background-color: #e7e7e7;
+}
+
+.progress-bar {
+	display: block;
+	width: 0%;
+	height: 100%;
+	background-color: #2ecc71;
+	border-radius: 5px;
+	transition: width 0.3s;
+}
+
+.progress-text {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	text-align: center;
+	transform: translateX(-50%);
+	color: #333;
+	font-size: 14px;
+}
+
+.file-details {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-top: 15px;
+	/* font-weight: normal; */
+}
+.file-details .file-name {
+	width: 85%;
+	font-family: "Poppins", sans-serif;
+	color: #555;
+	color: #2e71ccbb;
+	font-weight: 500;
+	/* font-style: italic; */
+	/* flex-basis: 90%; */
+}
+
+.file-details i {
+	width: fit-content;
+	margin-right: 0.25em;
+}
+
+.file-details button {
+	width: 10%;
+	text-align: right;
+}
+
+.dropzone-inactive {
+	border-color: #444;
+	color: #444 !important;
+}
