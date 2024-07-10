@@ -1,4 +1,4 @@
-<h1 align="center">⌨️ Funkey: Typing Practice Website</h1>
+<h1 align="center">⌨️ Funkey - Typing Practice Website</h1>
 
 <p align="center">
 <img src="assets/images/logo.png" width="50%">
@@ -25,14 +25,14 @@ Funkey is a web application designed to help users improve their typing skills i
    - Instead of the usual "Lorem Ipsum" placeholder text, Funkey provides AI-generated sentences that sound familiar and interesting.
    - Users can practice typing sentences that resemble real-world content.
 	<p align="right">
-	<img src="assets/images/practice.png" width="100%">
+	<img src="assets/images/practice.png" width="90%">
 	</p>
 
 3. **Virtual Piano Typing 🎹**
    - Funkey includes a virtual piano keyboard. Users can type the notes of melodies, chords, or even their own compositions.
    - This mode combines music and typing practice, making it enjoyable for both musicians and beginners.
 	<p align="right">
-	<img src="assets/images/keyboard.png" width="100%">
+	<img src="assets/images/keyboard.png" width="95%">
 	</p>
 
 ## Installation
