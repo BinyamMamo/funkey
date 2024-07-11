@@ -3,6 +3,12 @@ const multer = require('multer');
 const path = require('path');
 const app = express();
 const PORT = 5000;
+
+// Parse URL-encoded form data
+// Middleware to parse JSON and urlencoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static(__dirname));
 
 // Set up Multer storage
@@ -32,8 +38,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/signup', async (request, response) => {
+  response.sendFile(__dirname + '/signup.html');
+});
+
 app.get('/upload', async (request, response) => {
-  response.sendFile(__dirname + '/upload.html');
+	response.sendFile(__dirname + '/upload.html');
   // response.sendFile(__dirname + '/upload.html');
 });
 
@@ -60,6 +70,12 @@ app.post('/upload', upload.single('file'), (req, res) => {
     console.error('Error handling file upload:', error);
     res.status(500).json({ error: 'Internal server error.' });
   }
+});
+
+app.post('/signup', async (req, res) => {
+	// console.log(req);
+	res.status(200).json(req.body);
+	// res.json('signed in successfully!');
 });
 
 app.listen(PORT, () => {

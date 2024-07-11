@@ -25,9 +25,8 @@ header {
 	position: fixed;
 	width: 100vw;
 	height: fit-content;
-	background-color: blue;
-	left: 0;
-	top: 0;
+	left: 4rem;
+	top: 1.5rem;
 }
 
 .top-left {

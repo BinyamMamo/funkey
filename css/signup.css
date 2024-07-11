@@ -1,0 +1,107 @@
+body {
+	background-color: #1f2122;
+}
+
+.container {
+	width: 50rem;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	flex-direction: row;
+
+	gap: 5rem;
+	align-items: center;
+	justify-content: space-evenly;
+	color: #f7f7f7;
+}
+
+.card {
+	background-color: #27292a;
+
+	border: none;
+}
+
+.card-header,
+.form-control {
+	background-color: #3e4347;
+	background-color: #1f2122;
+
+	border: none;
+	color: white;
+}
+
+.form-control:focus {
+	box-shadow: none;
+}
+
+input:focus {
+	background-color: #1f212255 !important;
+	color: #f7f7f7 !important;
+}
+
+.form-check {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.btn-primary {
+	background-color: #007bff;
+	border: none;
+}
+
+.card-body {
+	position: relative;
+}
+
+.card {
+	padding-top: 2rem;
+}
+
+.avatar-container {
+	background-image: url('../assets/images/logo.png');
+	margin-bottom: 2rem;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	/* border: 1px solid red; */
+	border-radius: 50%;
+	position: fixed;
+	width: 7rem;
+	height: 7rem;
+	display: block;
+	left: 50%;
+	top: 0%;
+	transform: translate(-50%, -5%);
+	display: block;
+	z-index: 1000;
+	padding: 0;
+	cursor: pointer;
+	transition: background-color 1s;
+}
+
+.avatar-container:hover {
+	background-color: #fff1;
+}
+
+.drop-hover {
+	background-color: #fff1;
+	border: 2px dashed #fff1;
+}
+
+.icon {
+	color: #f1f1f1 !important;
+	opacity: 0;
+	z-index: 1000;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	transition: opacity 0.25s ease-in;
+}
+
+.avatar-container:hover > .icon {
+	opacity: 0.95;
+}

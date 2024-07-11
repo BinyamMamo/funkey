@@ -1,5 +1,5 @@
 * {
-	font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .modal-content {
@@ -129,8 +129,8 @@
   font-weight: bold;
   color: #575757;
   /* width: fit-content; */
-	border-style: dashed;
-	transition: border-style 1s;
+  border-style: dashed;
+  transition: border-style 1s;
 }
 
 .drag-drop * {
@@ -263,51 +263,68 @@
   transform: rotate(-68deg);
 }
 
-.toast {
+.hover {
+  transition: 1s;
+  /* background-color: red !important; */
+  border-style: solid;
+}
+
+.progress-container {
+  display: block;
+  margin-top: 15px;
   position: relative;
-  width: 18rem;
-  color: #444c;
-  font-size: 0.95rem;
+  height: 20px;
+  background-color: #e7e7e7;
 }
 
-.toast-header {
-  text-transform: capitalize;
-  width: 100%;
-  align-items: center;
+.progress-bar {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background-color: #2ecc71;
+  border-radius: 5px;
+  transition: width 0.3s;
 }
 
-.toast-success {
-  background-color: #f9ffff;
-  color: #5ee78d;
+.progress-text {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  text-align: center;
+  transform: translateX(-50%);
+  color: #333;
+  font-size: 14px;
 }
 
-.toast-warning {
-  background-color: #fffff9;
-  color: #ffc107;
+.file-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 15px;
+  /* font-weight: normal; */
+}
+.file-details .file-name {
+  width: 85%;
+  font-family: 'Poppins', sans-serif;
+  color: #555;
+  color: #2e71ccbb;
+  font-weight: 500;
+  /* font-style: italic; */
+  /* flex-basis: 90%; */
 }
 
-.toast-danger {
-  background-color: #fff9ff;
-  color: #dc3545;
+.file-details i {
+  width: fit-content;
+  margin-right: 0.25em;
 }
 
-.toast-info {
-  background-color: #f9f9ff;
-  color: #0dcaf0;
+.file-details button {
+  width: 10%;
+  text-align: right;
 }
 
-.toast-header strong {
-  font-size: 1.15rem;
-  font-weight: 600;
-  padding-left: 0.25em;
-}
-
-.toast-header small {
-  color: #444a;
-}
-
-.toast-header button {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #444a;
+.dropzone-inactive {
+  border-color: #444;
+  color: #444 !important;
 }
