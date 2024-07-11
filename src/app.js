@@ -1,46 +1,32 @@
 const express = require('express');
-const multer = require('multer');
 const path = require('path');
-const app = express();
-const PORT = 5000;
+const routes = require('./routes/routes');
+const fakeRoute = require('./routes/faker');
+const connectDB = require('./config/db');
 
+const app = express();
+// Connect to MongoDB
+connectDB();
+
+// Set EJS as the view engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// Set the directory for your views
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));	
+
+// Middleware to parse JSON and urlencoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
-// Set up Multer storage
-const storage = multer.diskStorage({
-    destination: function (request, file, callback) {
-        callback(null, 'uploads/');
-    },
-    filename: function (request, file, callback) {
-        callback(
-            null,
-            file.fieldname + '-' + Date.now() + path.extname(file.originalname)
-        );
-    },
-});
+app.use(routes);
+app.use(fakeRoute);
 
-// Initialize Multer upload
-const upload = multer({ storage: storage });
-
-// Middleware to track upload progress
-app.use((req, res, next) => {
-    let uploadedBytes = 0;
-    req.on('data', (chunk) => {
-        uploadedBytes += chunk.length;
-        const progress = (uploadedBytes / req.headers['content-length']) * 100;
-        console.log(`Upload progress: ${progress.toFixed(2)}%`);
-    });
-    next();
-});
-
-app.get('/upload', (req, res) => {
-    res.sendFile(__dirname + '/lab.html');
-});
-
-app.post('/upload', upload.single('file'), (req, res) => {
-    res.json({ filename: req.file.filename });
-});
-
+const PORT = 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+	console.clear();
+	console.log('\x1Bc'); // Clears the console (Linux only)
+  console.log(`Server is running on port ${PORT}`);
 });

@@ -155,6 +155,7 @@ $(document).ready(function () {
 		type = type.charAt(0).toUpperCase() + type.slice(1)
 
 		if ($(element).is('.thumbnail')) {
+			// $('.thumbnail').css('background-image', `url('${file.path}')`);
 			$('.thumbnail').css('background-image', `url('/${file.path}')`);
 			toastSuccess('Thumbnail uploaded successfully!');
 		} else {

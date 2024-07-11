@@ -6,6 +6,10 @@ function toastWarning(message) {
   toastMessage(message, 'Warning', 'toast-warning', 'fa fa-exclamation-circle');
 }
 
+function toastError(message) {
+  toastMessage(message, 'Error', 'toast-danger', 'fa fa-bug');
+}
+
 function toastDanger(message) {
   toastMessage(message, 'Error', 'toast-danger', 'fa fa-bug');
 }
@@ -14,8 +18,13 @@ function toastInfo(message) {
   toastMessage(message, 'Info', 'toast-info', 'fa fa-info-circle');
 }
 
+// const toastContainer = document.querySelector('.toast-container');
+const toastContainer = document.createElement('div');
+toastContainer.id = 'toast-container';
+toastContainer.classList.add('toast-container');
+document.body.appendChild(toastContainer);
+
 function toastMessage(message, header, category, categoryIcon) {
-  const toastContainer = document.querySelector('.toast-container');
   let delay = 4000 + message.length * 50;
 
   // Create a new toast element

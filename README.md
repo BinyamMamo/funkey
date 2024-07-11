@@ -39,7 +39,7 @@ Funkey is a web application designed to help users improve their typing skills i
 
 1. Clone this repository to your local machine:
    ```
-   git clone https://github.com/yourusername/funkey.git
+   git clone https://github.com/binyammamo/funkey.git
    ```
 
 2. Install the necessary dependencies:
@@ -48,10 +48,19 @@ Funkey is a web application designed to help users improve their typing skills i
    npm install
    ```
 
-3. Start the development server:
-   ```
-   npm start
-   ```
+3. Start MongoDB:
+    - Windows: `mongod`
+    - macOS: `brew services start mongodb/brew/mongodb-community`
+    - Linux: Follow the official MongoDB guide for your distribution [here](https://docs.mongodb.com/manual/administration/install-on-linux/)
+
+4. Configure MongoDB connection:
+    - MongoDB URI is set to `mongodb://localhost:27017/keyfun` by default in `src/config/db.js`
+
+5. Start the server:
+    ```sh
+    npm start
+    ```
+
 
 ## Usage
 
