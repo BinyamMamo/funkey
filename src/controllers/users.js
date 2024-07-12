@@ -9,6 +9,8 @@ const renderSignup = async (req, res) => {
 };
 
 const renderLogin = async (req, res) => {
+	if (req.session.userId)
+		res.redirect('/');
   res.sendFile(urlFor('login.html'));
 };
 
@@ -70,12 +72,26 @@ const handleLogin = async (req, res) => {
       throw new Error('Incorrect password!');
     }
 
+		req.session.userId = user._id;
+		req.session.avatar = user.avatar;
     res.status(200).json({ msg: 'signed in successfully!', user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
   }
 };
+
+const handleLogout = async (req, res) => {
+	try {
+		if (!req.session || !req.session.userId) {
+			res.status(400).json({error: 'No session found!'});
+			throw new Error('No session found!');
+		}
+		req.session.destroy();
+		res.json({msg: 'Logged out succesfully!'});
+		res.redirect('/');
+	} catch (err) { console.error(err); }
+}
 
 const getUsers = async (req, res) => {
   try {
@@ -122,6 +138,7 @@ module.exports = {
   renderDashboard,
   renderSignup,
   handleSignup,
+  handleLogout,
   renderLogin,
   handleLogin,
   deleteUser,

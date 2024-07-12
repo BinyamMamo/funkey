@@ -336,7 +336,6 @@ Header Style
 */
 
 .background-header {
-  background-color: #fff !important;
   height: 70px!important;
   position: fixed!important;
   top: 0!important;
@@ -612,10 +611,12 @@ Header Style
 
 @media (max-width: 992px) {
   .header-area {
+		z-index: 10000 !important;
+		background-color: #1f2122 !important;
     top: 0;
   }
   .header-area .main-nav {
-    background-color: transparent;
+    background-color: #1f2122 !important;
     border-radius: 0px;
   }
   .header-area .main-nav .nav {
@@ -683,12 +684,14 @@ Header Style
     margin-top: 70px !important;
   }
   .header-area .main-nav .nav li:first-child {
-    border-top: 1px solid #eee;
+    /* border-top: 1px solid #eee; */
   }
   .header-area .main-nav .nav li {
     width: 100%;
-    background: #fff;
-    border-bottom: 1px solid #eee;
+    /* background: #fff;
+    border-bottom: 1px solid #eee; */
+    background: #1f2122;
+    border-bottom: 1px solid #27292a;
     padding-left: 0px !important;
     padding-right: 0px !important;
   }
@@ -697,11 +700,12 @@ Header Style
     line-height: 50px !important;
     padding: 0px !important;
     border: none !important;
-    background: #fff !important;
-    color: #1e1e1e !important;
+    /* background: #fff !important; */
+    background: #1f2122 !important;
+    /* color: #1e1e1e !important; */
   }
   .header-area .main-nav .nav li a:hover {
-    background: #fff !important;
+    /* background: #fff !important; */
     color: var(--brand-color)!important;
   }
   .header-area .main-nav .nav li:last-child a img {

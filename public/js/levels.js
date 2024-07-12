@@ -5,7 +5,7 @@
 // });
 
 $(document).ready(function () {
-	console.clear();
+	// console.clear();
   const selectedLevelText = $("#selectedLevelText");
   const customOptions = $("#customOptions");
 

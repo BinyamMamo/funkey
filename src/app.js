@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
 const routes = require('./routes/routes');
 const fakeRoute = require('./routes/faker');
@@ -7,6 +8,12 @@ const connectDB = require('./config/db');
 const app = express();
 // Connect to MongoDB
 connectDB();
+
+app.use(session({
+	secret: 'Funkey user',
+	resave: false,
+	saveUninitialized: false,
+}));
 
 // Set EJS as the view engine
 app.set('views', path.join(__dirname, 'views'));
