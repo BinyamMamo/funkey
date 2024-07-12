@@ -1,0 +1,28 @@
+.particle-wrapper {
+	z-index: 100;
+  position: absolute;
+  /* justify-content: flex-end; */
+  /* Aligns particles container to the right */
+  align-items: center;
+  /* Centers vertically */
+  height: 100vh;
+  width: 100vw;
+
+  /* Adjust height as needed */
+  overflow: hidden;
+  /* Ensures particles outside wrapper aren't visible */
+}
+
+#particles-js {
+  position: absolute;
+  height: 85%;
+  width: 45%;
+  top: 50%;
+  left: 52%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  /* Adjust width as needed */
+}

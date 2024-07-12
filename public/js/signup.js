@@ -97,3 +97,44 @@ $(document).ready(function () {
 		$('input[name="avatar"]')[0].value = file.path;
   }
 });
+
+$(document).ready(function () {
+  $('.signup-form').on('submit', async function (event) {
+    event.preventDefault();
+
+    const name = $(this).find('input[name="name"]')[0].value;
+    const email = $(this).find('input[name="email"]')[0].value;
+    const password = $(this).find('input[name="password"]')[0].value;
+    const avatar = $(this).find('input[name="avatar"]')[0].value;
+
+    $('.spinner').show();
+    try {
+      const response = await fetch('/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, avatar }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+				console.log(data.user);
+				
+        // Redirect to homepage
+				window.location.href = '/';  // tODO: think about redirecting to profile page
+        setTimeout(() => {
+					toastSuccess(data.msg);
+					$('.spinner').hide();
+        }, 500);
+      } else {
+        $('.spinner').hide();
+        toastError(data.error);
+        console.error(data.error);
+      }
+    } catch (error) {
+      $('.spinner').hide();
+      toastError(`Error: ${error.message}`);
+      console.error('Error:', error);
+    }
+  });
+});

@@ -10,6 +10,34 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/signup.css">
 	<link rel="stylesheet" href="css/toasts.css">
+	<link rel="stylesheet" href="css/particles.css">
+
+	<style>
+		a:hover {
+			text-decoration: none;
+		}
+
+		.form-check {
+			user-select: none;
+			cursor: pointer;
+		}
+
+		.form-check-label {
+			cursor: pointer;
+		}
+
+		.spinner {
+			display: block;
+			position: absolute;
+			left: 45%;
+			top: 50%;
+			z-index: 1000;
+
+			font-size: 1.5rem;
+			width: 2.5rem;
+			height: 2.5rem;
+		}
+	</style>
 </head>
 
 <body>
@@ -18,20 +46,23 @@
 	</header>
 
 	<div class="container">
+		<div class="spinner-border text-primary spinner" role="status" style="display: none">
+			<span class="sr-only">...</span>
+		</div>
 		<div class="card mt-5">
 			<div class="card-body">
-				<form action="/signup" method="POST">
+				<form class="signup-form">
 					<div class="avatar-container" data-type="image">
 						<i class="fas fa-camera-retro icon"></i>
 					</div>
 					<input type="file" id="avatar-upload" style="display: none" accept="images">
 					<input type="hidden" name="avatar" value="assets/images/logo.png">
 					<div class="form-group">
-						<label for="name"><i class="fa fa-user"></i> &nbsp;Your Name</label>
+						<label for="name"><i class="fa fa-user"></i> &nbsp;Name</label>
 						<input name="name" type="text" class="form-control" id="name" placeholder="Your Name" required>
 					</div>
 					<div class="form-group">
-						<label for="email"><i class="fa fa-envelope"></i> &nbsp;Your Email</label>
+						<label for="email"><i class="fa fa-envelope"></i> &nbsp;Email</label>
 						<input name="email" type="email" class="form-control" id="email" placeholder="Your Email" required>
 					</div>
 					<div class="form-group">
@@ -42,11 +73,20 @@
 						<label for="confirm-password"><i class="fa fa-key"></i> &nbsp;Repeat your password</label>
 						<input type="password" class="form-control" id="confirm-password" placeholder="Repeat your password">
 					</div>
+					<div class="form-group">
+						<label class="form-label"> &nbsp;
+							Have account already?
+							<a href="/login" class="text-primary">
+								<i class="fas fa-sign-in-alt"></i>
+								Login
+							</a>
+						</label>
+					</div>
 					<div class="form-check">
 						<input type="checkbox" class="form-check-input" id="terms">
 						<label class="form-check-label" for="terms">I agree to all statements in <a href="#"
-								class="text-primary">Terms of service</a></label>
-					</div>
+							class="text-primary">Terms of service</a></label>
+						</div>
 					<button type="submit" class="btn btn-primary btn-block mt-4">Register</button>
 				</form>
 			</div>
@@ -65,5 +105,6 @@
 
 	<script src="js/signup.js"></script>
 	<script src="js/toasts.js"></script>
+	<script src="js/particles.js"></script>
 </body>
 </html>
