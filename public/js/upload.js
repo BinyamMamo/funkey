@@ -1,16 +1,16 @@
 $(document).ready(function () {
-  $('input[name="artistName"]').on('input', function () {
+  $('input[name="artist"]').on('input', function () {
     const value = $(this).val();
     const output = $('.artist-music-name span');
     output[0].innerHTML = value;
-    if (value == '') output[0].innerHTML = 'Artist Name';
+    if (value == '') output[0].innerHTML = 'Unkown';
   });
 
-  $('input[name="musicName"]').on('input', function () {
+  $('input[name="title"]').on('input', function () {
     const value = $(this).val();
     const output = $('.artist-music-name span');
     output[1].innerHTML = value;
-    if (value == '') output[1].innerHTML = 'Music Name';
+    if (value == '') output[1].innerHTML = 'Track';
   });
 
   $('.drag-drop').each(function (index, element) {
@@ -79,8 +79,7 @@ $(document).ready(function () {
   function uploadFile(file, element) {
     let type = element.dataset.type;
 
-		if (!validFile(file, type))
-			return;
+    if (!validFile(file, type)) return;
 
     var formData = new FormData();
     formData.append('file', file);
@@ -103,7 +102,17 @@ $(document).ready(function () {
         let response = JSON.parse(xhr.response);
         handleFileDetails(element, response);
       } else if (xhr.readyState == 4) {
-        let response = JSON.parse(xhr.response);
+        let response = {error: 'nothing'};
+        if (xhr.responseText) {
+          try {
+            response = JSON.parse(xhr.responseText);
+            // Process the JSON response
+          } catch (e) {
+            console.error('Parsing error:', e);
+          }
+        } else {
+          console.warn('Empty response');
+        }
         toastDanger(response.error);
       }
     };
@@ -111,13 +120,12 @@ $(document).ready(function () {
     xhr.send(formData);
   }
 
-	function validFile(file, type) {
-		const allowedMimeTypes = {
-			image: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
-			video: ['video/mp4', 'video/webm', 'video/ogg'],
-			lyrics: ['text/plain', 'text/lrc', 'text/srt'],
-		};
-		
+  function validFile(file, type) {
+    const allowedMimeTypes = {
+      image: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
+      video: ['video/mp4', 'video/webm', 'video/ogg'],
+      lyrics: ['text/plain', 'text/lrc', 'text/srt'],
+    };
 
     if (!file) {
       toastDanger('No file uploaded.');
@@ -127,16 +135,19 @@ $(document).ready(function () {
     }
 
     if (!allowedMimeTypes[type].includes(file.type)) {
-			let allowedTypes = allowedMimeTypes[type].map(mimeType => '.' + mimeType.replace(`${type}/`, '')).join(', ');
-			if (type === 'lyrics')
-				allowedTypes = '.txt'; 
-      toastDanger(`Invalid file type! <br> Upload ${type} type(${allowedTypes}) only.`);
+      let allowedTypes = allowedMimeTypes[type]
+        .map((mimeType) => '.' + mimeType.replace(`${type}/`, ''))
+        .join(', ');
+      if (type === 'lyrics') allowedTypes = '.txt';
+      toastDanger(
+        `Invalid file type! <br> Upload ${type} type(${allowedTypes}) only.`
+      );
       console.log('error: Invalid file type.');
       return false;
     }
 
-		return true;
-	}
+    return true;
+  }
 
   function handleProgress(element, percentComplete) {
     if (!$(element).is('.thumbnail')) {
@@ -150,38 +161,40 @@ $(document).ready(function () {
     }
   }
 
-	function handleFileDetails(element, file) {
-		let type = element.dataset.type.toString().split('/')[0];
-		type = type.charAt(0).toUpperCase() + type.slice(1)
+  function handleFileDetails(element, file) {
+    let type = element.dataset.type.toString().split('/')[0];
+    type = type.charAt(0).toUpperCase() + type.slice(1);
 
-		if ($(element).is('.thumbnail')) {
-			// $('.thumbnail').css('background-image', `url('${file.path}')`);
-			$('.thumbnail').css('background-image', `url('/${file.path}')`);
-			toastSuccess('Thumbnail uploaded successfully!');
-		} else {
-			toastSuccess(`${type} uploaded successfully!`);
-	
-			const fileDetails = $(element).find('.file-details');
-			const fileName = $(element).find('.file-name');
-			const progressContainer = $(element).find('.progress-container');
-			const closeBtn = $(element).find('button.close');
-	
-			closeBtn.css('color', 'red');
-			closeBtn.click(function (e) {
-				e.preventDefault();
-				let icon = $(element).find('i');
-				$(icon[0]).show();
-				fileDetails.hide();
-				toastInfo('Upload removed');
-			});
-3
-			progressContainer.hide();
-			$(element).find('.progress-bar').css('width', '0%');
-			let icon = $(element).find('i');
-			$(icon[0]).hide();
-			
-			fileDetails.show();
-			fileName.html(`${file.originalname}`);
-		}
-	}
+    const hiddenInput = $(element).find('input[type="hidden"]');
+    hiddenInput.val(file.path);
+    if ($(element).is('.thumbnail')) {
+      // $('.thumbnail').css('background-image', `url('${file.path}')`);
+      $('.thumbnail').css('background-image', `url('/${file.path}')`);
+      toastSuccess('Thumbnail uploaded successfully!');
+    } else {
+      toastSuccess(`${type} uploaded successfully!`);
+
+      const fileDetails = $(element).find('.file-details');
+      const fileName = $(element).find('.file-name');
+      const progressContainer = $(element).find('.progress-container');
+      const closeBtn = $(element).find('button.close');
+
+      closeBtn.css('color', 'red');
+      closeBtn.click(function (e) {
+        e.preventDefault();
+        let icon = $(element).find('i');
+        $(icon[0]).show();
+        fileDetails.hide();
+        toastInfo('Upload removed');
+      });
+      3;
+      progressContainer.hide();
+      $(element).find('.progress-bar').css('width', '0%');
+      let icon = $(element).find('i');
+      $(icon[0]).hide();
+
+      fileDetails.show();
+      fileName.html(`${file.originalname}`);
+    }
+  }
 });

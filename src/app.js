@@ -4,6 +4,8 @@ const path = require('path');
 const routes = require('./routes/routes');
 const fakeRoute = require('./routes/faker');
 const connectDB = require('./config/db');
+const errorHandler = require('./middleware/error_handler');
+const notFoundHandler = require('./middleware/notFoundHandler');
 
 const app = express();
 // Connect to MongoDB
@@ -30,6 +32,15 @@ app.use(express.static(__dirname));
 
 app.use(routes);
 app.use(fakeRoute);
+
+// Example route that throws an error
+app.get('/error', (req, res) => {
+	throw new Error('This is a test error');
+});
+
+// Add the not found handler middleware after all routes
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 const PORT = 5000;
 app.listen(PORT, () => {

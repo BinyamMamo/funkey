@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard | Manage Musics</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/upload.css">
+	<link rel="stylesheet" href="/css/toasts.css">
+
+	<link rel="shortcut icon" href="assets/icon/logo.ico" type="image/x-icon">
+
+	<style>
+		#upload-form {
+			position: relative !important;
+			left: 55%;
+			transform: translateX(-50%);
+		}
+
+		.delete-btn {
+			display: block;
+			cursor: pointer;
+			text-align: center;
+			padding-left: 1em;
+			padding-top: 0.9em;
+		}
+
+		.delete-btn:hover {
+			color: #f11c;
+		}
+
+		.thumbnail-container {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		table .thumbnail {
+			display: block;
+			height: 45px;
+			width: 50px;
+			border-radius: 5px;
+		}
+
+		#affirmModal .modal-content {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, 100%);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="row mb-4">
+			<div class="col">
+				<h1 class="text-center">music Management Dashboard</h1>
+			</div>
+		</div>
+		<div class="row mb-4">
+			<div class="col">
+				<form id="fakeUsersForm" class="form-inline justify-content-center">
+					<div class="form-group mb-2">
+						<label for="numberOfUsers" class="sr-only">Number of musics</label>
+						<input type="number" class="form-control" id="numberOfUsers" placeholder="Number of musics" min="1">
+					</div>
+					<button type="submit" class="btn btn-primary mb-2 ml-2">Generate Fake musics</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Music Title</th>
+							<th scope="col">Artist Name</th>
+							<th scope="col">Music Video</th>
+							<th scope="col">Lyrics</th>
+							<th scope="col">Thumbnail</th>
+							<th scope="col">Delete</th>
+						</tr>
+					</thead>
+					<tbody id="musicsTableBody">
+						<% let ordinalNo=0; %>
+							<% musics.forEach((music, index)=> { %>
+								<% ordinalNo=index + 1; %>
+									<tr id="<%= music._id %>">
+										<th scope="row" class="ordinal">
+											<%= index + 1 %>
+										</th>
+										<td>
+											<%= music.title %>
+										</td>
+										<td>
+											<%= music.artist %>
+										</td>
+										<td>
+											<a href="/<%= music.video %>">
+												<%= music.video %>
+											</a>
+										</td>
+										<td>
+											<a href="/<%= music.lyrics %>">
+												<%= music.lyrics %>
+											</a>
+										</td>
+										<td class="thumbnail-container"><span style="background-image: url('/<%= music.thumbnail %>');" class="thumbnail"></span></td>
+										<td class="delete-container"><i data-id="<%= music._id %>" class="fas fa-trash-alt delete-btn"></i></tdc>
+									</tr>
+									<% }); %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="container mt-5">
+		<form id="upload-form" class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="musicModalLabel">Upload Music</h5>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="left-side">
+					<div class="thumbnail drop-zone" data-type="image" data-image-url="assets/images/default_thumbnail.jpg">
+						<div class="play-icon-container">
+							<i class="fa fa-file-image" aria-hidden="true"></i>
+						</div>
+						<input type="hidden" name="thumbnail" value="assets/images/default_thumbnail.jpg">
+					</div>
+					<input type="file" accept="image/*" id="thumbnail-upload" style="display: none;">
+					<div class="drag-drop artist-music-name">
+						<span>Unknown</span> - <span class="music-name">Track</span>
+					</div>
+				</div>
+
+				<div class="inputs right-side">
+					<!-- <h4 class="upload-title">Upload Music Here</h4> -->
+					<div class="input-group">
+						<input name="artist" type="text" class="form-control" placeholder="Artist Name" pattern="[A-Za-z\s]+"
+							title="Enter a valid artist name (letters and spaces only)" required>
+					</div>
+					<div class="input-group">
+						<input name="title" type="text" class="form-control" placeholder="Music Name" pattern="[A-Za-z0-9\s]+"
+							title="Enter a valid music name (letters, numbers, and spaces only)" required>
+					</div>
+
+					<!-- Video Drop Zone -->
+					<div class="drag-drop drop-zone video-drop" data-type="video">
+						<span>
+							<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+							Drop video here, or <a href="javascript:void(0)">browse</a>
+							<input class="drop-browse" type="file" accept="video/*" style="display: none">.
+						</span>
+						<input type="hidden" name="video" value="">
+						<div class="progress-container" style="display: none">
+							<div class="progress-bar"></div>
+							<div class="progress-text"></div>
+						</div>
+						<div class="file-details" style="display: none">
+							<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+							<div class="file-name text-truncate" id="fileName"></div>
+							<button type="button" class="close" data-dismiss="file-name" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</div>
+
+					<!-- Lyrics Drop Zone -->
+					<div class="drag-drop drop-zone lyrics-drop" data-type="lyrics">
+						<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+						<span>Drop Lyrics here, or <a href="javascript:void(0)">browse</a>
+							<input class="drop-browse" type="file" name="video" accept="text/*" style="display: none">.
+						</span>
+						<input type="hidden" name="lyrics" value="">
+						<div class="progress-container" style="display: none">
+							<div class="progress-bar"></div>
+							<div class="progress-text"></div>
+						</div>
+						<div class="file-details" style="display: none">
+							<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+							<div class="file-name text-truncate" id="fileName"></div>
+							<button type="button" class="close" data-dismiss="file-name" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="modal-footer"> -->
+			<div class="modal-footer border-0">
+				<button type="submit" class="btn btn-outline-primary"><i
+						class="fas fa-cloud-upload-alt"></i>&nbsp;Upload</button>
+			</div>
+		</form>
+	</div>
+
+	<!-- Bootstrap and jquery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+		console.clear();
+
+		$(document).ready(function () {
+			const toasts = $('.toast');
+			$.each(toasts, function (index, toast) {
+				toast = new bootstrap.Toast(toast);
+				toast.show();
+			});
+
+			// Attach the event handler to all text inputs
+			$('input[type="text"]').on('dragover', function (event) {
+				event.preventDefault(); // Prevent default drag-and-drop behavior
+			});
+			$('input[type="text"]').on('dragleave', function (event) {
+				event.preventDefault(); // Prevent default drag-and-drop behavior
+			});
+			$('input[type="text"]').on('drop', function (event) {
+				event.preventDefault(); // Prevent default drag-and-drop behavior
+			});
+
+			$('#upload-form').on('submit', function (e) {
+				e.preventDefault();
+				// artist, title, video, lyrics, thumbnail, public
+				let artist = $(this).find('input[name="artist"]')[0].value;
+				let title = $(this).find('input[name="title"]')[0].value;
+				let video = $(this).find('input[name="video"]').val();
+				let lyrics = $(this).find('input[name="lyrics"]').val();
+				let thumbnail = $(this).find('input[name="thumbnail"]').val();
+
+				// uploaded from dashboard, so public
+				let public = true;
+
+				if (!artist || artist == '' || !title || title == '' || !video || video == '' || !lyrics || lyrics == '') {
+					toastDanger('Fill all required inputs!');
+					console.error('Fill every input!');
+					return;
+				}
+
+				const fetchData = async () => {
+					try {
+						const res = await fetch('/uploadMusic', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ artist, title, video, lyrics, thumbnail, role: 'admin' }),
+						});
+
+						const data = await res.json();
+						if (!res.ok)
+							throw new Error(data.message);
+
+						console.log(data.message);
+						toastSuccess(data.message);
+					} catch (err) {
+						toastDanger(err.message);
+						console.error(err);
+					}
+				}
+
+				fetchData();
+			});
+
+		});
+	</script>
+
+	<script src="/js/upload.js"></script>
+	<script src="/js/toasts.js"></script>
+	<script src="/js/affirm.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			console.clear();
+			console.log('Hey there');
+			toastSuccess("musics loaded successfully!");
+
+			// Function to update the ordinal numbers
+			function updateOrdinalNumbers() {
+				$('#userTableBody tr').each(function (index) {
+					$(this).find('.ordinal').text(index + 1);
+				});
+			}
+
+			// Handle fake musics form submission
+			$('#fakeUsersForm').submit(function (e) {
+				e.preventDefault();
+				const numberOfUsers = $('#numberOfUsers').val();
+
+				let index = $('#musicsTableBody tr').length + 1;
+				fetch(`/fake-musics/${numberOfUsers}`)
+					.then(response => response.json())
+					.then(musics => {
+						musics.forEach(music => {
+							$('#musicsTableBody').append(`
+                                <tr id="${music._id}">
+                                    <th scope="row" class="ordinal">${index++}</th>
+                                    <td>${music.name}</td>
+                                    <td>${music.email}</td>
+                                    <td>${music.password}</td>
+                                    <td><img src="${music.avatar}" alt="👤" class="avatar" width="45px"></td>
+                                    <td><i data-id="${music._id}" class="fas fa-trash-alt delete-btn"></i></td>
+                                </tr>
+                            `);
+						});
+						updateOrdinalNumbers();
+						toastSuccess(`${numberOfUsers} fake musics added successfully!`);
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						toastDanger('Failed to add fake musics.');
+					});
+			});
+
+			// Handle delete button click
+			$(document).on('click', '.delete-btn', function () {
+				let id = this.dataset.id.toString();
+
+				affirm('Are you sure you want to delete this music?').then((result) => {
+					if (result) {
+						console.log('Deleting music...');
+						deleteUser(id);
+					} else {
+						console.log('Deletion cancelled!');
+					}
+				});
+			});
+
+			function deleteUser(id) {
+				fetch('/deleteMusic', {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ id }),
+				}).then(res => {
+					if (!res.ok)
+						return res.json().then((err) => Promise.reject(err));
+					return res.json();
+				}).then(res => {
+						const row = document.getElementById(id);
+						if (row) {
+							let ordinal = $(row).find('.ordinal');
+							let index = parseInt(ordinal.text());
+
+							let next = $(row).next()[0];
+							while ($(next).is('tr')) {
+								$(next).find('.ordinal').html(`${index++}`);
+								next = $(next).next()[0];
+							}
+							console.log('music Deleted!');
+
+							row.parentNode.removeChild(row);
+						} else {
+							console.error(`Row with ID "${rowId}" not found.`);
+						}
+						toastSuccess(res.message);
+					}).catch(err => {
+						console.error(err);
+						toastDanger(err.message);
+					});
+			}
+		});
+	</script>
+</body>
+
+</html>

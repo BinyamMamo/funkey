@@ -1,0 +1,123 @@
+// Music Controller
+const Music = require('../models/Music');
+
+const getMusics = async (req, res) => {
+  let musics = [];
+  try {
+    musics = await Music.find({ public: true });
+    if (req.session && req.session.userId) {
+      let userId = req.session.userId;
+      let privateMusics = await Music.find({ userId });
+      musics.concat(privateMusics);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+  return musics;
+};
+
+const uploadMusic = async (req, res) => {
+  try {
+    console.log('-----------------');
+    console.log(req.body);
+
+    let { artist, title, video, lyrics, thumbnail, public } = req.body;
+    if (req.body.role && req.body.role === 'admin') public = true;
+    else if (!req.session || !req.session.userId) {
+      res
+        .status(400)
+        .json({ message: 'You need to sign in to upload musics!' });
+      throw new Error('User is not signed in!');
+    }
+
+    // validate the above
+
+    let userId = req.session.userId;
+    let musicByTitle = await Music.findOne({ title });
+    if (musicByTitle) {
+      let musicByArtist = await Music.findOne({ artist });
+			if (public && musicByArtist && JSON.stringify(musicByArtist) == JSON.stringify(musicByTitle)) {
+				res.status(400).json({message: 'Music with the same artist and title exists in db'});  // TODO: CHANGE THE STATUS CODE
+				throw new Error('Music with the same artist and title exists in db');
+			}
+			console.log('musicByArtist:', JSON.stringify(musicByArtist));
+    }
+		console.log('musicByTitle', JSON.stringify(musicByTitle));
+		console.log('Equality', JSON.stringify(musicByArtist) == JSON.stringify(musicByTitle));
+    let music = new Music({
+      artist,
+      title,
+      video,
+      lyrics,
+      thumbnail,
+      public: !public ? false : public,
+      userId,
+    });
+
+    await music.save();
+
+    console.log('Music uploaded succesfully!', music);
+    res.status(201).json({ message: 'Music uploaded succesfully!', music });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    console.error(err);
+  }
+};
+
+const renderMusic = async (req, res) => {
+  try {
+    let musicId = req.params.id || null;
+    if (!musicId) {
+      res.status(400).json({ error: 'Music id not found!' });
+      throw new Error('Music id not found!');
+    }
+
+    let music = await Music.findById(musicId);
+    if (!music) {
+      res.status(400).json({ error: 'Music not found!' });
+      throw new Error('Music not found!');
+    }
+
+    // For private musics
+    if (!music.public) {
+      let userId = req.session && req.session.userId;
+      if (!userId || userId !== music.userId) {
+        res.status(400).json({ error: 'Not Authorized!' });
+        throw new Error('Not Authorized!');
+      }
+    }
+
+    res.render('music', { music });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+    console.error(err);
+  }
+};
+
+const deleteMusic = async (req, res) => {
+  try {
+    let musicId = req.body.id || null;
+    let music = await Music.findByIdAndDelete(musicId);
+    if (!music) {
+      res.status(400).json({ message: 'music not found' });
+      throw new Error('music not found');
+    }
+
+    res.status(200).json({
+      message: `'${music.title}' by ${music.artist} is deleted succesfully!`,
+      music,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Internal server error. Unable to delete music!',
+    });
+    console.error(err.message);
+  }
+};
+
+module.exports = {
+  getMusics,
+  uploadMusic,
+  renderMusic,
+  deleteMusic,
+};

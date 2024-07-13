@@ -102,20 +102,9 @@ const getUsers = async (req, res) => {
   }
 };
 
-const renderDashboard = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.render('dashboard', { users });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
 const deleteUser = async (req, res) => {
   try {
     const id = req.body.id || null;
-    console.log('req.body:', req.body);
-    console.log('id:', id);
     if (!id) {
       res.status(400).json({ error: 'Id Not Found!' });
       throw new Error('Id Not Found!');
@@ -135,7 +124,6 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-  renderDashboard,
   renderSignup,
   handleSignup,
   handleLogout,
