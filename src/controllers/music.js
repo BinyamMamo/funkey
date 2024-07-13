@@ -1,4 +1,5 @@
 // Music Controller
+const fs = require('fs');
 const Music = require('../models/Music');
 
 const getMusics = async (req, res) => {
@@ -42,14 +43,13 @@ const uploadMusic = async (req, res) => {
 			}
 			console.log('musicByArtist:', JSON.stringify(musicByArtist));
     }
-		console.log('musicByTitle', JSON.stringify(musicByTitle));
-		console.log('Equality', JSON.stringify(musicByArtist) == JSON.stringify(musicByTitle));
-    let music = new Music({
+
+		let music = new Music({
       artist,
       title,
       video,
       lyrics,
-      thumbnail,
+      thumbnail: thumbnail || 'assets/images/default_thumbnail.jpg',
       public: !public ? false : public,
       userId,
     });
@@ -59,7 +59,6 @@ const uploadMusic = async (req, res) => {
     console.log('Music uploaded succesfully!', music);
     res.status(201).json({ message: 'Music uploaded succesfully!', music });
   } catch (err) {
-    res.status(400).json({ message: err.message });
     console.error(err);
   }
 };
@@ -103,14 +102,15 @@ const deleteMusic = async (req, res) => {
       throw new Error('music not found');
     }
 
+		// remove video and lyrics files from server
+		fs.unlinkSync(music.video);
+		fs.unlinkSync(music.lyrics);
+
     res.status(200).json({
       message: `'${music.title}' by ${music.artist} is deleted succesfully!`,
       music,
     });
   } catch (err) {
-    res.status(500).json({
-      message: 'Internal server error. Unable to delete music!',
-    });
     console.error(err.message);
   }
 };

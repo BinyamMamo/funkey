@@ -36,6 +36,35 @@
 			top: 50%;
 			transform: translate(-50%, 100%);
 		}
+
+		.password {
+			max-width: 2rem !important;
+		}
+
+		.add-row {
+			padding: 0;
+		}
+
+		.add-row input {
+			border: none;
+			width: 100%;
+			height: 100%;
+			display: block;
+		}
+
+		.add-row input:focus {
+			border: none;
+			outline: none;
+		}
+
+		.avatar-container {
+			width: 5.5rem;
+			position: relative;
+		}
+
+		.avatar-container * {
+			margin: auto;
+		}
 	</style>
 </head>
 
@@ -46,17 +75,7 @@
 				<h1 class="text-center">User Management Dashboard</h1>
 			</div>
 		</div>
-		<div class="row mb-4">
-			<div class="col">
-				<form id="fakeUsersForm" class="form-inline justify-content-center">
-					<div class="form-group mb-2">
-						<label for="numberOfUsers" class="sr-only">Number of Users</label>
-						<input type="number" class="form-control" id="numberOfUsers" placeholder="Number of Users" min="1">
-					</div>
-					<button type="submit" class="btn btn-primary mb-2 ml-2">Generate Fake Users</button>
-				</form>
-			</div>
-		</div>
+
 		<div class="row">
 			<div class="col">
 				<table class="table">
@@ -65,7 +84,7 @@
 							<th scope="col">#</th>
 							<th scope="col">Username</th>
 							<th scope="col">Email</th>
-							<th scope="col">Password</th>
+							<th scope="col" class="text-truncate password">Password</th>
 							<th scope="col">Avatar</th>
 							<th scope="col">Delete</th>
 						</tr>
@@ -84,18 +103,54 @@
 										<td>
 											<%= user.email %>
 										</td>
-										<td>
+										<td class="text-truncate password">
 											<%= user.password %>
 										</td>
-										<td><img src="<%= user.avatar %>" class="avatar"></td>
-										<td><i data-id="<%= user._id %>" class="fas fa-trash-alt delete-btn"></i></td>
+										<% let avatar=user.avatar; %>
+											<!-- TODO: Remove this 👇 -->
+											<% avatar=!avatar.startsWith('https') ? '/' + avatar : avatar; %>
+												<td class="avatar-container"><img src="<%= avatar %>" class="avatar"></td>
+												<td><i data-id="<%= user._id %>" class="fas fa-trash-alt delete-btn"></i></td>
 									</tr>
 									<% }); %>
+					</tbody>
+					<tbody class="add-row">
+						<tr>
+							<th scope="row">$</th>
+							<th><input type="text" name="name" placeholder="username"></th>
+							<th><input type="email" name="email" placeholder="email"></th>
+							<th><input type="password" name="password" placeholder="password"></th>
+							<th class="avatar-container">
+								<button class="btn btn-secondary"><i class="fas fa-user-circle"></i></button>
+								<input type="file" style="display: none">
+								<input type="hidden" name="avatar" value="">
+							</th>
+							<th><button class="btn btn-primary"><i class="fas fa-user-plus"></i></button></th>
+						</tr>
+					</tbody>
+					<tbody class="fake-users">
+						<tr>
+							<form id="fakeUsersForm">
+								<th scope="row">$</th>
+								<th>Generate</th>
+								<th>Fake</th>
+								<th>Users</th>
+								<th class="avatar-container">
+									<input type="number" class="form-control" id="numberOfUsers" placeholder="🤖" min="1">
+								</th>
+								<th><button class="btn btn-warning"><i class="fas fa-user-secret"
+											style="font-size: 1.5rem;"></i></button>
+								</th>
+							</form>
+						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
+
+
+	<br><br><br><br><br><br><br><br>
 
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">

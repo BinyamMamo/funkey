@@ -41,6 +41,7 @@ $(document).ready(function () {
   });
 
   $('.drop-browse').on('change', function () {
+    console.log('I am changed');
     let element = $(this).parent().parent();
 
     uploadFile(this.files[0], element[0]);
@@ -77,6 +78,27 @@ $(document).ready(function () {
   }
 
   function uploadFile(file, element) {
+    let filePath = $(element).find('input[type="hidden"]').val();
+    if (filePath) {
+      fetch('/deleteUpload', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filePath }),
+      })
+        .then((res) => {
+          if (!res.ok) return res.json().then((err) => Promise.reject(err));
+          return res.json();
+        })
+        .then((res) => {
+          toastSuccess(`previous upload is ${res.message}`);
+          console.log(`previous upload is ${res.message}`);
+        })
+        .catch((err) => {
+          toastDanger(err.message);
+          console.log(err.message);
+        });
+    }
+
     let type = element.dataset.type;
 
     if (!validFile(file, type)) return;
@@ -102,7 +124,7 @@ $(document).ready(function () {
         let response = JSON.parse(xhr.response);
         handleFileDetails(element, response);
       } else if (xhr.readyState == 4) {
-        let response = {error: 'nothing'};
+        let response = { error: 'nothing' };
         if (xhr.responseText) {
           try {
             response = JSON.parse(xhr.responseText);
@@ -186,8 +208,28 @@ $(document).ready(function () {
         $(icon[0]).show();
         fileDetails.hide();
         toastInfo('Upload removed');
+        $(element).find('input[type="file')[0].form.reset();
+        $(element).find('input[type="hidden').val('');
+
+        fetch('/deleteUpload', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filePath: file.path }),
+        })
+          .then((res) => {
+            if (!res.ok) return res.json().then((err) => Promise.reject(err));
+            return res.json();
+          })
+          .then((res) => {
+            toastSuccess(res.message);
+            console.log(res.message);
+          })
+          .catch((err) => {
+            toastDanger(err.message);
+            console.log(err.message);
+          });
       });
-      3;
+
       progressContainer.hide();
       $(element).find('.progress-bar').css('width', '0%');
       let icon = $(element).find('i');

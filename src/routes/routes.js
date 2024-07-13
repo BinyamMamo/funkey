@@ -45,5 +45,6 @@ router.get('/profile', async (req, res) => {
 
 router.post('/uploadMusic', musicController.uploadMusic);
 router.delete('/deleteMusic', musicController.deleteMusic);
+router.delete('/deleteUpload', uploadController.deleteUpload);
 
 module.exports = router;

@@ -2,29 +2,49 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.modal-content {
-  /* position: relative; */
-  position: fixed;
-  left: 55%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  /* width: fit-content; */
+.upload-container {
+  position: relative;
+  /* width: 700px; */
   width: 700px;
-  /* margin: auto; */
+	margin: auto;
+	/* background-color: red; */
+	display: flex;
+	flex-direction: column !important;
+	gap: 1em;
+	justify-content: center;
+	align-items: center;
 }
 
-.modal-title {
+.upload-header {
+	text-align: center;
+	display: block;
+	width: 700px;
+	position: relative;
+	background-color: #f8f9fa;
+	padding: 1em 0.5em;
+}
+
+.upload-title {
+	display: block;
+	position: relative;
   font-size: 1.75rem;
   font-weight: 700;
   padding-left: 0.5em;
 }
 
-.modal-header {
-  /* position: static; */
-  background-color: #f8f9fa;
-  /* width: calc(100% + 2rem); */
-  /* left: 0; */
-  float: left;
+.upload-body {
+	/* background-color: #2ecc71; */
+	position: relative;
+	display: flex;
+	width: 700px;
+	text-align: center;
+	margin: auto;
+
+	flex-direction: row;
+	gap: 1rem;
+	justify-content: space-evenly;
+	align-items: center;
+	margin-top: 0.5em;
 }
 
 .input-group {
@@ -32,104 +52,54 @@
 }
 
 .input-group input {
-  /* border-color: #5e8de7; */
   padding: 1.25em 1em;
   outline: none !important;
 }
+
 .input-group input:hover {
   outline: none !important;
 }
 
-.drag-drop {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  border: 2px dashed #6c757d;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 15px;
-}
-
-.music-icon {
-  width: 100px;
-  height: auto;
-}
-
-.modal-body {
-  text-align: center;
-  position: relative;
-  display: flex;
-  width: 100%;
-  /* width: 100%; */
-  margin: auto;
-
-  flex-direction: row;
-  gap: 1rem;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-top: 0.5em;
-}
 
 .left-side,
 .right-side {
-  width: 50%;
+	width: 50%;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-
+	
   justify-content: space-between;
   align-items: center;
 }
 
-.left-side * {
-  width: 100%;
+.left-side *, .right-side * {
+	width: 100%;
 }
 
 .left-side img {
-  /* width: 65%; */
-  width: 15rem;
+	width: 15rem;
   border-radius: 25px;
-}
-
-.left-side button {
-  border-radius: 25px;
-  width: 60%;
-  padding: 0.25em 1em;
-  background-color: transparent;
-  color: #5ea78d;
-  border: 1px solid #5ea78d;
-  font-weight: bold;
-}
-
-.right-side * {
-  width: 100%;
 }
 
 .right-side h4 {
-  font-size: 1.75rem;
+	font-size: 1.75rem;
   font-weight: bold;
-}
-
-.upload-container {
-  /* transform: scale(0.75); */
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
 }
 
 .drag-drop {
-  display: block;
+	display: block;
+	margin-bottom: 15px;
+	padding: 10px;
+	cursor: pointer;
+	
   text-wrap: nowrap;
   font-size: 1.15rem;
-  border-color: #5ea78d;
-  border-color: #444;
-  border-color: #5e8de7ee;
   text-align: left;
   font-weight: bold;
   color: #575757;
-  /* width: fit-content; */
-  border-style: dashed;
+
+	border-radius: 5px;
+	border: 2px dashed #5e8de7ee;
   transition: border-style 1s;
 }
 
@@ -137,11 +107,7 @@
   display: inline;
 }
 
-.drag-drop span {
-}
-
 .drag-drop i {
-  /* color: #5ea78d; */
   color: #5e8de7ee;
   padding-left: 0.5em;
   padding-right: 0.25em;
@@ -152,13 +118,19 @@
   color: #5e8de7ee;
 }
 
-.modal-footer {
+/* Upload Footer */
+.upload-footer {
   display: flex;
   justify-content: center;
   align-items: center;
+
+	/* border-top: 1px solid #4442 !important; */
+	border-top: 1px solid #4442 !important;
+	padding-top: 1em;
+	width: 100%;
 }
 
-.modal-footer button {
+.upload-footer button {
   font-size: 1.5rem;
   font-weight: 500;
   border-width: 1px;
@@ -168,10 +140,12 @@
   border-color: #5e8de7;
   transition: 0.7s;
   border-radius: 5px;
+	margin: auto;
   margin-bottom: 0.35em;
+	width: fit-content;
 }
 
-.modal-footer button:hover {
+.upload-footer button:hover {
   color: #f7f7f7;
   background-color: #5e8de7;
   border-radius: 10px;
@@ -246,7 +220,7 @@
   transform: translate(-50%, -50%);
 }
 
-.modal-header button.close {
+.upload-header button.close {
   outline: none !important;
   border: none !important;
   transition: transform 1.2s ease-in-out;
@@ -257,7 +231,7 @@
 }
 
 /* Rotate the .modal button.close 360 degrees on hover */
-.modal-header button.close:hover {
+.upload-header button.close:hover {
   /* transform: rotate(360deg); */
   /* transform: rotate(-360deg); */
   transform: rotate(-68deg);

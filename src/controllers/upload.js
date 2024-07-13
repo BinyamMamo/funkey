@@ -1,6 +1,6 @@
-const multer = require('multer');
+const fs = require('fs');
 const path = require('path');
-
+const multer = require('multer');
 const { urlFor } = require('../utils/helpers');
 
 const renderUpload = async (req, res) => {
@@ -51,19 +51,32 @@ const postupload = async (req, res) => {
       return res.status(400).json({ error: 'Invalid file type.' });
     }
 
-    // Respond with success message
-		console.log('dirname', __dirname);
-		// req.file.path = path.join(__dirname, `../../${req.file.path}`);
-		console.log('req.file.path:', req.file.path);
-    res.status(200).json(req.file);
+    res.status(200).json({...req.file, message: 'uploaded succesfully!'});
   } catch (error) {
     console.error('Error handling file upload:', error);
     res.status(500).json({ error: 'Internal server error.' });
   }
 };
 
+const deleteUpload = async (req, res) => {
+	try {
+		let filePath = req.body.filePath || null;
+
+		if (!filePath) {
+			res.status(400).json({message: 'Deletion not successful!'})
+			throw new Error('Deletion not successful!');
+		}
+
+		fs.unlinkSync(filePath);
+		res.status(200).json({message: 'Succesfully deleted!'});
+	} catch(err) {
+		console.error(err);
+	}
+}
+
 module.exports = {
   renderUpload,
+	deleteUpload,
 	postupload,
 	upload,
 };
