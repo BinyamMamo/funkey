@@ -1,52 +1,57 @@
 // TODO -- THINK ABOUT ADDING A FLAG TO CHECK IF LYRICS IS LOADED BEFORE PLAYING THE MUSIC
 //      -- check if the music has started playing before allowing the user to type
 // let DEFAULT_TEXT = "Lorem ipsum dolor sit amet consectetur adipisicing elit";
-let DEFAULT_TEXT = "..."; // "♪"
+let DEFAULT_TEXT = '...'; // "♪"
 let textboxContent = DEFAULT_TEXT;
 const SPEED = 1;
 
-const WHITESPACE_OPTIONS = ["·", "&nbsp;", "_"];
+const WHITESPACE_OPTIONS = ['·', '&nbsp;', '_'];
 const WHITESPACE = WHITESPACE_OPTIONS[1];
 
-const EOL = "\n"; // <br>
+const EOL = '\n'; // <br>
 let lyrics = [];
-let TITLE = "";
+let TITLE = '';
 
-const vid = document.getElementById("music-video");
-const textbox = document.getElementById("lyrics-container");
-const wpm = document.getElementById("wpm");
+const vid = document.getElementById('music-video');
+const textbox = document.getElementById('lyrics-container');
+const wpm = document.getElementById('wpm');
 let wpm_array = [];
 
 let interval_id = null;
 
 $(document).ready(function () {
-  console.clear();
+  // console.clear();
 
   // loading();  // TODO: check if no need and remove it
-  $(".overlay-loader").show();
+  $('.overlay-loader').show();
+
+  // fetch('/uploads/lyrics.txt').then((res) => res.text()).then((res) => {
+  // 	console.log(res);
+  // })
 
   let ajax = new XMLHttpRequest();
 
   ajax.onreadystatechange = async function () {
     if (this.readyState == 4 && this.status == 200) {
-      console.log("connection stablished!");
+      console.log('connection stablished!');
 
       let response = this.responseText;
-      response = response.split("\n");
+      response = response.split('\n');
 
-      TITLE = response[0].split("(")[0];
+      console.log('response', response);
+      TITLE = response[0].split('(')[0];
 
       for (let i = 1; i < response.length; i++) {
         let id = response[i];
         i++;
 
         let stamp = response[i];
-        stamp = stamp.split(" --> ")[0];
+        stamp = stamp.split(' --> ')[0];
         i++;
 
-        let verse = "";
-        while (response[i] != "") {
-          verse += response[i];
+        let verse = '';
+        while (response[i] != '') {
+          verse += response[i] || '';
           verse += EOL;
           i++;
         }
@@ -60,20 +65,28 @@ $(document).ready(function () {
 
       let line = TITLE; // TODO = TITLE
       fillTextBox(line);
-      $("#play").show();
+      $('#play').show();
 
       console.log(lyrics);
     }
   };
 
-  ajax.open("GET", "shorter_lyrics.txt", true);
+  let lyricsUrl = $('.whole-body').find('input[type="hidden"]').val();
+  // lyricsUrl = lyricsUrl || "/uploads/lyrics.txt";
+  console.log('lyricsUrl', lyricsUrl);
+  ajax.open('GET', `/${lyricsUrl}`, true);
   ajax.send();
 });
 
-function playMusic() {
-  $(".lyrics-container").show();
-  $(".keyboard-container").show();
-  $(".overlay-loader").hide();
+function playMusic(btn) {
+  let musicId = btn.dataset.id;
+  fetch(`/update/views/${musicId}`, {
+    method: 'PUT',
+  });
+
+  $('.lyrics-container').show();
+  $('.keyboard-container').show();
+  $('.overlay-loader').hide();
   begin_music();
 }
 
@@ -91,44 +104,44 @@ function fillTextBox(line) {
   line = parse(line);
   line = easy(line);
   textboxContent = line;
-  textboxContent = textboxContent.replace(/\n/g, "<br>");
-  textbox.innerHTML = "";
+  textboxContent = textboxContent.replace(/\n/g, '<br>');
+  textbox.innerHTML = '';
 
   for (let i = 0; i < line.length; i++) {
-    let char = document.createElement("char");
-    if (i == cursor) char.classList = ["char cursor"];
-    else char.classList = ["char"];
+    let char = document.createElement('char');
+    if (i == cursor) char.classList = ['char cursor'];
+    else char.classList = ['char'];
 
-    if (line[i] != "\n") {
-      char.innerHTML = line[i] == " " ? WHITESPACE : line[i];
+    if (line[i] != '\n') {
+      char.innerHTML = line[i] == ' ' ? WHITESPACE : line[i];
       textbox.appendChild(char);
-    } else textbox.appendChild(document.createElement("br"));
+    } else textbox.appendChild(document.createElement('br'));
   }
   // let curr = document.getElementsByClassName("cursor")[0];
   // curr.classList.remove("cursor");
   if (textbox.childNodes.length > 0)
-    textbox.childNodes[0].classList.add("cursor");
+    textbox.childNodes[0].classList.add('cursor');
   // console.log(textbox.childNodes[0])
 }
 
 let previous_time = 0;
 let finished = false;
-document.addEventListener("keypress", (ev) => {
+document.addEventListener('keypress', (ev) => {
   // console.log(ev.key, cursor, textboxContent, ev.key == textboxContent[cursor]);
   // console.log("textboxContent: ", textboxContent.charAt(0), " dsfsdfsd");
   if (cursor >= textboxContent.length) {
     // console.log(textboxContent.split(" ").length," ", time);
-    console.log("FINISHED!!!");
+    console.log('FINISHED!!!');
   } else if (ev.key == textboxContent[cursor]) {
-    let curr = document.getElementsByClassName("cursor")[0];
-    curr.classList.remove("cursor");
-    curr.classList.add("done");
+    let curr = document.getElementsByClassName('cursor')[0];
+    curr.classList.remove('cursor');
+    curr.classList.add('done');
     if (curr.nextElementSibling) {
-      curr.nextElementSibling.classList.add("cursor");
+      curr.nextElementSibling.classList.add('cursor');
       // console.log(curr);
       cursor += 1;
     } else {
-      console.log("FINISHED!!!");
+      console.log('FINISHED!!!');
       update_wpm();
       finished = true;
     }
@@ -143,9 +156,9 @@ function update_wpm() {
   wpm_count *= 60000;
   wpm_count /= 5;
 
-  console.log("cursor", cursor);
-  console.log("time", time);
-  console.log("prev time", previous_time);
+  console.log('cursor', cursor);
+  console.log('time', time);
+  console.log('prev time', previous_time);
   console.log(wpm_count);
   previous_time = time;
 
@@ -156,17 +169,17 @@ function update_wpm() {
 
 function parse(line) {
   // line = line.replace(/\n/g, "newlinenewlinenewline");
-  line = line.replace(/\n/g, " ");
-  line = line.replace(/^ /, "");
-  line = line.replace(/ $/, "");
+  line = line.replace(/\n/g, ' ');
+  line = line.replace(/^ /, '');
+  line = line.replace(/ $/, '');
 
   return line;
 }
 
 function easy(line) {
   line = line.toLowerCase();
-  line = line.replace(/[^(a-z| |\n)]/g, ""); // couldn't inlcude braces ()
-  line = line.replace(/ +/g, " ");
+  line = line.replace(/[^(a-z| |\n)]/g, ''); // couldn't inlcude braces ()
+  line = line.replace(/ +/g, ' ');
 
   return line;
 }
@@ -174,18 +187,18 @@ function easy(line) {
 let time = 0;
 let curr = 0;
 function timer() {
-  const time_cont = document.getElementById("timer");
+  const time_cont = document.getElementById('timer');
 
   sec = time / 1000;
   min = Math.floor(sec / 60);
-  let output = "";
+  let output = '';
 
   sec = sec % 60;
 
   if (min < 10) output += `0${min}`;
   else output += `${min}`;
 
-  output += ":";
+  output += ':';
 
   if (sec < 10) output += `0${Math.floor(sec)}`;
   else output += `${Math.floor(sec)}`;
@@ -193,30 +206,32 @@ function timer() {
   let stamp = null;
   if (curr + 1 < lyrics.length) stamp = lyrics[curr + 1].stamp;
   else {
-    console.log("FINALLY WE HAVE FINISHED");
+    console.log('FINALLY WE HAVE FINISHED');
+		$('.keyboard-container').hide();
+		$('.ratings-parent').show();
     let averagey =
       wpm_array.reduce(
         (accumulator, currentValue) =>
           accumulator + (isNaN(currentValue) ? 0 : currentValue),
         0
       ) / wpm_array.length;
-    console.log("Average wpm:", averagey);
+    console.log('Average wpm:', averagey);
     fillTextBox(averagey.toString());
     // container.innerHTML = `WPM: ${averagey}`;
     clearInterval(interval_id);
     return;
   }
-  stamp = stamp.split(":");
+  stamp = stamp.split(':');
 
   let lyrics_time = parseInt(stamp[0] * 3600);
   lyrics_time += parseInt(stamp[1] * 60);
   lyrics_time *= 1000;
-  lyrics_time += parseInt(stamp[2].replace(",", ""));
+  lyrics_time += parseInt(stamp[2].replace(',', ''));
 
   if (time + 1500 * SPEED > lyrics_time) {
     curr++;
     if (curr >= lyrics.length) {
-      console.log("Finished!"); // FInal Finish
+      console.log('Finished!'); // FInal Finish
       const average =
         wpm_array.reduce(
           (accumulator, currentValue) => accumulator + currentValue,
@@ -228,7 +243,7 @@ function timer() {
       // console.log(line);
 
       if (!finished) {
-        console.log("reached here: final");
+        console.log('reached here: final');
         update_wpm();
       }
       finished = false;

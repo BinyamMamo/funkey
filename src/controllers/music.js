@@ -37,14 +37,22 @@ const uploadMusic = async (req, res) => {
     let musicByTitle = await Music.findOne({ title });
     if (musicByTitle) {
       let musicByArtist = await Music.findOne({ artist });
-			if (public && musicByArtist && JSON.stringify(musicByArtist) == JSON.stringify(musicByTitle)) {
-				res.status(400).json({message: 'Music with the same artist and title exists in db'});  // TODO: CHANGE THE STATUS CODE
-				throw new Error('Music with the same artist and title exists in db');
-			}
-			console.log('musicByArtist:', JSON.stringify(musicByArtist));
+      if (
+        public &&
+        musicByArtist &&
+        JSON.stringify(musicByArtist) == JSON.stringify(musicByTitle)
+      ) {
+        res
+          .status(400)
+          .json({
+            message: 'Music with the same artist and title exists in db',
+          }); // TODO: CHANGE THE STATUS CODE
+        throw new Error('Music with the same artist and title exists in db');
+      }
+      console.log('musicByArtist:', JSON.stringify(musicByArtist));
     }
 
-		let music = new Music({
+    let music = new Music({
       artist,
       title,
       video,
@@ -102,9 +110,9 @@ const deleteMusic = async (req, res) => {
       throw new Error('music not found');
     }
 
-		// remove video and lyrics files from server
-		fs.unlinkSync(music.video);
-		fs.unlinkSync(music.lyrics);
+    // remove video and lyrics files from server
+    fs.unlinkSync(music.video);
+    fs.unlinkSync(music.lyrics);
 
     res.status(200).json({
       message: `'${music.title}' by ${music.artist} is deleted succesfully!`,
@@ -115,9 +123,56 @@ const deleteMusic = async (req, res) => {
   }
 };
 
+const updateViews = async (req, res) => {
+  try {
+    let musicId = req.params.musicId || null;
+
+    let music = await Music.findById(musicId);
+    if (!music) {
+      res.status(400).json({ message: 'Music not fOund!' });
+      throw new Error('Music not fOund!');
+    }
+
+		await music.updateOne({ $inc: { views: 1 } });
+		res.json({message: 'succesffuly updated views'});
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+const updateRating = async (req, res) => {
+	try {
+		let musicId = req.body.musicId || null;
+		let rating = req.body.rating || null;
+		console.log('updating rating...');
+		console.log('music id', musicId);
+		let music = await Music.findById(musicId);
+		console.log('HERE');
+    if (!music) {
+      res.status(400).json({ message: 'Music not fOund!' });
+      throw new Error('Music not found!');
+    }
+
+		// think about saving the rating on the user side
+		if (rating) {
+			console.log('give rating:', rating);
+			console.log('before rating:', music.rating);
+			music.rating = (parseFloat(rating) + parseFloat(music.rating)) / 2;
+			await music.save();
+			console.log('after rating:', music.rating);
+		} else console.log('invalid rating');
+
+		res.json({message: 'succesffuly updated rating'});
+	} catch (err) {
+		console.error('error message', err.messsage);
+	}
+}
+
 module.exports = {
   getMusics,
   uploadMusic,
   renderMusic,
   deleteMusic,
+	updateViews,
+	updateRating,
 };

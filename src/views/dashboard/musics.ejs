@@ -77,6 +77,8 @@
 							<th scope="col">#</th>
 							<th scope="col">Music Title</th>
 							<th scope="col">Artist Name</th>
+							<th scope="col">Rating</th>
+							<th scope="col">Views</th>
 							<th scope="col">Music Video</th>
 							<th scope="col">Lyrics</th>
 							<th scope="col">Thumbnail</th>
@@ -96,6 +98,12 @@
 										</td>
 										<td>
 											<%= music.artist %>
+										</td>
+										<td>
+											<%= music.rating.toFixed(2) %>
+										</td>
+										<td>
+											<%= music.views %>
 										</td>
 										<td>
 											<a href="/<%= music.video %>">

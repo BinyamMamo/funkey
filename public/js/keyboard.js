@@ -1,5 +1,4 @@
 $(document).ready(function () {
-	console.log("hey I am ready");
 	let pressedKey = null;
 
 	$(document).on('keydown', function(event) {
@@ -19,5 +18,4 @@ $(document).ready(function () {
 			$(".keys").css("font-size", "var(--keyboard-size)");
 		}, 300);
 	});
-	
 });
