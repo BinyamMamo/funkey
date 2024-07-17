@@ -1,0 +1,85 @@
+<div class="modal-dialog">
+	<form class="modal-content levels-form">
+		<div class="modal-header border-secondary">
+			<h5 class="modal-title" id="levelsModalLabel">Play Music</h5>
+			<!-- <h5 class="modal-title">Select Level</h5> -->
+			<i onclick="$('.levels-modal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
+				data-bs-dismiss="modal" aria-label="Close"></i>
+			<!-- <i onclick="$('.levels-modal').hide()" class="bi bi-x-octagon text-danger" type="button" data-bs-dismiss="modal" aria-label="Close"></i> -->
+		</div>
+		<div class="modal-body border-dark">
+			<div class="level-selector-container">
+				<div class="thumbnail-img-container">
+					<div class="thumbnail-img-overlay" onclick="$(this).find('i').toggleClass('far fas');">
+						<i class="far fa-heart"></i>
+					</div>
+					<!-- <i class="fas fa-heart text-danger liked"></i> -->
+					<img class="thumbnail-img"
+						src="https://external-preview.redd.it/b5R5gXGYfBVWVIppxnX5T0Bdtt1hJSK7XnUN6ypf_9s.jpg?width=640&crop=smart&auto=webp&s=eb12b986353e8b1bf2bfa6c8928707d8194dfc06"
+						alt="">
+				</div>
+				<div class="level-selector-title">Ed Sheeran - Perfect</div>
+				<!-- Select Level -->
+				<div class="btn-group btn-group-toggle level-buttons" data-toggle="buttons">
+					<label class="btn btn-outline-success brand-bg" data-level="easy">
+						<input type="radio" name="options" autocomplete="off" style="display: none;"> Easy
+					</label>
+					<label class="btn btn-outline-warning brand-bg" data-level="medium">
+						<input type="radio" name="options" autocomplete="off" style="display: none;"> Medium
+					</label>
+					<label class="btn btn-outline-danger brand-bg" data-level="hard">
+						<input type="radio" name="options" autocomplete="off" style="display: none;"> Hard
+					</label>
+					<label class="btn btn-outline-secondary brand-bg custom-btn" data-level="custom" id="customBtn">
+						<input type="radio" name="options" autocomplete="off" style="display: none;"> Custom
+					</label>
+				</div>
+
+				<!-- Custom Options -->
+				<div class="custom-options border border-secondary" id="customOptions" style="display: none;">
+					<div class="form-check">
+						<label class="form-check-label" for="customOption1">Capital Letters</label>
+						<input name="capital-letters" class="form-check-input" type="checkbox" id="customOption1">
+					</div>
+					<div class="form-check">
+						<label class="form-check-label" for="customOption2">Punctuation marks</label>
+						<input name="Punctuation" class="form-check-input" type="checkbox" id="customOption2">
+					</div>
+					<div class="form-check">
+						<label class="form-check-label" for="customOption3">Double spaces</label>
+						<input class="form-check-input" type="checkbox" id="customOption3">
+					</div>
+					<div class="form-check">
+						<label class="form-check-label" for="customOption4">Speed</label>
+						<select class="form-select" name="speed" aria-label="Default select example">
+							<option value="1">0.25</option>
+							<option value="2">0.5</option>
+							<option value="3">0.75</option>
+							<option selected>1.0</option>
+							<option value="1">1.25</option>
+							<option value="2">1.5</option>
+							<option value="3">1.75</option>
+							<option value="3">2.0</option>
+						</select>
+					</div>
+				</div>
+
+				<!-- Begin Button -->
+				<div style="display: block; width: 100%;">
+					<!-- <button id="start" class="btn btn-outline-info btn-lg mt-3 align-middle" style="display: none;" onclick="start()">BEGIN</button> -->
+					<img class="level-img" src="" alt="" style="display: none;" width="1px">
+					<!-- <button id="start" class="btn btn-lg mt-3 align-middle" style="display: none;" onclick="start()">
+						BEGIN
+					</button> -->
+				</div>
+			</div>
+		</div>
+		<!-- <div class="modal-footer border-secondary"> -->
+		<div class="modal-footer border-0">
+			<!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+			<!-- <button type="button" class="btn btn-primary">Play</button> -->
+			<button id="start" type="submit" class="btn btn-primary btn-lg">Play</button>
+		</div>
+		<input type="hidden" name="music" value="">
+	</form>
+</div>

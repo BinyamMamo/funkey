@@ -21,9 +21,9 @@
 
 	<header>
 		<div class="top-left">
-			<img class="logo" src="/assets/images/logo.png">
+			<img onclick="location.href='/'" class="logo" src="/assets/images/logo.png">
 			<button class="btn btn-outline-light" id="timer">00:00</button>
-			<button class="btn btn-outline-light" id="wpm">60WPM</button>
+			<!-- <button class="btn btn-outline-light" id="wpm">60WPM</button> -->
 		</div>
 	</header>
 
@@ -61,6 +61,10 @@
 	<div class="ratings-parent" style="display: none;">
 		<%- include('rating.ejs') %>
 	</div>
+	
+	<div class="stats-container" style="display: none">
+		<%- include('stats.ejs') %>
+	</div>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
@@ -91,6 +95,10 @@
 					body: JSON.stringify({ rating, musicId: '<%= music._id%>' })
 				});
 				$('.ratings-parent').hide();
+				$('.stats-container').find('.close-stats').hide();
+				$('.stats-container').find('.favor').show();
+				$('.stats-container').find('.replay').show();
+				$('.stats-container').show();
 			})
 		});
 	</script>

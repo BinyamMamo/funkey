@@ -195,9 +195,10 @@ p {
 }
 
 .main-border-button a:hover {
-  border-color: #fff;
-  background-color: #fff;
-  color: var(--brand-color);
+  /* border-color: #fff; */
+  background-color: var(--brand-color-2);
+  color: #f7f7f7;
+	opacity: 0.9;
 }
 
 .border-no-active a {
@@ -376,31 +377,8 @@ Header Style
   background-color: transparent;
 } */
 
-.header-area .main-nav #search {
-  position: relative;
-}
-
-.header-area .main-nav #search input {
-  background-color: #27292a;
-  height: 46px;
-  border-radius: 23px;
-  border: none;
-  color: #666;
-  font-size: 14px;
-  padding: 0px 15px 0px 45px;
-}
-
-.header-area .main-nav #search i {
-  position: absolute;
-  color: #666;
-  left: 20px;
-  top: 16px;
-  width: 18px;
-  height: 18px;
-  font-size: 16px;
-}
-
 .header-area .main-nav .nav {
+	flex-shrink: 0;
   display: inline-flex;
   justify-content: flex-end;
   vertical-align: middle;
