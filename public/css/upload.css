@@ -14,7 +14,7 @@
 	justify-content: center;
 	align-items: center;
 }
-
+/* 
 .upload-header {
 	text-align: center;
 	display: block;
@@ -22,15 +22,15 @@
 	position: relative;
 	background-color: #f8f9fa;
 	padding: 1em 0.5em;
-}
+} */
 
-.upload-title {
+/* .upload-title {
 	display: block;
 	position: relative;
   font-size: 1.75rem;
   font-weight: 700;
   padding-left: 0.5em;
-}
+} */
 
 .upload-body {
 	/* background-color: #2ecc71; */
@@ -52,8 +52,27 @@
 }
 
 .input-group input {
+	background-color: #1f2122;
+	border-color: #27292a;
   padding: 1.25em 1em;
   outline: none !important;
+	color: #eee4;
+	color: #eee7;
+}
+
+.input-group input:focus {
+	/* background-color: #1f2122; */
+	background-color: #27292a;
+	border-color: #27292a;
+	outline: none;
+	border: none;
+	color: #eeea;
+}
+
+.input-group input:not(:empty) {
+	/* background-color: #1f2122; */
+	background-color: #27292a;
+	border-color: #27292a;
 }
 
 .input-group input:hover {
@@ -77,7 +96,7 @@
 }
 
 .left-side img {
-	width: 15rem;
+	width: 15rem !important;
   border-radius: 25px;
 }
 
@@ -95,11 +114,13 @@
   text-wrap: nowrap;
   font-size: 1.15rem;
   text-align: left;
-  font-weight: bold;
+  /* font-weight: bold; */
   color: #575757;
+  color: #eee9;
 
 	border-radius: 5px;
 	border: 2px dashed #5e8de7ee;
+	border: 2px dashed #2e71cc22;
   transition: border-style 1s;
 }
 
@@ -109,13 +130,24 @@
 
 .drag-drop i {
   color: #5e8de7ee;
+  color: #5e8de799;
+  color: #2e71ccbb;
   padding-left: 0.5em;
   padding-right: 0.25em;
   font-size: 1.35rem;
 }
 
 .drag-drop span a {
-  color: #5e8de7ee;
+	color: #5e8de7ee;
+  color: #5e8de799;
+  color: #2e71ccbb;
+	/* font-weight: 500; */
+	transition: font-weight 0.25s ease;
+}
+
+.drag-drop span a:hover {
+	color: #2e71cc99;
+	font-weight: bold;
 }
 
 /* Upload Footer */
@@ -134,10 +166,10 @@
   font-size: 1.5rem;
   font-weight: 500;
   border-width: 1px;
-  color: #5e8de7;
-
+  color: #5e8de7 !important;
+  border-color: #5e8de7 !important;
+	
   background-color: transparent;
-  border-color: #5e8de7;
   transition: 0.7s;
   border-radius: 5px;
 	margin: auto;
@@ -146,8 +178,10 @@
 }
 
 .upload-footer button:hover {
-  color: #f7f7f7;
-  background-color: #5e8de7;
+  /* color: #5e8de7 !important; */
+  background-color: #5e8de7 !important;
+  color: #f7f7f7 !important;
+  /* background-color: #5e8de7; */
   border-radius: 10px;
   border-color: transparent;
 }
@@ -161,7 +195,7 @@
   margin-top: 0.5em;
 }
 
-.play-icon-container {
+.upload-icon {
   /* display: none; */
   /* visibility: none; */
   border-radius: 23px;
@@ -179,11 +213,11 @@
   transition: 1s opacity;
 }
 
-.play-icon-container:hover {
+.upload-icon:hover {
   opacity: 1;
 }
 
-.play-icon-container i {
+.upload-icon i {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -195,29 +229,16 @@
   text-shadow: #4447 3px 3px;
 }
 
-.thumbnail {
-  /* background-color: red; */
+.uploaded-thumbnail {
+  position: relative;
   background-image: url('https://tse2.mm.bing.net/th?id=OIG2.5dM5XXn27bsOWSTcjIWe&pid=ImgGn');
+  background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
-  background-repeat: no-repeat;
-  position: relative;
-  /* height: 12rem; */
-  /* height: 12rem; */
+
   width: 15rem;
   height: 15rem;
   border-radius: 23px;
-  /* background-color: red; */
-  overflow: hidden;
-}
-
-.thumbnail img {
-  /* min-height: 100%;
-	min-width: 100%; */
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .upload-header button.close {
@@ -248,7 +269,7 @@
   margin-top: 15px;
   position: relative;
   height: 20px;
-  background-color: #e7e7e7;
+  background-color: transparent;
 }
 
 .progress-bar {
@@ -257,6 +278,7 @@
   height: 100%;
   background-color: #2ecc71;
   border-radius: 5px;
+  border-radius: 7px;
   transition: width 0.3s;
 }
 
@@ -268,6 +290,7 @@
   text-align: center;
   transform: translateX(-50%);
   color: #333;
+  color: #1f2122;
   font-size: 14px;
 }
 
@@ -283,6 +306,7 @@
   font-family: 'Poppins', sans-serif;
   color: #555;
   color: #2e71ccbb;
+  color: #2e71ccbb;
   font-weight: 500;
   /* font-style: italic; */
   /* flex-basis: 90%; */
@@ -293,9 +317,13 @@
   margin-right: 0.25em;
 }
 
-.file-details button {
+.file-details .cancel-upload {
   width: 10%;
   text-align: right;
+}
+
+.file-details .cancel-upload:hover i {
+  color: #2e71cc88;
 }
 
 .dropzone-inactive {

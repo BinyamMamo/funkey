@@ -2,14 +2,22 @@ $(document).ready(function () {
   $('input[name="artist"]').on('input', function () {
     const value = $(this).val();
     const output = $('.artist-music-name span');
-    output[0].innerHTML = value;
+		output[0].innerHTML = value;
+		
+    if (output.text().length < 25)
+			output[1].innerHTML = ' - ';
+		else output[1].innerHTML = '<br>';
     if (value == '') output[0].innerHTML = 'Unkown';
   });
 
   $('input[name="title"]').on('input', function () {
     const value = $(this).val();
     const output = $('.artist-music-name span');
-    output[1].innerHTML = value;
+		output[2].innerHTML = value;
+
+    if (output.text().length < 25)
+			output[1].innerHTML = ' - ';
+    else output[1].innerHTML = '<br>';
     if (value == '') output[1].innerHTML = 'Track';
   });
 
@@ -21,7 +29,7 @@ $(document).ready(function () {
       });
   });
 
-  $('.thumbnail').click(function (e) {
+  $('.uploaded-thumbnail').click(function (e) {
     e.preventDefault();
     $('#thumbnail-upload').trigger('click');
   });
@@ -172,7 +180,7 @@ $(document).ready(function () {
   }
 
   function handleProgress(element, percentComplete) {
-    if (!$(element).is('.thumbnail')) {
+    if (!$(element).is('.uploaded-thumbnail')) {
       const progressContainer = $(element).find('.progress-container');
       const progressBar = $(element).find('.progress-bar');
       const percentDisplay = $(element).find('.progress-text');
@@ -189,9 +197,9 @@ $(document).ready(function () {
 
     const hiddenInput = $(element).find('input[type="hidden"]');
     hiddenInput.val(file.path);
-    if ($(element).is('.thumbnail')) {
-      // $('.thumbnail').css('background-image', `url('${file.path}')`);
-      $('.thumbnail').css('background-image', `url('/${file.path}')`);
+    if ($(element).is('.uploaded-thumbnail')) {
+      // $('.uploaded-thumbnail').css('background-image', `url('${file.path}')`);
+      $('.uploaded-thumbnail').css('background-image', `url('/${file.path}')`);
       toastSuccess('Thumbnail uploaded successfully!');
     } else {
       toastSuccess(`${type} uploaded successfully!`);
@@ -199,7 +207,7 @@ $(document).ready(function () {
       const fileDetails = $(element).find('.file-details');
       const fileName = $(element).find('.file-name');
       const progressContainer = $(element).find('.progress-container');
-      const closeBtn = $(element).find('button.close');
+      const closeBtn = $(element).find('.cancel-upload');
 
       closeBtn.css('color', 'red');
       closeBtn.click(function (e) {

@@ -29,6 +29,14 @@ router.get('/', async (req, res) => {
 	let musics = await Music.find();
 	console.log(musics);
   res.render('home', { musics, avatar: null });
+  // res.render('home', { musics, avatar: null });
+});
+
+router.get('/browse', async (req, res) => {
+	let musics = await Music.find();
+	console.log(musics);
+  res.render('browse', { musics, avatar: null });
+  // res.render('home', { musics, avatar: null });
 });
 
 // router.get('/', async (req, res) => {
