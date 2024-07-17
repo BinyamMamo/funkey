@@ -1,0 +1,39 @@
+.logo {
+  padding: 2rem;
+}
+
+.container {
+}
+
+.practice-text {
+  font-family: 'Edu AU VIC WA NT Hand', cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	opacity: 0.9;
+	/* color: #fff; */
+	/* mix-blend-mode: difference; */
+}
+
+*::-webkit-scrollbar {
+	color: transparent;
+	width: 20px;
+}
+
+*::-webkit-scrollbar-track {
+	color: transparent;
+	border-radius: 8px;
+	background-image: url("https://i.ibb.co/5150925/tracks.png");
+	background-position: -5px;
+	background-repeat: repeat-y;
+	background-size: 50px;
+}
+
+*::-webkit-scrollbar-thumb {
+	color: transparent;
+    border-radius: 8px;
+  background-image: url("https://i.ibb.co/q95CBdZ/train.png");
+    background-position:center center;
+    background-repeat: no-repeat;
+    background-size: 35px;
+}
