@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const routes = require('./routes/routes');
-const fakeRoute = require('./routes/faker');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error_handler');
 const notFoundHandler = require('./middleware/notFoundHandler');
@@ -31,7 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
 app.use(routes);
-app.use(fakeRoute);
 
 // Example route that throws an error
 app.get('/error', (req, res) => {
