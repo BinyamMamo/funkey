@@ -14,6 +14,10 @@ router.get('/', async (req, res) => {
   // res.render('home', { musics, avatar: null });
 });
 
+router.get('/practice', async (req, res) => {
+  res.render('practice/practice');
+});
+
 // router.get('/', async (req, res) => {
 //   let avatar = null;
 //   if (req.session.userId) {

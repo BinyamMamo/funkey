@@ -38,6 +38,92 @@
 	<link rel="shortcut icon" href="assets/icon/logo.ico" type="image/x-icon">
 	<!-- <link rel="icon" type="" sizes="32x32" href="assets/icon/logo.ico"> -->
 
+	<style>
+		.practice-typing-video-container {
+			opacity: 0.95;
+			display: block;
+			margin: auto;
+			width: 100%;
+			margin-top: 50px;
+			border-radius: 23px;
+			position: relative;
+			z-index: 1000;
+		}
+
+		.practice-typing-video {
+			width: 100%;
+			border-radius: inherit;
+			z-index: 1001;
+		}
+
+		.practice-typing-video-overlay {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: #1114;
+			opacity: 0;
+			z-index: 100000;
+			transition: 1s ease;
+		}
+
+		.practice-typing-video-overlay:hover {
+			opacity: 0.9;
+		}
+
+		.practice-typing-video-overlay h1 {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+
+			font-size: 1.5rem;
+			opacity: 0.95;
+			cursor: pointer;
+			transition: font-weight 0.25s ease;
+		}
+
+		.practice-typing-video-overlay h1:hover {
+			font-weight: bold;
+		}
+
+		.video-label {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 100%;
+			height: 100%;
+
+			vertical-align: middle;
+			transform: translate(-50%, -50%);
+
+			text-shadow: 2px 2px 4px #1114;
+			font-size: 1.5rem;
+			opacity: 0.9;
+			text-align: center;
+			padding-top: 0.5em;
+		}
+
+		.practice-typing-video:hover>.video-label {
+			opacity: 0;
+		}
+
+		.toggle-video-volume {
+			display: block;
+			position: absolute;
+			right: 1.25em;
+			top: 1.25em;
+
+			color: #f7f7f7;
+			font-size: 1rem;
+			cursor: pointer;
+			z-index: 1000000;
+		}
+
+		.toggle-video-volume:hover {
+			color: #eee;
+		}
+	</style>
+
 </head>
 
 <body>
@@ -59,7 +145,7 @@
 	<header class="header-area header-sticky">
 		<nav class="main-nav">
 			<!-- ***** Logo Start ***** -->
-			<div href="/" class="logo">
+			<div onclick="location.href='/'" class="logo" style="cursor: pointer;" class="logo">
 				<img src="assets/images/logo.png" alt="">
 				<h4 class="logo-header">
 					FunKey
@@ -79,7 +165,7 @@
 			<ul class="nav">
 				<li><a href="/" class="active">Home</a></li>
 				<li><a href="/browse">Browse</a></li>
-				<li><a href="details.html">Details</a></li>
+				<li><a href="/practice">Practice</a></li>
 				<li><a href="match.html">Match</a></li>
 				<% if (!avatar) { %>
 					<li><a href="/login" class="active">Login</a></li>
@@ -185,303 +271,244 @@
 					<!-- ***** Most Popular End ***** -->
 
 					<!-- ***** Gaming Library Start ***** -->
-					<div class="gaming-library">
-						<div class="col-lg-12">
-							<div class="heading-section">
-								<h4><em>Your Gaming</em> Library</h4>
-							</div>
-							<div class="item">
-								<ul>
-									<li><img src="assets/images/game-01.jpg" alt="" class="templatemo-item"></li>
-									<li>
-										<h4>Dota 2</h4><span>Sandbox</span>
-									</li>
-									<li>
-										<h4>Date Added</h4><span>24/08/2036</span>
-									</li>
-									<li>
-										<h4>Hours Played</h4><span>634 H 22 Mins</span>
-									</li>
-									<li>
-										<h4>Currently</h4><span>Downloaded</span>
-									</li>
-									<li>
-										<div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div>
-									</li>
-								</ul>
-							</div>
-							<div class="item">
-								<ul>
-									<li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
-									<li>
-										<h4>Fortnite</h4><span>Sandbox</span>
-									</li>
-									<li>
-										<h4>Date Added</h4><span>22/06/2036</span>
-									</li>
-									<li>
-										<h4>Hours Played</h4><span>740 H 52 Mins</span>
-									</li>
-									<li>
-										<h4>Currently</h4><span>Downloaded</span>
-									</li>
-									<li>
-										<div class="main-border-button"><a href="#">Donwload</a></div>
-									</li>
-								</ul>
-							</div>
-							<div class="item last-item">
-								<ul>
-									<li><img src="assets/images/game-03.jpg" alt="" class="templatemo-item"></li>
-									<li>
-										<h4>CS-GO</h4><span>Sandbox</span>
-									</li>
-									<li>
-										<h4>Date Added</h4><span>21/04/2036</span>
-									</li>
-									<li>
-										<h4>Hours Played</h4><span>892 H 14 Mins</span>
-									</li>
-									<li>
-										<h4>Currently</h4><span>Downloaded</span>
-									</li>
-									<li>
-										<div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div>
-									</li>
-								</ul>
-							</div>
+					<div class="practice-typing-video-container">
+						<h1 class="video-label">Practice typing with AI generated content.</h1>
+						<i class="fas fa-volume-mute toggle-video-volume"
+							onclick="$(this).toggleClass('fa-volume-mute fa-volume-up'); 
+											 $('.practice-typing-video').prop('muted',
+											 !$('.practice-typing-video').prop('muted'));"></i>
+						<div class="practice-typing-video-overlay">
+							<h1 class="btn btn-warning" onclick="location.href='/practice'"><i class="fas fa-keyboard"></i> Practice
+							</h1>
 						</div>
-						<div class="col-lg-12">
-							<div class="main-button">
-								<a href="profile.html">View Your Library</a>
-							</div>
-						</div>
+						<video class="practice-typing-video" width="90%" autoplay muted loop>
+							<source src="/assets/videos/practice-forest-bg.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
 					</div>
-					<!-- ***** Gaming Library End ***** -->
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved.
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved.
 
-						<br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>
-					</p>
+							<br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>
+						</p>
+					</div>
 				</div>
 			</div>
-		</div>
-	</footer>
+		</footer>
 
 
 
 
-	<!-- Modals -->
-	<div class="modal fade levels-modal" tabindex="-1" id="levelsModal" aria-labelledby="levelsModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog">
-			<form class="modal-content levels-form">
-				<div class="modal-header border-secondary">
-					<h5 class="modal-title" id="levelsModalLabel">Play Music</h5>
-					<!-- <h5 class="modal-title">Select Level</h5> -->
-					<i onclick="$('.levels-modal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
-						data-bs-dismiss="modal" aria-label="Close"></i>
-					<!-- <i onclick="$('.levels-modal').hide()" class="bi bi-x-octagon text-danger" type="button" data-bs-dismiss="modal" aria-label="Close"></i> -->
-				</div>
-				<div class="modal-body border-dark">
-					<div class="level-selector-container">
-						<img class="thumbnail-img"
-							src="https://external-preview.redd.it/b5R5gXGYfBVWVIppxnX5T0Bdtt1hJSK7XnUN6ypf_9s.jpg?width=640&crop=smart&auto=webp&s=eb12b986353e8b1bf2bfa6c8928707d8194dfc06"
-							alt="">
-						<div class="level-selector-title">Ed Sheeran - Perfect</div>
-						<!-- Select Level -->
-						<div class="btn-group btn-group-toggle level-buttons" data-toggle="buttons">
-							<label class="btn btn-outline-success brand-bg" data-level="easy">
-								<input type="radio" name="options" autocomplete="off" style="display: none;"> Easy
-							</label>
-							<label class="btn btn-outline-warning brand-bg" data-level="medium">
-								<input type="radio" name="options" autocomplete="off" style="display: none;"> Medium
-							</label>
-							<label class="btn btn-outline-danger brand-bg" data-level="hard">
-								<input type="radio" name="options" autocomplete="off" style="display: none;"> Hard
-							</label>
-							<label class="btn btn-outline-secondary brand-bg custom-btn" data-level="custom" id="customBtn">
-								<input type="radio" name="options" autocomplete="off" style="display: none;"> Custom
-							</label>
-						</div>
-
-						<!-- Custom Options -->
-						<div class="custom-options border border-secondary" id="customOptions" style="display: none;">
-							<div class="form-check">
-								<label class="form-check-label" for="customOption1">Capital Letters</label>
-								<input name="capital-letters" class="form-check-input" type="checkbox" id="customOption1">
+		<!-- Modals -->
+		<div class="modal fade levels-modal" tabindex="-1" id="levelsModal" aria-labelledby="levelsModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<form class="modal-content levels-form">
+					<div class="modal-header border-secondary">
+						<h5 class="modal-title" id="levelsModalLabel">Play Music</h5>
+						<!-- <h5 class="modal-title">Select Level</h5> -->
+						<i onclick="$('.levels-modal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
+							data-bs-dismiss="modal" aria-label="Close"></i>
+						<!-- <i onclick="$('.levels-modal').hide()" class="bi bi-x-octagon text-danger" type="button" data-bs-dismiss="modal" aria-label="Close"></i> -->
+					</div>
+					<div class="modal-body border-dark">
+						<div class="level-selector-container">
+							<img class="thumbnail-img"
+								src="https://external-preview.redd.it/b5R5gXGYfBVWVIppxnX5T0Bdtt1hJSK7XnUN6ypf_9s.jpg?width=640&crop=smart&auto=webp&s=eb12b986353e8b1bf2bfa6c8928707d8194dfc06"
+								alt="">
+							<div class="level-selector-title">Ed Sheeran - Perfect</div>
+							<!-- Select Level -->
+							<div class="btn-group btn-group-toggle level-buttons" data-toggle="buttons">
+								<label class="btn btn-outline-success brand-bg" data-level="easy">
+									<input type="radio" name="options" autocomplete="off" style="display: none;"> Easy
+								</label>
+								<label class="btn btn-outline-warning brand-bg" data-level="medium">
+									<input type="radio" name="options" autocomplete="off" style="display: none;"> Medium
+								</label>
+								<label class="btn btn-outline-danger brand-bg" data-level="hard">
+									<input type="radio" name="options" autocomplete="off" style="display: none;"> Hard
+								</label>
+								<label class="btn btn-outline-secondary brand-bg custom-btn" data-level="custom" id="customBtn">
+									<input type="radio" name="options" autocomplete="off" style="display: none;"> Custom
+								</label>
 							</div>
-							<div class="form-check">
-								<label class="form-check-label" for="customOption2">Punctuation marks</label>
-								<input name="Punctuation" class="form-check-input" type="checkbox" id="customOption2">
-							</div>
-							<div class="form-check">
-								<label class="form-check-label" for="customOption3">Double spaces</label>
-								<input class="form-check-input" type="checkbox" id="customOption3">
-							</div>
-							<div class="form-check">
-								<label class="form-check-label" for="customOption4">Speed</label>
-								<select class="form-select" name="speed" aria-label="Default select example">
-									<option value="1">0.25</option>
-									<option value="2">0.5</option>
-									<option value="3">0.75</option>
-									<option selected>1.0</option>
-									<option value="1">1.25</option>
-									<option value="2">1.5</option>
-									<option value="3">1.75</option>
-									<option value="3">2.0</option>
-								</select>
-							</div>
-						</div>
 
-						<!-- Begin Button -->
-						<div style="display: block; width: 100%;">
-							<!-- <button id="start" class="btn btn-outline-info btn-lg mt-3 align-middle" style="display: none;" onclick="start()">BEGIN</button> -->
-							<img class="level-img" src="" alt="" style="display: none;" width="1px">
-							<!-- <button id="start" class="btn btn-lg mt-3 align-middle" style="display: none;" onclick="start()">
+							<!-- Custom Options -->
+							<div class="custom-options border border-secondary" id="customOptions" style="display: none;">
+								<div class="form-check">
+									<label class="form-check-label" for="customOption1">Capital Letters</label>
+									<input name="capital-letters" class="form-check-input" type="checkbox" id="customOption1">
+								</div>
+								<div class="form-check">
+									<label class="form-check-label" for="customOption2">Punctuation marks</label>
+									<input name="Punctuation" class="form-check-input" type="checkbox" id="customOption2">
+								</div>
+								<div class="form-check">
+									<label class="form-check-label" for="customOption3">Double spaces</label>
+									<input class="form-check-input" type="checkbox" id="customOption3">
+								</div>
+								<div class="form-check">
+									<label class="form-check-label" for="customOption4">Speed</label>
+									<select class="form-select" name="speed" aria-label="Default select example">
+										<option value="1">0.25</option>
+										<option value="2">0.5</option>
+										<option value="3">0.75</option>
+										<option selected>1.0</option>
+										<option value="1">1.25</option>
+										<option value="2">1.5</option>
+										<option value="3">1.75</option>
+										<option value="3">2.0</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- Begin Button -->
+							<div style="display: block; width: 100%;">
+								<!-- <button id="start" class="btn btn-outline-info btn-lg mt-3 align-middle" style="display: none;" onclick="start()">BEGIN</button> -->
+								<img class="level-img" src="" alt="" style="display: none;" width="1px">
+								<!-- <button id="start" class="btn btn-lg mt-3 align-middle" style="display: none;" onclick="start()">
 								BEGIN
 							</button> -->
+							</div>
 						</div>
 					</div>
-				</div>
-				<!-- <div class="modal-footer border-secondary"> -->
-				<div class="modal-footer border-0">
-					<!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-					<!-- <button type="button" class="btn btn-primary">Play</button> -->
-					<button id="start" type="submit" class="btn btn-primary btn-lg">Play</button>
-				</div>
-				<input type="hidden" name="music" value="">
-			</form>
+					<!-- <div class="modal-footer border-secondary"> -->
+					<div class="modal-footer border-0">
+						<!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+						<!-- <button type="button" class="btn btn-primary">Play</button> -->
+						<button id="start" type="submit" class="btn btn-primary btn-lg">Play</button>
+					</div>
+					<input type="hidden" name="music" value="">
+				</form>
+			</div>
 		</div>
-	</div>
 
-	<!-- Modals 2 -->
-	<div class="modal fade upload-modal" tabindex="-1" id="uploadModal" aria-labelledby="uploadModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog">
-			<form class="modal-content">
-				<div class="modal-header border-secondary">
-					<h5 class="modal-title" id="levelsModalLabel">Play Music</h5>
-					<!-- <h5 class="modal-title">Select Level</h5> -->
-					<i onclick="$('.upload-modal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
-						data-bs-dismiss="modal" aria-label="Close"></i>
-					<!-- <i onclick="$('.upload-modal').hide()" class="bi bi-x-octagon text-danger" type="button" data-bs-dismiss="modal" aria-label="Close"></i> -->
-				</div>
-				<div class="modal-body border-dark">
-					<div class="level-selector-container">
-						<img class="thumbnail-img"
-							src="https://external-preview.redd.it/b5R5gXGYfBVWVIppxnX5T0Bdtt1hJSK7XnUN6ypf_9s.jpg?width=640&crop=smart&auto=webp&s=eb12b986353e8b1bf2bfa6c8928707d8194dfc06"
-							alt="">
-						<div class="level-selector-title">Ed Sheeran - Perfect</div>
-						<input type="hidden" name="artist" value="">
-						<input type="hidden" name="title" value="">
-						<!-- Select Level -->
-						<div class="btn-group btn-group-toggle level-buttons" data-toggle="buttons">
-							<label class="btn btn-outline-success brand-bg" data-level="easy">
-								<input type="radio" name="options" autocomplete="off" style="display: none;"> Easy
-							</label>
-							<label class="btn btn-outline-warning brand-bg" data-level="medium">
-								<input type="radio" name="options" autocomplete="off" style="display: none;"> Medium
-							</label>
-							<label class="btn btn-outline-danger brand-bg" data-level="hard">
-								<input type="radio" name="options" autocomplete="off" style="display: none;"> Hard
-							</label>
-							<label class="btn btn-outline-secondary brand-bg custom-btn" data-level="custom" id="customBtn">
-								<input type="radio" name="options" autocomplete="off" style="display: none;"> Custom
-							</label>
-						</div>
+		<!-- Modals 2 -->
+		<div class="modal fade upload-modal" tabindex="-1" id="uploadModal" aria-labelledby="uploadModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<form class="modal-content">
+					<div class="modal-header border-secondary">
+						<h5 class="modal-title" id="levelsModalLabel">Play Music</h5>
+						<!-- <h5 class="modal-title">Select Level</h5> -->
+						<i onclick="$('.upload-modal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
+							data-bs-dismiss="modal" aria-label="Close"></i>
+						<!-- <i onclick="$('.upload-modal').hide()" class="bi bi-x-octagon text-danger" type="button" data-bs-dismiss="modal" aria-label="Close"></i> -->
+					</div>
+					<div class="modal-body border-dark">
+						<div class="level-selector-container">
+							<img class="thumbnail-img"
+								src="https://external-preview.redd.it/b5R5gXGYfBVWVIppxnX5T0Bdtt1hJSK7XnUN6ypf_9s.jpg?width=640&crop=smart&auto=webp&s=eb12b986353e8b1bf2bfa6c8928707d8194dfc06"
+								alt="">
+							<div class="level-selector-title">Ed Sheeran - Perfect</div>
+							<input type="hidden" name="artist" value="">
+							<input type="hidden" name="title" value="">
+							<!-- Select Level -->
+							<div class="btn-group btn-group-toggle level-buttons" data-toggle="buttons">
+								<label class="btn btn-outline-success brand-bg" data-level="easy">
+									<input type="radio" name="options" autocomplete="off" style="display: none;"> Easy
+								</label>
+								<label class="btn btn-outline-warning brand-bg" data-level="medium">
+									<input type="radio" name="options" autocomplete="off" style="display: none;"> Medium
+								</label>
+								<label class="btn btn-outline-danger brand-bg" data-level="hard">
+									<input type="radio" name="options" autocomplete="off" style="display: none;"> Hard
+								</label>
+								<label class="btn btn-outline-secondary brand-bg custom-btn" data-level="custom" id="customBtn">
+									<input type="radio" name="options" autocomplete="off" style="display: none;"> Custom
+								</label>
+							</div>
 
-						<!-- Custom Options -->
-						<div class="custom-options border border-secondary" id="customOptions" style="display: none;">
-							<div class="form-check">
-								<label class="form-check-label" for="customOption1">Capital Letters</label>
-								<input name="capital-letters" class="form-check-input" type="checkbox" id="customOption1">
+							<!-- Custom Options -->
+							<div class="custom-options border border-secondary" id="customOptions" style="display: none;">
+								<div class="form-check">
+									<label class="form-check-label" for="customOption1">Capital Letters</label>
+									<input name="capital-letters" class="form-check-input" type="checkbox" id="customOption1">
+								</div>
+								<div class="form-check">
+									<label class="form-check-label" for="customOption2">Punctuation marks</label>
+									<input name="Punctuation" class="form-check-input" type="checkbox" id="customOption2">
+								</div>
+								<div class="form-check">
+									<label class="form-check-label" for="customOption3">Double spaces</label>
+									<input class="form-check-input" type="checkbox" id="customOption3">
+								</div>
+								<div class="form-check">
+									<label class="form-check-label" for="customOption4">Speed</label>
+									<select class="form-select" name="speed" aria-label="Default select example">
+										<option value="1">0.25</option>
+										<option value="2">0.5</option>
+										<option value="3">0.75</option>
+										<option selected>1.0</option>
+										<option value="1">1.25</option>
+										<option value="2">1.5</option>
+										<option value="3">1.75</option>
+										<option value="3">2.0</option>
+									</select>
+								</div>
 							</div>
-							<div class="form-check">
-								<label class="form-check-label" for="customOption2">Punctuation marks</label>
-								<input name="Punctuation" class="form-check-input" type="checkbox" id="customOption2">
-							</div>
-							<div class="form-check">
-								<label class="form-check-label" for="customOption3">Double spaces</label>
-								<input class="form-check-input" type="checkbox" id="customOption3">
-							</div>
-							<div class="form-check">
-								<label class="form-check-label" for="customOption4">Speed</label>
-								<select class="form-select" name="speed" aria-label="Default select example">
-									<option value="1">0.25</option>
-									<option value="2">0.5</option>
-									<option value="3">0.75</option>
-									<option selected>1.0</option>
-									<option value="1">1.25</option>
-									<option value="2">1.5</option>
-									<option value="3">1.75</option>
-									<option value="3">2.0</option>
-								</select>
-							</div>
-						</div>
 
-						<!-- Begin Button -->
-						<div style="display: block; width: 100%;">
-							<!-- <button id="start" class="btn btn-outline-info btn-lg mt-3 align-middle" style="display: none;" onclick="start()">BEGIN</button> -->
-							<img class="level-img" src="" alt="" style="display: none;" width="1px">
-							<!-- <button id="start" class="btn btn-lg mt-3 align-middle" style="display: none;" onclick="start()">
+							<!-- Begin Button -->
+							<div style="display: block; width: 100%;">
+								<!-- <button id="start" class="btn btn-outline-info btn-lg mt-3 align-middle" style="display: none;" onclick="start()">BEGIN</button> -->
+								<img class="level-img" src="" alt="" style="display: none;" width="1px">
+								<!-- <button id="start" class="btn btn-lg mt-3 align-middle" style="display: none;" onclick="start()">
 								BEGIN
 							</button> -->
+							</div>
 						</div>
+
 					</div>
-
-				</div>
-				<!-- <div class="modal-footer border-secondary"> -->
-				<div class="modal-footer border-0">
-					<button id="start" type="button" class="btn btn-primary btn-lg">Play</button>
-				</div>
-			</form>
+					<!-- <div class="modal-footer border-secondary"> -->
+					<div class="modal-footer border-0">
+						<button id="start" type="button" class="btn btn-primary btn-lg">Play</button>
+					</div>
+				</form>
+			</div>
 		</div>
-	</div>
 
-	<!-- Bootstrap JS and dependencies -->
-	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<!-- Bootstrap JS and dependencies -->
+		<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	<script src="assets/js/isotope.min.js"></script>
-	<script src="assets/js/owl-carousel.js"></script>
-	<script src="assets/js/tabs.js"></script>
-	<script src="/js/popup.js"></script>
-	<script src="/js/custom.js" defer></script>
-	<script src="/js/levels.js" defer></script>
-	<script>
-		$(document).ready(function () {
-			$('#levelsModal').modal({
-				backdrop: true, // Allows closing the modal by clicking outside of it
-				keyboard: true,  // Allows closing the modal by pressing the escape key
-				show: false
+		<script src="assets/js/isotope.min.js"></script>
+		<script src="assets/js/owl-carousel.js"></script>
+		<script src="assets/js/tabs.js"></script>
+		<script src="/js/popup.js"></script>
+		<script src="/js/custom.js" defer></script>
+		<script src="/js/levels.js" defer></script>
+		<script>
+			$(document).ready(function () {
+				$('#levelsModal').modal({
+					backdrop: true, // Allows closing the modal by clicking outside of it
+					keyboard: true,  // Allows closing the modal by pressing the escape key
+					show: false
+				});
+
+				$('#uploadModal').modal({
+					backdrop: true, // Allows closing the modal by clicking outside of it
+					keyboard: true,  // Allows closing the modal by pressing the escape key
+					show: false
+				});
+
+				$('.thumbnail').each(function () {
+					var imageUrl = $(this).data('image-url');
+					$(this).css('background-image', 'url(' + imageUrl + ')');
+				});
+
+				// $('#levelsModal').modal('hide');
+				// $('#levelsModal').hide();
 			});
-
-			$('#uploadModal').modal({
-				backdrop: true, // Allows closing the modal by clicking outside of it
-				keyboard: true,  // Allows closing the modal by pressing the escape key
-				show: false
-			});
-
-			$('.thumbnail').each(function () {
-				var imageUrl = $(this).data('image-url');
-				$(this).css('background-image', 'url(' + imageUrl + ')');
-			});
-
-			// $('#levelsModal').modal('hide');
-			// $('#levelsModal').hide();
-		});
-	</script>
+		</script>
 
 </body>
 
