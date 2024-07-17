@@ -881,6 +881,14 @@ Gaming Library Style
   margin-bottom: 0px;
 }
 
+.gaming-library .item ul {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
 .gaming-library .item ul li {
   margin-top: 15px;
 }
@@ -914,8 +922,19 @@ Gaming Library Style
 }
 
 .gaming-library .main-button {
-  text-align: center;
-  margin-bottom: -53px;
+  /* text-align: left; */
+	/* justify-self: left; */
+	float: left;
+	/* position: absolute;
+	left: 0%; */
+  /* margin-bottom: -53px; */
+}
+
+.gaming-library .view-library-btn {
+	float: none;
+	margin: auto;
+	width: 100%;
+	text-align: center;
 }
 
 /* 
@@ -1368,13 +1387,17 @@ Game Details Style
 }
 
 .game-details .main-border-button {
+	background-color: var(--brand-color);
+	color: #fff;
+	display: block;
   margin-top: 35px;
+	text-align: center;
+	width: 100%;
+	margin: auto;
 }
 
-.game-details .main-border-button a {
-  text-align: center;
-  width: 100%;
-} 
+/* .game-details .main-border-button a {
+}  */
 
 /* 
 ---------------------------------------------
@@ -1672,6 +1695,25 @@ body {
   .most-popular .item .inner-item {
     margin-bottom: 20px;
   }
+
+	.gaming-library .item ul {
+		flex-wrap: wrap;
+		position: relative;
+		width: 100%;
+	}
+
+	.gaming-library .item ul li span {
+		margin: auto;
+		margin-top: -25px;
+		transform: scale(1.25);
+	}
+
+	.gaming-library .main-button {
+		display: block;
+		float: none;
+		/* width: fit-content; */
+		margin: auto;
+	}
 }
 
 @media (max-width: 992px) {

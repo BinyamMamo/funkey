@@ -75,10 +75,12 @@
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">#</th>
-							<th scope="col">Music Title</th>
-							<th scope="col">Artist Name</th>
+							<th scope="col">Music</th>
+							<th scope="col">Artist</th>
 							<th scope="col">Rating</th>
 							<th scope="col">Views</th>
+							<th scope="col">Favorite</th>
+							<th scope="col">Created</th>
 							<th scope="col">Music Video</th>
 							<th scope="col">Lyrics</th>
 							<th scope="col">Thumbnail</th>
@@ -104,6 +106,12 @@
 										</td>
 										<td>
 											<%= music.views %>
+										</td>
+										<td>
+											<%= music.favorite %>
+										</td>
+										<td>
+											<%= music.updatedAt %>
 										</td>
 										<td>
 											<a href="/<%= music.video %>">
