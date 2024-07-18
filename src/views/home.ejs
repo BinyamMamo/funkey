@@ -28,6 +28,7 @@
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/homepage.css">
 	<link rel="stylesheet" href="css/levels.css">
+	<link rel="stylesheet" href="/css/particles.css">
 
 	<!-- Favicons -->
 	<!-- <link rel="icon" type="image/png" sizes="32x32" href="assets/icon/favicon-32x32.png">
@@ -40,14 +41,16 @@
 
 	<style>
 		.practice-typing-video-container {
-			opacity: 0.95;
+			opacity: 0.9;
+			/* mix-blend-mode: screen; */
 			display: block;
 			margin: auto;
 			width: 100%;
-			margin-top: 50px;
+			margin-top: 100px;
 			border-radius: 23px;
 			position: relative;
 			z-index: 1000;
+			background-color: transparent;
 		}
 
 		.practice-typing-video {
@@ -57,6 +60,7 @@
 		}
 
 		.practice-typing-video-overlay {
+			border-radius: inherit;
 			position: absolute;
 			width: 100%;
 			height: 100%;
@@ -122,6 +126,40 @@
 		.toggle-video-volume:hover {
 			color: #eee;
 		}
+
+		#particles-js {
+			position: absolute;
+			/* z-index: 1000000000; */
+			z-index: 1;
+			height: 100%;
+			width: 100%;
+			top: 0% !important;
+			left: 0% !important;
+			border-radius: 0;
+
+			/* transform: translateX(-50%); */
+
+			/* transform: none; */
+
+		}
+
+		.main-banner {
+			position: relative;
+		}
+
+		.banner-img {
+			width: fit-content;
+			height: fit-content;
+			margin-top: 5em;
+			float: right;
+			/* border-radius: 50%; */
+			border-radius: 23px;
+			overflow: hidden;
+			opacity: 0.8;
+			/* box-shadow: 0px 0px 15px 10px #1115 inset; */
+			z-index: 1000;
+		}
+
 	</style>
 
 </head>
@@ -169,9 +207,9 @@
 				<li><a href="match.html">Match</a></li>
 				<% if (!avatar) { %>
 					<li><a href="/login" class="active">Login</a></li>
-					<% } else { %>
-						<li><a href="/profile">Profile <img src="<%= avatar %>" alt=""></a></li>
-						<% } %>
+				<% } else { %>
+						<li><a href="/profile">Profile <span class="profile-pic-cont"><img class="profile-pic" src="<%= avatar %>" alt=""></span></a></li>
+				<% } %>
 							<!-- <li><a href="profile.html">Login <img src="assets/images/logo.png" alt=""></a></li> -->
 			</ul>
 			<a class='menu-trigger'>
@@ -189,15 +227,20 @@
 
 					<!-- ***** Banner Start ***** -->
 					<div class="main-banner">
-						<div class="row">
-							<div class="col-lg-7">
+						<div class="row main-banner-row" style="display: flex; flex-direction: row; flex-wrap: nowrap	;">
+							<div class="col-lg-7" style="text-align: left;">
 								<div class="header-text">
 									<h6>Welcome To <em>FunKey</em></h6>
-									<h4><em>Browse</em> The Most Popular Musics Here</h4>
+									<h4><em>Practice</em> Typing, having the Ultimate <em>Fun</em></h4>
+									<!-- <h4><em>Practice</em> Typing Having THE MOST Fun</h4> -->
 									<div class="main-button">
-										<a href="browse.html">Browse Now</a>
+										<a href="browse.html">Let's Go</a>
 									</div>
 								</div>
+							</div>
+							<div class="banner-img">
+								<img
+									src="https://user-images.githubusercontent.com/74038190/216644497-1951db19-8f3d-4e44-ac08-8e9d7e0d94a7.gif">
 							</div>
 						</div>
 					</div>
@@ -214,7 +257,7 @@
 									<div class="col-lg-3 col-sm-6">
 										<div class="item">
 											<div class="upload">
-												<i class="fa fa-cloud-upload" aria-hidden="true"></i>
+												<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
 												<!-- <i class="fa fa-upload" aria-hidden="true"></i> -->
 											</div>
 
@@ -267,25 +310,45 @@
 								</div>
 							</div>
 						</div>
+						<div class="col-lg-12">
+							<div class="main-button view-library-btn">
+								<a href="/browse">Browse More</a>
+							</div>
+						</div>
 					</div>
 					<!-- ***** Most Popular End ***** -->
 
 					<!-- ***** Gaming Library Start ***** -->
 					<div class="practice-typing-video-container">
+						<!-- <h1 class="video-label">Practice typing with virtual Piano.</h1> -->
+						<i class="fas fa-volume-mute toggle-video-volume" onclick="$(this).toggleClass('fa-volume-mute fa-volume-up'); 
+											 $(this).parent().find('video').prop('muted',
+											 !$(this).parent().find('video').prop('muted'));"></i>
+						<div class="practice-typing-video-overlay">
+							<h1 class="btn btn-dark" onclick="location.href='/piano'"><i class="fas fa-music"></i>&nbsp; Play
+							</h1>
+						</div>
+						<!-- <video class="practice-typing-video" width="90%" autoplay muted loop>
+							<source src="/assets/videos/piano.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video> -->
+					</div>
+
+					<div class="practice-typing-video-container">
 						<h1 class="video-label">Practice typing with AI generated content.</h1>
-						<i class="fas fa-volume-mute toggle-video-volume"
-							onclick="$(this).toggleClass('fa-volume-mute fa-volume-up'); 
-											 $('.practice-typing-video').prop('muted',
-											 !$('.practice-typing-video').prop('muted'));"></i>
+						<i class="fas fa-volume-mute toggle-video-volume" onclick="$(this).toggleClass('fa-volume-mute fa-volume-up'); 
+											 $(this).parent().find('video').prop('muted',
+											 !$(this).parent().find('video').prop('muted'));"></i>
 						<div class="practice-typing-video-overlay">
 							<h1 class="btn btn-warning" onclick="location.href='/practice'"><i class="fas fa-keyboard"></i> Practice
 							</h1>
 						</div>
-						<video class="practice-typing-video" width="90%" autoplay muted loop>
+						<!-- <video class="practice-typing-video" width="90%" autoplay muted loop style="filter: grayscale(100);">
 							<source src="/assets/videos/practice-forest-bg.mp4" type="video/mp4">
 							Your browser does not support the video tag.
-						</video>
+						</video> -->
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -294,7 +357,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
-						<p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved.
+						<p>Copyright © 2024 <a href="#">Funkey</a> | Learn typing. All rights reserved.
 
 							<br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>
 						</p>
@@ -480,13 +543,13 @@
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-		<script src="assets/js/isotope.min.js"></script>
+		<!-- <script src="assets/js/isotope.min.js"></script>
 		<script src="assets/js/owl-carousel.js"></script>
-		<script src="assets/js/tabs.js"></script>
-		<script src="/js/popup.js"></script>
+		<script src="assets/js/tabs.js"></script> -->
+		<script src="/js/popup.js" defer></script>
 		<script src="/js/custom.js" defer></script>
 		<script src="/js/levels.js" defer></script>
-		<script>
+		<script defer>
 			$(document).ready(function () {
 				$('#levelsModal').modal({
 					backdrop: true, // Allows closing the modal by clicking outside of it
@@ -508,6 +571,141 @@
 				// $('#levelsModal').modal('hide');
 				// $('#levelsModal').hide();
 			});
+		</script>
+		<!-- <script src="/js/particles.js"></script> -->
+
+		<script>
+			// Create a new <script> element
+			const particlesScript = document.createElement('script');
+			const particlesContainer = document.createElement('div');
+			particlesContainer.classList.add('particle-wrapper');
+			particlesContainer.innerHTML = `<div>
+		<div id="particles-js"></div>
+	</div>`;
+
+			particlesScript.src =
+				'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+
+			// Set up a callback for when the script is loaded
+			particlesScript.onload = () => {
+				// Initialize particles.js
+				particlesJS('particles-js', {
+					particles: {
+						number: {
+							value: 80,
+							density: {
+								enable: true,
+								value_area: 800,
+							},
+						},
+						color: {
+							value: '#ffffff',
+						},
+						shape: {
+							type: 'circle',
+							stroke: {
+								width: 0, // Set stroke width to 0 to hide lines
+								color: '#000000',
+							},
+							polygon: {
+								nb_sides: 5,
+							},
+							image: {
+								src: 'img/github.svg',
+								width: 100,
+								height: 100,
+							},
+						},
+						opacity: {
+							value: 0.5,
+							random: false,
+							anim: {
+								enable: false,
+								speed: 1,
+								opacity_min: 0.1,
+								sync: false,
+							},
+						},
+						size: {
+							value: 3,
+							random: true,
+							anim: {
+								enable: false,
+								speed: 40,
+								size_min: 0.1,
+								sync: false,
+							},
+						},
+						line_linked: {
+							enable: false, // Disable lines between particles
+							distance: 150,
+							color: '#ffffff',
+							opacity: 0.4,
+							width: 1,
+						},
+						move: {
+							enable: true,
+							speed: 6,
+							direction: 'none',
+							random: false,
+							straight: false,
+							out_mode: 'out',
+							bounce: false,
+							attract: {
+								enable: false,
+								rotateX: 600,
+								rotateY: 1200,
+							},
+						},
+					},
+					interactivity: {
+						detect_on: 'canvas',
+						events: {
+							onhover: {
+								enable: true,
+								mode: 'grab',
+							},
+							onclick: {
+								enable: true,
+								mode: 'push',
+							},
+							resize: true,
+						},
+						modes: {
+							grab: {
+								distance: 140,
+								line_linked: {
+									opacity: 1,
+								},
+							},
+							bubble: {
+								distance: 400,
+								size: 40,
+								duration: 2,
+								opacity: 8,
+								speed: 3,
+							},
+							repulse: {
+								distance: 200,
+								duration: 0.4,
+							},
+							push: {
+								particles_nb: 4,
+							},
+							remove: {
+								particles_nb: 2,
+							},
+						},
+					},
+					retina_detect: true,
+				});
+			};
+
+			// Append the <script> element to the <body>
+			$('.main-banner-row')[0].appendChild(particlesContainer);
+			// document.getElementsByClassName('header-area')[0].appendChild(particlesContainer);
+			document.body.appendChild(particlesScript);
+
 		</script>
 
 </body>

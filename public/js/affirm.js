@@ -8,16 +8,14 @@ function affirm(message) {
 					<div class="modal fade" id="affirmModal" tabindex="-1" role="dialog" aria-labelledby="affirmModalLabel" aria-hidden="true">
 							<div class="modal-dialog" role="document">
 									<div class="modal-content">
-											<div class="modal-header">
-													<h5 class="modal-title" id="affirmModalLabel">Confirm</h5>
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-													</button>
+											<div class="modal-header border-0">
+													<h5 class="modal-title" id="affirmModalLabel" style="text-align: left;">Confirm</h5>
+													<i type="button" class="fas fa-times text-light"  data-dismiss="modal" aria-label="Close"></i>
 											</div>
-											<div class="modal-body">
+											<div class="modal-body border-0">
 													${message}
 											</div>
-											<div class="modal-footer">
+											<div class="modal-footer border-0">
 													<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 													<button type="button" class="btn btn-danger" id="affirmYesButton">Yes</button>
 											</div>

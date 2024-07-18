@@ -77,7 +77,6 @@ const handleLogin = async (req, res) => {
     res.status(200).json({ msg: 'signed in successfully!', user });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message });
   }
 };
 
