@@ -107,14 +107,15 @@
 			<!-- ***** Search End ***** -->
 			<!-- ***** Menu Start ***** -->
 			<ul class="nav">
-				<li><a href="/" class="active">Home</a></li>
-				<li><a href="browse.html">Browse</a></li>
-				<li><a href="details.html">Details</a></li>
-				<li><a href="match.html">Match</a></li>
+				<li><a href="/">Home</a></li>
+				<li><a href="/browse" class="active">Browse</a></li>
+				<li><a href="/practice">Practice</a></li>
+				<li><a href="/match">Piano</a></li>
+				<!-- <li><a href="match.html">Match</a></li> -->
 				<% if (!avatar) { %>
 					<li><a href="/login" class="active">Login</a></li>
 					<% } else { %>
-						<li><a href="/profile">Profile <img src="<%= avatar %>" alt=""></a></li>
+						<li><a href="/profile">Profile <span class="profile-pic-cont"><img class="profile-pic" src="<%= avatar %>" alt=""></span></a></li>
 						<% } %>
 							<!-- <li><a href="profile.html">Login <img src="assets/images/logo.png" alt=""></a></li> -->
 			</ul>

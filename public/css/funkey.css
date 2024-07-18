@@ -419,9 +419,15 @@ Header Style
   background-color: #27292a;
   padding: 8px 10px 8px 20px;
   border-radius: 23px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
 }
 
 .header-area .main-nav .nav li:last-child a img {
+	display: inline;
+	height: 30px;
   max-width: 30px;
   border-radius: 50%;
   margin-left: 5px;
@@ -588,6 +594,9 @@ Header Style
 }
 
 @media (max-width: 992px) {
+	.banner-img {
+		display: none;
+	}
   .header-area {
 		z-index: 10000 !important;
 		background-color: #1f2122 !important;
@@ -617,14 +626,45 @@ Header Style
     top: 15px;
     right: 70px;
   }
+
+	.header-area .main-nav #search {
+		display: none !important;
+	}
+
+  .header-area.header-sticky .nav {
+		width: 100% !important;
+		float: left;
+	}
+
+  .header-area.header-sticky .nav li:last-child a {
+		display: inline-block;
+		padding: 1em;
+		width: 90%;
+		margin: auto;
+	}
+
+	.header-area.header-sticky .nav li:last-child a {
+		background-color: transparent !important;
+	}
+	.header-area.header-sticky .nav li:last-child:hover {
+		background-color: transparent !important;
+	}
+	
+	.header-area.header-sticky .nav li:last-child a:hover {
+		background-color: transparent !important;
+	}
+
   .header-area.header-sticky .nav li a:hover,
   .header-area.header-sticky .nav li a.active {
     color: var(--brand-color)!important;
+		background-color: transparent;
     opacity: 1;
   }
+
   .header-area.header-sticky .nav li.search-icon a {
     width: 100%;
   }
+
   .header-area {
     /* background-color: #f7f7f7; */
     padding: 0px 15px;

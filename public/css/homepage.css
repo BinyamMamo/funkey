@@ -24,7 +24,7 @@
 .header-area .main-nav {
   /* min-height: 80px; */
   background: transparent;
-	width: 100vw;
+	/* width: 100vw; */
   display: flex;
 	flex-direction: row;
 	align-items: center;
