@@ -8,24 +8,29 @@ const musicRoutes = require('./music.routes');
 const userRoutes = require('./user.routes');
 const fakeRoute = require('./faker.routes');
 
-router.get('/', async (req, res) => {
-	let musics = await Music.find();
-  res.render('home', { musics, avatar: null });
-  // res.render('home', { musics, avatar: null });
-});
+// router.get('/', async (req, res) => {
+// 	let musics = await Music.find();
+//   res.render('home', { musics, avatar: null });
+//   // res.render('home', { musics, avatar: null });
+// });
 
 router.get('/practice', async (req, res) => {
   res.render('practice/practice');
 });
 
-// router.get('/', async (req, res) => {
-//   let avatar = null;
-//   if (req.session.userId) {
-//     avatar = req.session.avatar;
-//     console.log('not logged in');
-//   } else console.log('we are logged in');
-//   res.render('home', { avatar });
-// });
+router.get('/piano', async (req, res) => {
+	res.render('piano/piano');
+});
+
+router.get('/', async (req, res) => {
+	let musics = await Music.find();
+  let avatar = null;
+  if (req.session.userId) {
+		avatar = req.session.avatar;
+    console.log('not logged in');
+  } else console.log('we are logged in');
+	res.render('home', { musics, avatar });
+});
 
 router.get('/browse', async (req, res) => {
 	let musics = await Music.find();

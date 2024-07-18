@@ -1,6 +1,7 @@
 .particle-wrapper {
 	z-index: 100;
   position: absolute;
+  /* position: fixed; */
   /* justify-content: flex-end; */
   /* Aligns particles container to the right */
   align-items: center;
