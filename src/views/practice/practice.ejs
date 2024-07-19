@@ -30,6 +30,7 @@
 	<link rel="stylesheet" href="/css/homepage.css">
 	<link rel="stylesheet" href="/css/practice.css">
 	<link rel="stylesheet" href="css/upload.css">
+<<<<<<< HEAD
 
 	<style>
 		.upload-modal .upload-container {
@@ -38,6 +39,37 @@
 			left: 50%;
 			top: 50%;
 			transform: translate(-50%, -50%);
+=======
+
+	<style>
+		.upload-modal .upload-container {
+			background-color: #1f2122;
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+
+			width: 700px;
+			display: flex;
+			flex-direction: column !important;
+			gap: 1em;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.upload-modal .upload-header {
+			background-color: transparent;
+			color: #e1e1e1;
+			border-color: #5e8de720 !important;
+			font-size: 1.5rem;
+			font-weight: normal;
+			width: 100%;
+			text-align: left;
+			padding-left: 1em;
+		}
+	</style>
+</head>
+>>>>>>> 348ac15... feat(practice): add theme selection and audio options
 
 			width: 700px;
 			display: flex;
@@ -88,6 +120,7 @@
 		</div>
 	</div>
 
+<<<<<<< HEAD
 	<div class="spinner-border text-primary spinner" role="status" style="display: none">
 		<span class="sr-only">Loading...</span>
 	</div>
@@ -106,6 +139,15 @@
 
 	</div>
 
+=======
+	<!-- Modals 2 - add fade-->
+	<div class="modal upload-modal" tabindex="-1" id="uploadModal" aria-labelledby="uploadModalLabel" aria-hidden="true"
+		style="display: block !important">
+		<%- include('practiceMenus.ejs') %>
+	</div>
+
+	<%- include('forest_bg.ejs') %>
+>>>>>>> 348ac15... feat(practice): add theme selection and audio options
 
 	<!-- Bootstrap JS and dependencies -->
 	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
@@ -114,6 +156,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 	<script defer>
+<<<<<<< HEAD
 		$(document).ready(function () {
 			let theme = localStorage.getItem('theme') || '/practice/partials/fireflies';
 			fetch(theme).then(res => {
@@ -138,6 +181,45 @@
 		});
 	</script>
 
+=======
+		let audio = new Audio(`/assets/audio/forest.mp3`);
+
+		$(document).ready(function () {
+			$('.audio-selector').on('change', function (e) {
+				e.preventDefault();
+				let value = $(this).val();
+				let selected = $(this).find('option:selected')[0];
+				localStorage.setItem('audioSelected', value);
+				if (!value) {
+					if (!audio.paused) audio.pause();
+					return;
+				}
+
+				audio.load();
+				audio.src = `/assets/audio/${value}`;
+				if (audio) audio.play();
+			});
+
+			$('.audio-selector').on('blur', function (e) {
+				console.log('I lost attention!');
+				if (!audio.paused) audio.pause();
+			});
+			$('.audio-selector').val(localStorage.getItem('audioSelected'));
+
+			$('#themeCarousel').on('slide.bs.carousel', function (e) {
+				let activeItem = e.relatedTarget;
+				let newCaption = activeItem.getAttribute('data-caption');
+				$('#carouselCaption').text(newCaption);
+				localStorage.setItem('themeCarousel', e.to.toString());
+			})
+			$('#themeCarousel').carousel({
+				pause: true
+			});
+			$('#themeCarousel').carousel(parseInt(localStorage.getItem('themeCarousel')));
+		});
+	</script>
+	<script src="/js/practice.js"></script>
+>>>>>>> 348ac15... feat(practice): add theme selection and audio options
 </body>
 
 </html>
