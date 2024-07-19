@@ -15,6 +15,7 @@ const fakeRoute = require('./faker.routes');
 // });
 
 router.get('/practice', async (req, res) => {
+  // res.render('practice/practice');
   res.render('practice/practice');
 });
 
