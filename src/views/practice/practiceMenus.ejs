@@ -1,0 +1,239 @@
+<style>
+	.prompt-message,
+	.custom-text,
+	.audio-selector {
+		/* color: red !important; */
+		/* border-color: #1f122133 !important; */
+		background-color: #27292a !important;
+		font-size: 100%;
+		border: none;
+	}
+
+	.custom-text {
+		padding: 1em;
+		resize: vertical;
+	}
+
+	input:focus {
+		outline: none;
+	}
+
+	.audio-selector {
+		display: block;
+		width: 80%;
+		flex-basis: 80%;
+		outline: none;
+	}
+
+	.audio-selector-container {
+		display: flex;
+		flex-wrap: nowrap;
+	}
+
+	.browse-btn {
+		font-family: 'Poppins', sans-serif;
+		background-color: #264773;
+		background-color: #285188;
+		color: #e1e1e1;
+		font-weight: 500;
+		border: none;
+	}
+
+	.browse-btn:hover {
+		color: #e1e1e1;
+		font-weight: bold;
+	}
+
+	.level-settings {
+		border: 2px dashed #2e71cc22;
+		display: flex;
+		flex-direction: row;
+		padding: 1em;
+		justify-content: space-evenly;
+		align-items: center;
+	}
+
+	.speed-setting {
+		background-color: #1f2122;
+		color: #e1e1e1 !important;
+		/* font-size: 1.25rem; */
+		border: none;
+		font-family: monospace;
+		text-align: right;
+		padding-right: 3px !important;
+		width: fit-content;
+		margin: 0;
+
+		outline: none;
+	}
+
+	.speed-setting * {
+		font-family: monospace;
+	}
+
+	.carousel-container {
+		display: block;
+
+	}
+
+	.carousel-container img {
+		margin: auto;
+		width: auto;
+		height: 14rem;
+	}
+
+
+	.carousel-container span {
+		/* width: fit-content; */
+	}
+
+	.carousel-control-prev,
+	.carousel-control-next,
+	.carousel-control-prev:focus,
+	.carousel-control-next:focus {
+		background-color: transparent;
+		color: #fff4;
+		opacity: 0.15;
+		width: 2em;
+		border: none;
+	}
+
+	.carousel-control-prev:hover,
+	.carousel-control-next:hover {
+		background-color: #fff1;
+		color: #fff4;
+		opacity: 0.3;
+	}
+
+	.carousel-indicators {
+		margin: auto;
+	}
+
+	.modal-header {
+		border-color: #27292a !important;
+	}
+
+</style>
+
+<div class="modal-dialog">
+	<form id="upload-form" class="upload-container modal-content">
+		<div class="upload-header modal-header">
+			<h5 class="upload-title modal-title" id="uploadModalLabel">Practice Typing</h5>
+			<i onclick="$('#uploadModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
+				data-bs-dismiss="modal" aria-label="Close"></i>
+		</div>
+		<div class="upload-body modal-body">
+			<div class="left-side">
+				<input type="file" accept="image/*" id="thumbnail-upload" style="display: none;">
+
+				<!-- carousel CAROUSEL -->
+				<!-- <div id="themeCarousel" class="carousel-container carousel slide" data-ride="carousel"> -->
+				<div id="themeCarousel" class="carousel-container carousel slide">
+					<ol class="carousel-indicators" style="display: none">
+						<li data-target="#themeCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#themeCarousel" data-slide-to="1"></li>
+						<li data-target="#themeCarousel" data-slide-to="2"></li>
+						<li data-target="#themeCarousel" data-slide-to="3"></li>
+						<li data-target="#themeCarousel" data-slide-to="4"></li>
+						<li data-target="#themeCarousel" data-slide-to="5"></li>
+						<li data-target="#themeCarousel" data-slide-to="6"></li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="carousel-item active" data-caption="Fireflies">
+							<img src="assets/images/gif/Fireflies.gif" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item" data-caption="Color Changing">
+							<img src="assets/images/gif/Color Changing.gif" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item" data-caption="Flow Field">
+							<img src="assets/images/gif/Flow Field.gif" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item" data-caption="Sea Waves">
+							<img src="assets/images/gif/Sea Waves.gif" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item" data-caption="Rymd">
+							<img src="assets/images/gif/Rymd.gif" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item" data-caption="Crystal Parallax">
+							<img src="assets/images/gif/Crystal Parallax.gif" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item" data-caption="Space Elevator">
+							<img src="assets/images/gif/Space Elevator.gif" class="d-block w-100" alt="...">
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-target="#themeCarousel" data-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-target="#themeCarousel" data-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</button>
+				</div>
+
+				<div class="drag-drop artist-music-name">
+					<span id="carouselCaption">Image Caption</span>
+					<!-- <span>Unknown</span> <br> <span class="music-name">Track</span> -->
+				</div>
+			</div>
+
+			<div class="inputs right-side">
+				<!-- <h4 class="upload-title">Upload Music Here</h4> -->
+				<div class="input-group">
+					<input name="artist" type="text" class="form-control prompt-message" placeholder="Prompt Message"
+						pattern="[A-Za-z\s]+" title="Enter a valid prompt message" required>
+				</div>
+				<div class="input-group">
+					<textarea name="title" class="form-control custom-text" rows="1" placeholder="Custom Text"
+						pattern="[A-Za-z0-9\s]+" title="Enter a valid custom text here"></textarea>
+				</div>
+
+				<div class="input-group audio-selector-container">
+					<select class="custom-select audio-selector" id="inputGroupSelect04"
+						aria-label="Example select with button addon" placeholder="Choose audio...">
+						<option selected disabled hidden>Choose audio...</option>
+						<option value="">None</option>
+						<option value="forest.mp3">♪ &nbsp;Frederic Chopin - Mysterious Forest&nbsp;</option>
+						<option value="2">♪ &nbsp;Frederic Chopin - Mysterious Forest&nbsp;</option>
+						<option value="3">♪ &nbsp;Frederic Chopin - Mysterious Forest&nbsp;</option>
+					</select>
+					<div class="input-group-append" style="width: auto;">
+						<button class="btn browse-btn" type="button">Browse</button>
+						<input class="" type="file" name="video" accept="audio/*" style="display: none">
+					</div>
+				</div>
+
+				<!-- Lyrics Drop Zone -->
+				<div class="level-settings">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+						<label class="form-check-label" for="inlineCheckbox1">Capitals</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+						<label class="form-check-label" for="inlineCheckbox2">Punctuations</label>
+					</div>
+
+					<div class="form-check" style="width: fit-content;  padding: 0;">
+						<select class="form-select speed-setting" name="speed" aria-label="Default select example">
+							<option value="1">0.25</option>
+							<option value="2">0.5</option>
+							<option value="3">0.75</option>
+							<option selected>1x</option>
+							<option value="1">1.25</option>
+							<option value="2">1.5</option>
+							<option value="3">1.75</option>
+							<option value="3">2.0</option>
+						</select>
+						<!-- <label class="form-check-label" for="customOption4">Speed</label> -->
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- <div class="upload-footer"> -->
+		<div class="modal-footer upload-footer border-0">
+			<button type="submit" class="btn btn-outline-primary"><i class="fas fa-keyboard"></i></i>&nbsp;Begin</button>
+		</div>
+	</form>
+</div>
