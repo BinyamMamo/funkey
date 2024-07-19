@@ -17,12 +17,47 @@
 	<link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&display=swap"
 		rel="stylesheet">
 
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="css/toasts.css">
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="/css/funkey.css">
 	<link rel="stylesheet" href="/css/homepage.css">
 	<link rel="stylesheet" href="/css/practice.css">
+	<link rel="stylesheet" href="css/upload.css">
 
+	<style>
+		.upload-modal .upload-container {
+			background-color: #1f2122;
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+
+			width: 700px;
+			display: flex;
+			flex-direction: column !important;
+			gap: 1em;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.upload-modal .upload-header {
+			background-color: transparent;
+			color: #e1e1e1;
+			border-color: #5e8de720 !important;
+			font-size: 1.5rem;
+			font-weight: normal;
+			width: 100%;
+			text-align: left;
+			padding-left: 1em;
+		}
+	</style>
 </head>
 
 <body>
@@ -42,9 +77,58 @@
 		</div>
 	</div>
 
+	<!-- Modals 2 - add fade-->
+	<div class="modal upload-modal" tabindex="-1" id="uploadModal" aria-labelledby="uploadModalLabel" aria-hidden="true"
+		style="display: block !important">
+		<%- include('practiceMenus.ejs') %>
+	</div>
+
 	<%- include('forest_bg.ejs') %>
-	
-	<script src="/js/script.js"></script>
+
+	<!-- Bootstrap JS and dependencies -->
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script defer>
+		let audio = new Audio(`/assets/audio/forest.mp3`);
+
+		$(document).ready(function () {
+			$('.audio-selector').on('change', function (e) {
+				e.preventDefault();
+				let value = $(this).val();
+				let selected = $(this).find('option:selected')[0];
+				localStorage.setItem('audioSelected', value);
+				if (!value) {
+					if (!audio.paused) audio.pause();
+					return;
+				}
+
+				audio.load();
+				audio.src = `/assets/audio/${value}`;
+				if (audio) audio.play();
+			});
+
+			$('.audio-selector').on('blur', function (e) {
+				console.log('I lost attention!');
+				if (!audio.paused) audio.pause();
+			});
+			$('.audio-selector').val(localStorage.getItem('audioSelected'));
+
+			$('#themeCarousel').on('slide.bs.carousel', function (e) {
+				let activeItem = e.relatedTarget;
+				let newCaption = activeItem.getAttribute('data-caption');
+				$('#carouselCaption').text(newCaption);
+				localStorage.setItem('themeCarousel', e.to.toString());
+			})
+			$('#themeCarousel').carousel({
+				pause: true
+			});
+			$('#themeCarousel').carousel(parseInt(localStorage.getItem('themeCarousel')));
+		});
+	</script>
+	<script src="/js/practice.js"></script>
 </body>
 
 </html>

@@ -53,9 +53,9 @@ document.addEventListener("keypress", (ev) => {
 		ev.preventDefault();
 		console.log('space is pressed');
 	}
-	if (audio.paused) {
-		audio.play();
-	}
+	// if (audio.paused) {
+	// 	audio.play();
+	// }
   if (cursor >= text.length) {
     console.log("FINISHED!!!");
   } else if (ev.key == text[cursor]) {
