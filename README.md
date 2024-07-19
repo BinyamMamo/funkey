@@ -9,7 +9,8 @@ Funkey is a web application designed to help users improve their typing skills i
 1. **Lyrics Typing 🎧**
    - Users can type the lyrics of popular songs. They can choose from a list of pre-selected songs or upload their own lyrics.
 
-	 ![](/public/assets/images/most_popular.png)
+	 <!-- ![](/public/assets/images/most_popular.png) -->
+	 ![](/public/assets/images/browse.gif)
 
 	 ![](/public/assets/images/upload_custom_songs.png)
 
@@ -25,14 +26,14 @@ Funkey is a web application designed to help users improve their typing skills i
    - Instead of the usual "Lorem Ipsum" placeholder text, Funkey provides AI-generated sentences that sound familiar and interesting.
    - Users can practice typing sentences that resemble real-world content.
 	<p align="right">
-	<img src="public/assets/images/practice.png" width="90%">
+	<img src="public/assets/images/practice.gif" width="90%">
 	</p>
 
 3. **Virtual Piano Typing 🎹**
    - Funkey includes a virtual piano keyboard. Users can type the notes of melodies, chords, or even their own compositions.
    - This mode combines music and typing practice, making it enjoyable for both musicians and beginners.
 	<p align="right">
-	<img src="public/assets/images/keyboard.png" width="95%">
+	<img src="public/assets/images/piano.gif" width="95%">
 	</p>
 
 ## Installation
