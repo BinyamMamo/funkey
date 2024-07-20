@@ -1,0 +1,135 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+	integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+	.stats-container {
+		font-family: 'Poppins', sans-serif;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 10000;
+	}
+	
+	.stats-content {
+		width: 320px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		/* background-color: #fff; */
+		/* background-color: #1f2122; */
+		background-color: #1f2122aa;
+		background-color: #1f2122dd;
+		color: #fffd;
+		text-align: center;
+		border-radius: 20px;
+		/* padding: 30px 30px 70px; */
+		padding: 30px 30px 30px;
+	}
+
+	button.btn-close {
+		width: 30px;
+		font-size: 20px;
+		color: #c0c5cb;
+		align-self: flex-end;
+		background-color: transparent;
+		border: none;
+		margin-bottom: 10px;
+		transition: 0.25s;
+	}
+	
+	button.btn-close:hover {
+		border: none;
+		outline: none;
+		transform: scale(0.9);
+	}
+
+	h1 {
+		margin-bottom: 40px;
+	}
+
+	p.favor {
+		color: #e75e8d;
+		margin-bottom: 25px;
+		font-size: 18px;
+		font-weight: bold;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+	}
+
+	p.favor:hover {
+		color: #e75e8dbb;
+	}
+
+	button.close-stats, button.replay {
+		background-color: #5e8de7;
+		border: none;
+		border-radius: 5px;
+		width: 200px;
+		padding: 14px;
+		font-size: 16px;
+		color: white;
+		cursor: pointer;
+		transition: 0.5s;
+		/* box-shadow: 0px 6px 18px -5px #5e8de7; */
+		/* box-shadow: 0px 6px 10px -5px #5e8de7; */
+		/* border: 2px solid #5e8de7; */
+	}
+	button.replay {
+		background-color: #5ee78d;
+	}
+	
+	button.replay:hover {
+		background-color: #5e8de711;
+		border-color: #5ee78dcc;
+		color: #5ee78dcc;
+	}
+
+	button.close-stats:hover {
+		/* box-shadow: 0px 4px 8px -5px #5e8de7; */
+		background-color: #5e8de711;
+		border-color: #5e8de7cc;
+		color: #5e8de7cc;
+	}
+
+	.close-stats, button.replay {
+		position: relative;
+		margin: auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5em;
+		font-weight: bold;
+		font-size: 1.35rem !important;
+	}
+
+	.stats-content a {
+		position: relative;
+		display: block;
+		width: 100%;
+		margin: auto;
+		color: #5e8de7;
+		text-decoration: none;
+		margin-top: 1.5em !important;
+		font-weight: bold;
+		transition: color 0.5s;
+	}
+
+	.stats-content a:hover {
+		color: #5e8de799;
+	}
+</style>
+
+<div class="stats-content" id="statsPopup">
+	<button onclick="$('.stats-container').hide()" class="btn-close">✖</button>
+	<h1 class="wpm-display"> 68 wpm </h1>
+	<!-- <img src="https://cdn-icons-png.flaticon.com/512/1047/1047711.png" alt="cookies-img" /> -->
+	<p class="favor" style="display: none"><i class="far fa-heart"></i> Add to favourites</p>
+	<button class="close-stats"><i class="fas fa-play-circle"></i>Continue</button>
+	<button class="replay" style="display: none"><i class="fas fa-sync-alt"></i> Replay</button>
+	<!-- <a href="/">Go Home <i class="fas fa-home"></i></a> -->
+	<a href="/practice">Change Text <i class="fas fa-paragraph"></i></a>
+</div>
