@@ -5,8 +5,33 @@ let Music = require('../models/Music');
 
 const renderDashboard = async (req, res) => {
   try {
-    const users = await User.find();
-    res.render('dashboard/');
+    const userCount = await User.countDocuments();
+    const musicCount = await Music.countDocuments();
+    const uploadCount = await User.countDocuments({ public: false });
+
+    const topUsers = await User.find().sort({ views: -1 }).limit(5);
+    // const popularMusics = await Music.find().sort({ rating: -1, views: -1 }).limit(5);
+    const popularMusics = await Music.aggregate([
+      {
+        $addFields: {
+          averageScore: { $avg: ['$rating', '$views'] },
+        },
+      },
+      {
+        $sort: { averageScore: -1 },
+      },
+      {
+        $limit: 5,
+      },
+    ]);
+
+    res.render('dashboard', {
+      numUsers: userCount,
+      numMusics: musicCount,
+      numUploads: uploadCount,
+      topUsers,
+      popularMusics,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.error(error);
@@ -34,7 +59,7 @@ const renderMusics = async (req, res) => {
 };
 
 module.exports = {
-	renderDashboard,
-	renderUsers,
-	renderMusics,
-}
+  renderDashboard,
+  renderUsers,
+  renderMusics,
+};

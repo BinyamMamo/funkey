@@ -4,13 +4,55 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dashboard | Manage Musics</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/css/upload.css">
-	<link rel="stylesheet" href="/css/toasts.css">
+	<title>Dashboard | Music</title>
+	<link rel="shortcut icon" href="/assets/icon/logo.ico" type="image/x-icon">
 
-	<link rel="shortcut icon" href="assets/icon/logo.ico" type="image/x-icon">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="/css/dashboard.css">
+	<style>
+		body {
+			font-size: 0.875rem;
+		}
+
+		.sidebar {
+			position: fixed;
+			height: 100vh;
+			background-color: #343a40;
+			color: #fff;
+			padding: 1rem;
+		}
+
+		.sidebar a {
+			color: #fff;
+			text-decoration: none;
+		}
+
+		.sidebar a:hover {
+			text-decoration: none;
+			background-color: #495057;
+			border-radius: .25rem;
+		}
+
+		.content {
+			padding: 2rem;
+		}
+
+		.navbar-dark .navbar-nav .nav-link {
+			color: #fff;
+		}
+
+		.navbar-dark .navbar-nav .nav-link:hover {
+			color: #ddd;
+		}
+	</style>
 
 	<style>
 		.delete-btn {
@@ -48,272 +90,195 @@
 			top: 50%;
 			transform: translate(-50%, 100%);
 		}
+
+		.favorite {
+			text-align: center;
+			color: #e75e86;
+			font-size: 1rem;
+		}
 	</style>
+	<link rel="stylesheet" href="/css/toasts.css">
 </head>
 
 <body>
-	<div class="container mt-5">
-		<div class="row mb-4">
-			<div class="col">
-				<h1 class="text-center">Music Management Dashboard</h1>
-			</div>
-		</div>
-		<div class="row mb-4" style="display: none">
-			<div class="col">
-				<form id="fakeUsersForm" class="form-inline justify-content-center">
-					<div class="form-group mb-2">
-						<label for="numberOfUsers" class="sr-only">Number of musics</label>
-						<input type="number" class="form-control" id="numberOfUsers" placeholder="Number of musics" min="1">
-					</div>
-					<button type="submit" class="btn btn-primary mb-2 ml-2">Generate Fake musics</button>
-				</form>
-			</div>
-		</div>
+
+	<div class="container-fluid">
 		<div class="row">
-			<div class="col">
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">Music</th>
-							<th scope="col">Artist</th>
-							<th scope="col">Rating</th>
-							<th scope="col">Views</th>
-							<th scope="col">Favorite</th>
-							<th scope="col">Created</th>
-							<th scope="col">Music Video</th>
-							<th scope="col">Lyrics</th>
-							<th scope="col">Thumbnail</th>
-							<th scope="col">Delete</th>
-						</tr>
-					</thead>
-					<tbody id="musicsTableBody">
-						<% let ordinalNo=0; %>
-							<% musics.forEach((music, index)=> { %>
-								<% ordinalNo=index + 1; %>
-									<tr id="<%= music._id %>">
-										<th scope="row" class="ordinal">
-											<%= index + 1 %>
-										</th>
-										<td>
-											<%= music.title %>
-										</td>
-										<td>
-											<%= music.artist %>
-										</td>
-										<td>
-											<%= music.rating.toFixed(2) %>
-										</td>
-										<td>
-											<%= music.views %>
-										</td>
-										<td>
-											<%= music.favorite %>
-										</td>
-										<td>
-											<%= music.updatedAt %>
-										</td>
-										<td>
-											<a href="/<%= music.video %>">
-												<%= music.video %>
-											</a>
-										</td>
-										<td>
-											<a href="/<%= music.lyrics %>">
-												<%= music.lyrics %>
-											</a>
-										</td>
-										<td class="thumbnail-container"><span style="background-image: url('/<%= music.thumbnail %>');"
-												class="table-thumbnail"></span></td>
-										<td class="delete-container">
-											<i data-id="<%= music._id %>" class="fas fa-trash-alt delete-btn"></i>
-										</td>
-									</tr>
-									<% }); %>
-					</tbody>
-				</table>
-			</div>
+			<!-- Sidebar -->
+			<!-- Sidebar -->
+			<!-- Sidebar -->
+			<!-- Sidebar -->
+			<!-- Sidebar -->
+			<!-- Sidebar -->
+			<nav class="col-md-2 d-none d-md-block sidebar">
+				<div class="top-left text-center">
+					<img onclick="location.href = '/'" style="cursor: pointer;" src="/assets/images/logo.png" alt="logo" class="img-fluid rounded-circle">
+					<h5 class="mt-2">Dashboard | Musics</h5>
+				</div>
+				<hr>
+				<form class="form-inline my-2 my-lg-0" style="display: none">
+					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				</form>
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link active" href="/dashboard">Overview</a>
+					</li>
+					<!-- Accordion -->
+					<li class="nav-item">
+						<div id="accordion">
+							<div class="card border-0">
+								<div class="card-header border-0 p-0">
+									<h5 class="mb-0">
+										<button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapseOne"
+											aria-expanded="true" aria-controls="collapseOne">
+											&nbsp;Dashboards <i class="fas fa-caret-down"></i>
+										</button>
+									</h5>
+								</div>
+								<div id="collapseOne" class="collapse dashboards" aria-labelledby="headingOne" data-parent="#accordion">
+									<div class="card-body p-0">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="/dashboard/users"><i class="fas fa-users"></i> &nbsp; User
+													Dashboard</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="/dashboard/musics"><i class="fas fa-music"></i>&nbsp;&nbsp; Music
+													Dashboard</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Analytics</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Settings</a>
+					</li>
+				</ul>
+
+				<hr>
+
+				<h5 class="mt-4 quick-links">&nbsp;Quick Links</h5>
+				<ul class="nav flex-column quick-links-container">
+					<li class="nav-item">
+						<a class="nav-link" href="/browse">Browse Musics</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/practice">practice Typing</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/practice">Piano Typing</a>
+					</li>
+				</ul>
+
+			</nav>
+
+
+
+
+
+			<!-- Main content -->
+			<main role="main" class="col-md-10 ml-sm-auto px-4 content" style="padding: 0;">
+				<!-- Dashboard Navbar -->
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+					style="position: relative;">
+					<h1 class="h2">Dashboard Overview</h1>
+					<div class="dropdown">
+						<span class="profile-pic" data-toggle="dropdown" aria-expanded="false"></span>
+						<div class="dropdown-menu" style="margin: auto; margin-right: 5rem;">
+							<a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> Profile</a>
+							<a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a>
+							<a class="dropdown-item" href="#">Logout <i class="fas fa-sign-out-alt"></i></a>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="musics-table" style="width: 100%;">
+					<div class="col">
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Thumbnail</th>
+									<th scope="col">Music</th>
+									<th scope="col">Artist</th>
+									<th scope="col">Rating</th>
+									<th scope="col">Views</th>
+									<th scope="col">Favorite</th>
+									<th scope="col">Created</th>
+									<th scope="col">Music Video</th>
+									<th scope="col">Lyrics</th>
+									<th scope="col">Delete</th>
+								</tr>
+							</thead>
+							<tbody id="musicsTableBody">
+								<% let ordinalNo=0; %>
+									<% musics.forEach((music, index)=> { %>
+										<% ordinalNo=index + 1; %>
+											<tr id="<%= music._id %>">
+												<th scope="row" class="ordinal">
+													<%= index + 1 %>
+												</th>
+												<td class="thumbnail-container"><span style="background-image: url('/<%= music.thumbnail %>');"
+														class="table-thumbnail"></span></td>
+												<td>
+													<%= music.title %>
+												</td>
+												<td>
+													<%= music.artist %>
+												</td>
+												<td>
+													<%= music.rating.toFixed(2) %>
+												</td>
+												<td>
+													<%= music.views %>
+												</td>
+												<td class="favorite">
+													<% if (music.favorite) {%>
+														<i class="fas fa-heart"></i>
+														<% } else { %>
+															<i class="far fa-heart"></i>
+															<% } %>
+												</td>
+												<td>
+													<%= music.updatedAt %>
+												</td>
+												<td>
+													<a href="/<%= music.video %>">
+														<%= music.video %>
+													</a>
+												</td>
+												<td>
+													<a href="/<%= music.lyrics %>">
+														<%= music.lyrics %>
+													</a>
+												</td>
+												<td class="delete-container">
+													<i data-id="<%= music._id %>" class="fas fa-trash-alt delete-btn"></i>
+												</td>
+											</tr>
+											<% }); %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+
+			</main>
 		</div>
 	</div>
-	<div class="container mt-5">
-		<form id="upload-form" class="upload-container">
-			<div class="upload-header">
-				<h5 class="upload-title" id="musicModalLabel">Upload Music</h5>
-				</button>
-			</div>
-			<div class="upload-body">
-				<div class="left-side">
-					<div class="thumbnail drop-zone" data-type="image" data-image-url="assets/images/default_thumbnail.jpg">
-						<div class="play-icon-container">
-							<i class="fa fa-file-image" aria-hidden="true"></i>
-						</div>
-						<input type="hidden" name="thumbnail" value="">
-					</div>
-					<input type="file" accept="image/*" id="thumbnail-upload" style="display: none;">
-					<div class="drag-drop artist-music-name">
-						<span>Unknown</span> - <span class="music-name">Track</span>
-					</div>
-				</div>
 
-				<div class="inputs right-side">
-					<!-- <h4 class="upload-title">Upload Music Here</h4> -->
-					<div class="input-group">
-						<input name="artist" type="text" class="form-control" placeholder="Artist Name" pattern="[A-Za-z\s]+"
-							title="Enter a valid artist name (letters and spaces only)" required>
-					</div>
-					<div class="input-group">
-						<input name="title" type="text" class="form-control" placeholder="Music Name" pattern="[A-Za-z0-9\s]+"
-							title="Enter a valid music name (letters, numbers, and spaces only)" required>
-					</div>
-
-					<!-- Video Drop Zone -->
-					<div class="drag-drop drop-zone video-drop" data-type="video">
-						<span>
-							<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
-							Drop video here, or <a href="javascript:void(0)">browse</a>
-							<input class="drop-browse" type="file" accept="video/*" style="display: none">.
-						</span>
-						<input type="hidden" name="video" value="">
-						<div class="progress-container" style="display: none">
-							<div class="progress-bar"></div>
-							<div class="progress-text"></div>
-						</div>
-						<div class="file-details" style="display: none">
-							<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
-							<div class="file-name text-truncate" id="fileName"></div>
-							<button type="button" class="close" data-dismiss="file-name" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-					</div>
-
-					<!-- Lyrics Drop Zone -->
-					<div class="drag-drop drop-zone lyrics-drop" data-type="lyrics">
-						<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
-						<span>Drop Lyrics here, or <a href="javascript:void(0)">browse</a>
-							<input class="drop-browse" type="file" name="video" accept="text/*" style="display: none">.
-						</span>
-						<input type="hidden" name="lyrics" value="">
-						<div class="progress-container" style="display: none">
-							<div class="progress-bar"></div>
-							<div class="progress-text"></div>
-						</div>
-						<div class="file-details" style="display: none">
-							<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
-							<div class="file-name text-truncate" id="fileName"></div>
-							<button type="button" class="close" data-dismiss="file-name" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- <div class="upload-footer"> -->
-			<div class="upload-footer border-0">
-				<button type="submit" class="btn btn-outline-primary"><i
-						class="fas fa-cloud-upload-alt"></i>&nbsp;Upload</button>
-			</div>
-		</form>
-	</div>
-
-
-	<br><br><br><br><br><br><br>
-	<!-- Bootstrap and jquery -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script>
-		console.clear();
 
-		$(document).ready(function () {
-			const toasts = $('.toast');
-			$.each(toasts, function (index, toast) {
-				toast = new bootstrap.Toast(toast);
-				toast.show();
-			});
 
-			// Attach the event handler to all text inputs
-			$('input[type="text"]').on('dragover', function (event) {
-				event.preventDefault(); // Prevent default drag-and-drop behavior
-			});
-			$('input[type="text"]').on('dragleave', function (event) {
-				event.preventDefault(); // Prevent default drag-and-drop behavior
-			});
-			$('input[type="text"]').on('drop', function (event) {
-				event.preventDefault(); // Prevent default drag-and-drop behavior
-			});
-
-			$('#upload-form').on('submit', function (e) {
-				e.preventDefault();
-				// artist, title, video, lyrics, thumbnail, public
-				let artist = $(this).find('input[name="artist"]')[0].value;
-				let title = $(this).find('input[name="title"]')[0].value;
-				let video = $(this).find('input[name="video"]').val();
-				let lyrics = $(this).find('input[name="lyrics"]').val();
-				let thumbnail = $(this).find('input[name="thumbnail"]').val();
-
-				// uploaded from dashboard, so public
-				let public = true;
-
-				if (!artist || artist == '' || !title || title == '' || !video || video == '' || !lyrics || lyrics == '') {
-					toastDanger('Fill all required inputs!');
-					console.error('Fill every input!');
-					return;
-				}
-
-				const fetchData = async () => {
-					try {
-						const res = await fetch('/uploadMusic', {
-							method: 'POST',
-							headers: { 'Content-Type': 'application/json' },
-							body: JSON.stringify({ artist, title, video, lyrics, thumbnail, role: 'admin' }),
-						});
-
-						const data = await res.json();
-						if (!res.ok)
-							throw new Error(data.message);
-
-						// let index = $('#musicsTableBody tr').length + 1;
-						// let music = data.music;
-						// $('#musicsTableBody').append(`
-						// 								<tr id="${music._id}">
-						// 										<th scope="row" class="ordinal">${index++}</th>
-						// 										<td>${music.title}</td>
-						// 										<td>${music.artist}</td>
-						// 										<td><a href='${music.video}'>${music.video}</a></td>
-						// 										<td><a href='${music.lyrics}'>${music.lyrics}</a></td>
-						// 										<td class="thumbnail-container">
-						// 											<span style="background-image: url('/${music.thumbnail}');" class="table-thumbnail"></span>
-						// 											</td>
-						// 										<td class="delete-container">
-						// 											<i data-id="${music._id}" class="fas fa-trash-alt delete-btn"></i>
-						// 										</td>
-						// 								</tr>
-						// 						`);
-
-						// $(this).find('input[name="artist"]').val('');
-						// $(this).find('input[name="title"]').val('');
-						// $(this).find('input[name="video"]').val('');
-						// $(this).find('input[name="lyrics"]').val('');
-						// $(this).find('input[name="thumbnail"]').val('');
-
-						
-						console.log(data.message);
-						toastSuccess(data.message);
-						location.reload();
-					} catch (err) {
-						toastDanger(err.message);
-						console.error(err);
-					}
-				}
-
-				fetchData();
-			});
-
-		});
-	</script>
-
-	<script src="/js/upload.js"></script>
 	<script src="/js/toasts.js"></script>
 	<script src="/js/affirm.js"></script>
 
@@ -321,7 +286,7 @@
 		$(document).ready(function () {
 			console.clear();
 			console.log('Hey there');
-			toastSuccess("musics loaded successfully!");
+			toastSuccess("Users loaded successfully!");
 
 			// Function to update the ordinal numbers
 			function updateOrdinalNumbers() {
@@ -330,33 +295,33 @@
 				});
 			}
 
-			// Handle fake musics form submission
+			// Handle fake users form submission
 			$('#fakeUsersForm').submit(function (e) {
 				e.preventDefault();
 				const numberOfUsers = $('#numberOfUsers').val();
 
-				let index = $('#musicsTableBody tr').length + 1;
-				fetch(`/fake-musics/${numberOfUsers}`)
+				let index = $('#usersTableBody tr').length + 1;
+				fetch(`/fake-users/${numberOfUsers}`)
 					.then(response => response.json())
-					.then(musics => {
-						musics.forEach(music => {
-							$('#musicsTableBody').append(`
-                                <tr id="${music._id}">
+					.then(users => {
+						users.forEach(user => {
+							$('#usersTableBody').append(`
+                                <tr id="${user._id}">
                                     <th scope="row" class="ordinal">${index++}</th>
-                                    <td>${music.name}</td>
-                                    <td>${music.email}</td>
-                                    <td>${music.password}</td>
-                                    <td><img src="${music.avatar}" alt="👤" class="avatar" width="45px"></td>
-                                    <td><i data-id="${music._id}" class="fas fa-trash-alt delete-btn"></i></td>
+                                    <td>${user.name}</td>
+                                    <td>${user.email}</td>
+                                    <td>${user.password}</td>
+                                    <td><img src="${user.avatar}" alt="👤" class="avatar" width="45px"></td>
+                                    <td><i data-id="${user._id}" class="fas fa-trash-alt delete-btn"></i></td>
                                 </tr>
                             `);
 						});
 						updateOrdinalNumbers();
-						toastSuccess(`${numberOfUsers} fake musics added successfully!`);
+						toastSuccess(`${numberOfUsers} fake users added successfully!`);
 					})
 					.catch(error => {
 						console.error('Error:', error);
-						toastDanger('Failed to add fake musics.');
+						toastDanger('Failed to add fake users.');
 					});
 			});
 
@@ -364,52 +329,50 @@
 			$(document).on('click', '.delete-btn', function () {
 				let id = this.dataset.id.toString();
 
-				affirm('Are you sure you want to delete this music?').then((result) => {
+				affirm('Are you sure you want to delete this user?').then((result) => {
 					if (result) {
-						console.log('Deleting music...');
-						deleteMusic(id);
+						console.log('Deleting user...');
+						deleteUser(id);
 					} else {
 						console.log('Deletion cancelled!');
 					}
 				});
 			});
 
-			function deleteMusic(id) {
-				fetch('/deleteMusic', {
+			function deleteUser(id) {
+				fetch('/delete', {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({ id }),
-				}).then(res => {
-					if (!res.ok)
-						return res.json().then((err) => Promise.reject(err));
-					return res.json();
-				}).then(res => {
-					const row = document.getElementById(id);
-					if (row) {
-						let ordinal = $(row).find('.ordinal');
-						let index = parseInt(ordinal.text());
+				}).then(response => response.json())
+					.then(res => {
+						const row = document.getElementById(id);
+						if (row) {
+							let ordinal = $(row).find('.ordinal');
+							let index = parseInt(ordinal.text());
 
-						let next = $(row).next()[0];
-						while ($(next).is('tr')) {
-							$(next).find('.ordinal').html(`${index++}`);
-							next = $(next).next()[0];
+							let next = $(row).next()[0];
+							while ($(next).is('tr')) {
+								$(next).find('.ordinal').html(`${index++}`);
+								next = $(next).next()[0];
+							}
+							console.log('User Deleted!');
+
+							row.parentNode.removeChild(row);
+						} else {
+							console.error(`Row with ID "${rowId}" not found.`);
 						}
-						console.log('music Deleted!');
-
-						row.parentNode.removeChild(row);
-					} else {
-						console.error(`Row with ID "${rowId}" not found.`);
-					}
-					toastSuccess(res.message);
-				}).catch(err => {
-					console.error(err);
-					toastDanger(err.message);
-				});
+						toastSuccess(res.msg);
+					}).catch(err => {
+						console.error(err);
+						toastDanger(err.toString());
+					});
 			}
 		});
 	</script>
+
 </body>
 
 </html>

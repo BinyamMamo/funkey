@@ -26,6 +26,7 @@
 			background-color: #343a40;
 			color: #fff;
 			padding: 1rem;
+			position: fixed;
 		}
 
 		.sidebar a {
@@ -64,7 +65,7 @@
 			<!-- Sidebar -->
 			<!-- Sidebar -->
 			<nav class="col-md-2 d-none d-md-block sidebar">
-				<div class="top-left text-center">
+				<div class="top-left text-center" onclick="location.href = '/'" style="cursor: pointer;">
 					<img src="/assets/images/logo.png" alt="logo" class="img-fluid rounded-circle">
 					<h5 class="mt-2">Funkey | Dashboard</h5>
 				</div>
@@ -123,6 +124,9 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/practice">practice Typing</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/piano">Piano Typing</a>
+					</li>
 				</ul>
 
 			</nav>
@@ -155,7 +159,7 @@
 							<i class="fas fa-users"></i>
 						</div>
 						<div class="column">
-							<span class="stats-count">500</span>
+							<span class="stats-count"><%= numUsers %></span>
 							<span class="stats-caption">Users</span>
 						</div>
 					</div>
@@ -165,7 +169,7 @@
 							<i class="bi bi-music-note-list"></i>
 						</div>
 						<div class="column">
-							<span class="stats-count">350</span>
+							<span class="stats-count"><%= numMusics %></span>
 							<span class="stats-caption">Musics</span>
 						</div>
 					</div>
@@ -175,7 +179,7 @@
 							<i class="fas fa-cloud-upload-alt"></i>
 						</div>
 						<div class="column">
-							<span class="stats-count">520</span>
+							<span class="stats-count"><%= numUploads %></span>
 							<span class="stats-caption">Uploads</span>
 						</div>
 					</div>
@@ -200,24 +204,14 @@
 							</tr>
 						</thead>
 					<tbody>
-						<tr>
-							<td class="align-middle thumbnail-container" scope="row"><span class="thumbnail"></span></td>
-							<td class="align-middle">Ed Sheeran <br> Perfect</td>
-							<td class="align-middle">4.5</td>
-							<td class="align-middle">2 M</td>
-						</tr>
-						<tr>
-							<td class="align-middle" scope="row"><span class="thumbnail"></span></td>
-							<td class="align-middle">Adele <br> Rolling in the Deep</td>
-							<td class="align-middle">4.3</td>
-							<td class="align-middle">1.5 M</td>
-						</tr>
-						<tr>
-							<td class="align-middle" scope="row"><span class="thumbnail"></span></td>
-							<td class="align-middle">Michael Bubble <br> Feeling Good</td>
-							<td class="align-middle">4.3</td>
-							<td class="align-middle">1.2 M</td>
-						</tr>
+						<% popularMusics.forEach(music => { %>
+							<tr>
+								<td class="align-middle thumbnail-container" scope="row"><span class="thumbnail" data-img="<%= music.thumbnail %>"></span></td>
+								<td class="align-middle"><%= music.artist %> <br> <%= music.title %></td>
+								<td class="align-middle"><%= music.rating.toFixed(2) %></td>
+								<td class="align-middle"><%= music.views %></td>
+							</tr>
+						<% }); %>
 					</tbody>
 				</table>
 				
@@ -236,25 +230,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="align-middle thumbnail-container" scope="row"><span class="thumbnail"></span></td>
-							<td class="align-middle">Ed Sheeran <br> Perfect</td>
-							<td class="align-middle">4.5</td>
-							<td class="align-middle">2 M</td>
-						</tr>
-						<tr>
-							<td class="align-middle" scope="row"><span class="thumbnail"></span></td>
-							<td class="align-middle">Adele <br> Rolling in the Deep</td>
-							<td class="align-middle">4.3</td>
-							<td class="align-middle">1.5 M</td>
-						</tr>
-						<tr>
-							<td class="align-middle" scope="row"><span class="thumbnail"></span></td>
-							<td class="align-middle">Michael Bubble <br> Feeling Good</td>
-							<td class="align-middle">4.3</td>
-							<td class="align-middle">1.2 M</td>
-						</tr>
-					</tbody>
+						<% topUsers.forEach(user => { %>
+							<tr>
+								<td class="align-middle thumbnail-container" scope="row"><span class="thumbnail avatar" data-img="<%= user.avatar %>"></span></td>
+								<td class="align-middle"><%= user.name %></td>
+								<td class="align-middle"><%= user.hours || '7hrs45min' %></td>
+								<td class="align-middle" style="text-align: center;"><%= user.score || '24' %></td>
+							</tr>
+						<% }); %>
+						</tbody>
 				</table>
 			</div>
 
@@ -265,6 +249,16 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+	<script defer>
+		$(document).ready(function () {
+			$('.thumbnail').each(function (index, element) {
+				let img = element.dataset.img;
+				$(element).css('background-image', `url('${img}')`)
+			});
+		});
+	</script>
 </body>
 
 </html>
