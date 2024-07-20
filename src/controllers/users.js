@@ -39,7 +39,7 @@ const handleSignup = async (req, res) => {
       name,
       email,
       password: await hash(password),
-      avatar,
+      avatar: `/${avatar}`,
     });
 
     await user.save();
