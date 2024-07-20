@@ -45,6 +45,7 @@
 			gap: 1em;
 			justify-content: center;
 			align-items: center;
+			z-index: 100;
 		}
 
 		.upload-modal .upload-header {
@@ -57,33 +58,54 @@
 			text-align: left;
 			padding-left: 1em;
 		}
+
+		.spinner {
+			display: block;
+			position: fixed;
+			left: 48%;
+			top: 45%;
+			z-index: 10000;
+
+			font-size: 2.5rem;
+			width: 5rem;
+			height: 5rem;
+		}
 	</style>
 </head>
 
 <body>
-
-	<audio id="bg-music" style="display: none">
-		<source src="/assets/audio/forest.mp3" type="audio/mpeg">
-	</audio>
-
 	<div onclick="location.href='/'" class="logo" style="cursor: pointer;">
 		<img src="assets/images/logo.png" alt="">
+		<!-- <button class="btn btn-outline-light" id="timer">00:00</button> -->
 		<h4 class="logo-header">
 			FunKey
 		</h4>
+
 	</div>
+
 	<div class="container">
 		<div class="textbox practice-text" id="textbox">
 		</div>
 	</div>
 
+	<div class="spinner-border text-primary spinner" role="status" style="display: none">
+		<span class="sr-only">Loading...</span>
+	</div>
 	<!-- Modals 2 - add fade-->
-	<div class="modal upload-modal" tabindex="-1" id="uploadModal" aria-labelledby="uploadModalLabel" aria-hidden="true"
+	<div class="modal upload-modal" tabindex="-1" id="practiceModal" aria-labelledby="uploadModalLabel" aria-hidden="true"
 		style="display: block !important">
 		<%- include('practiceMenus.ejs') %>
 	</div>
+	
+	<!-- <div class="stats-container" style="display: none"> -->
+	<div class="stats-container" style="display: none">
+		<%- include('stats.ejs') %>
+	</div>
 
-	<%- include('forest_bg.ejs') %>
+	<div id="theme-container" style="display: block; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;">
+
+	</div>
+
 
 	<!-- Bootstrap JS and dependencies -->
 	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
@@ -92,43 +114,30 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 	<script defer>
-		let audio = new Audio(`/assets/audio/forest.mp3`);
-
 		$(document).ready(function () {
-			$('.audio-selector').on('change', function (e) {
-				e.preventDefault();
-				let value = $(this).val();
-				let selected = $(this).find('option:selected')[0];
-				localStorage.setItem('audioSelected', value);
-				if (!value) {
-					if (!audio.paused) audio.pause();
-					return;
-				}
-
-				audio.load();
-				audio.src = `/assets/audio/${value}`;
-				if (audio) audio.play();
+			let theme = localStorage.getItem('theme') || '/practice/partials/fireflies';
+			fetch(theme).then(res => {
+				if (!res.ok)
+					return res.text().then(err => Promise.reject(err));
+				return res.text();
+			}).then(res => {
+				// console.log(res);
+				if (res.error) return;
+				$('#theme-container').html(res);
 			});
-
-			$('.audio-selector').on('blur', function (e) {
-				console.log('I lost attention!');
-				if (!audio.paused) audio.pause();
-			});
-			$('.audio-selector').val(localStorage.getItem('audioSelected'));
-
-			$('#themeCarousel').on('slide.bs.carousel', function (e) {
-				let activeItem = e.relatedTarget;
-				let newCaption = activeItem.getAttribute('data-caption');
-				$('#carouselCaption').text(newCaption);
-				localStorage.setItem('themeCarousel', e.to.toString());
-			})
-			$('#themeCarousel').carousel({
-				pause: true
-			});
-			$('#themeCarousel').carousel(parseInt(localStorage.getItem('themeCarousel')));
 		});
 	</script>
-	<script src="/js/practice.js"></script>
+	<script src="/js/practice.js" defer></script>
+	<script defer>
+		$(document).ready(function () {
+			$('.theme').each(function (index, element) {
+				let img = element.dataset.img;
+				console.log('img data', img);
+				$(element).css('background-image', `url('${img}')`);
+			});
+		});
+	</script>
+
 </body>
 
 </html>
