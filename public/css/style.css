@@ -43,7 +43,16 @@ body {
   /* text-align: justify; */
   /* overflow: hidden; */
   /* line-height: 1.25em; */
-  line-height: 2em;
+  /* line-height: 2em; */
+}
+
+.break::before {
+	display: block;
+	position: relative;
+	content: '';
+	flex-basis: 100%;
+	width: 65vw;
+	height: 1em;
 }
 
 .char {
