@@ -7,6 +7,25 @@
 		background-color: #27292a !important;
 		font-size: 100%;
 		border: none;
+		padding: 1em;
+	}
+
+	/* .prompt-container i { */
+	.prompt-container span {
+		width: auto;
+		position: absolute;
+		top: 45%;
+		transform: translateY(-50%);
+		right: 0.5em;
+		z-index: 1000000;
+		color: #e1e1e1;
+		cursor: pointer;
+		transition: 0.5s ease;
+	}
+
+	.prompt-container span:hover {
+		transform-origin: center;
+		transform: translateY(-40%) rotateZ(90deg);
 	}
 
 	.custom-text {
@@ -23,6 +42,9 @@
 		width: 80%;
 		flex-basis: 80%;
 		outline: none;
+		color: #dddd;
+		height: min-content;
+		padding: 0.5em 1em;
 	}
 
 	.audio-selector-container {
@@ -53,24 +75,6 @@
 		align-items: center;
 	}
 
-	.speed-setting {
-		background-color: #1f2122;
-		color: #e1e1e1 !important;
-		/* font-size: 1.25rem; */
-		border: none;
-		font-family: monospace;
-		text-align: right;
-		padding-right: 3px !important;
-		width: fit-content;
-		margin: 0;
-
-		outline: none;
-	}
-
-	.speed-setting * {
-		font-family: monospace;
-	}
-
 	.carousel-container {
 		display: block;
 
@@ -96,6 +100,7 @@
 		opacity: 0.15;
 		width: 2em;
 		border: none;
+		border-radius: 23px;
 	}
 
 	.carousel-control-prev:hover,
@@ -110,15 +115,80 @@
 	}
 
 	.modal-header {
-		border-color: #27292a !important;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+	}
+	.modal-header h5 {
+		font-size: 1.5rem;	
+	}
+	
+	.modal-footer {
+		margin-top: 0;
+		border: none !important;
 	}
 
+	.theme {
+		display: block;
+		/* background-image: url('/assets/images/gif/Color Changing.gif'); */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+
+		border-radius: 23px;
+		/* width: 75% !important; */
+		width: 100% !important;
+		height: 14rem;
+		/* height: 14rem; */
+		overflow: hidden;
+		margin: auto;
+		opacity: 0.7 !important;
+	}
+
+	.textarea-container i {
+		width: auto;
+		position: absolute;
+		right: 0.5em;
+		top: 0.5em;
+		z-index: 100;
+		font-size: 1rem;
+		color: #e1e1e1;
+		cursor: pointer;
+	}
+
+	.text-length-container {
+		width: 100%;
+		position: relative;
+	}
+
+	.text-length {
+		background-color: transparent;
+		background-color: #27292a;
+		border: none;
+		width: fit-content;
+		text-align: center;
+		color: #e1e1e1;
+	}
+
+	.text-length:focus {
+		background-color: #27292a;
+		color: #ddd;
+	}
+
+	.text-length-container i {
+		width: auto;
+		position: absolute;
+		left: 0.5em;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 </style>
 
 <div class="modal-dialog">
-	<form id="upload-form" class="upload-container modal-content">
-		<div class="upload-header modal-header">
-			<h5 class="upload-title modal-title" id="uploadModalLabel">Practice Typing</h5>
+	<form id="practice-menu" class="upload-container modal-content">
+		<div class="upload-header modal-header" style="border-color: #27292aaa !important;">
+			<h5 class="upload-title modal-title" id="uploadModalLabel">Practice Typing ✨</h5>
 			<i onclick="$('#uploadModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
 				data-bs-dismiss="modal" aria-label="Close"></i>
 		</div>
@@ -128,37 +198,34 @@
 
 				<!-- carousel CAROUSEL -->
 				<!-- <div id="themeCarousel" class="carousel-container carousel slide" data-ride="carousel"> -->
-				<div id="themeCarousel" class="carousel-container carousel slide">
+				<div id="themeCarousel" class="carousel-container carousel slide" style="width: 80%;">
+					<input type="hidden" name="theme" value="fireflies" style="display: none">
 					<ol class="carousel-indicators" style="display: none">
 						<li data-target="#themeCarousel" data-slide-to="0" class="active"></li>
 						<li data-target="#themeCarousel" data-slide-to="1"></li>
 						<li data-target="#themeCarousel" data-slide-to="2"></li>
 						<li data-target="#themeCarousel" data-slide-to="3"></li>
-						<li data-target="#themeCarousel" data-slide-to="4"></li>
-						<li data-target="#themeCarousel" data-slide-to="5"></li>
-						<li data-target="#themeCarousel" data-slide-to="6"></li>
 					</ol>
 					<div class="carousel-inner">
-						<div class="carousel-item active" data-caption="Fireflies">
-							<img src="assets/images/gif/Fireflies.gif" class="d-block w-100" alt="...">
+						<div class="carousel-item active" data-caption="Fireflies" data-view="fireflies">
+							<!-- <img src="/assets/images/gif/Fireflies.gif" class="d-block w-100" alt="..."> -->
+							<span class="theme d-block w-100" alt="..." data-img="/assets/images/gif/Fireflies.gif"></span>
 						</div>
-						<div class="carousel-item" data-caption="Color Changing">
-							<img src="assets/images/gif/Color Changing.gif" class="d-block w-100" alt="...">
+						<div class="carousel-item" data-caption="Rymd" data-view="rymd">
+							<!-- <img src="/assets/images/gif/Rymd.gif" class="d-block w-100" alt="..."> -->
+							<span class="theme d-block w-100" alt="..." data-img="/assets/images/gif/Rymd.gif"></span>
 						</div>
-						<div class="carousel-item" data-caption="Flow Field">
-							<img src="assets/images/gif/Flow Field.gif" class="d-block w-100" alt="...">
+						<div class="carousel-item" data-caption="East Entrance" data-view="east_entrance">
+							<!-- <img src="/assets/images/gif/Rymd.gif" class="d-block w-100" alt="..."> -->
+							<span class="theme d-block w-100" alt="..." data-img='https://i.pinimg.com/originals/f0/c2/64/f0c264e5f18ee610c88ca829cd46f32e.gif'></span>
 						</div>
-						<div class="carousel-item" data-caption="Sea Waves">
-							<img src="assets/images/gif/Sea Waves.gif" class="d-block w-100" alt="...">
+						<div class="carousel-item" data-caption="Space Ship" data-view="space_ship">
+							<!-- <img src="/assets/images/gif/Rymd.gif" class="d-block w-100" alt="..."> -->
+							<span class="theme d-block w-100" alt="..." data-img='https://steamuserimages-a.akamaihd.net/ugc/1618439156948644147/598FCDF818584ED302FDEFEC19256E3E409595B7/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'></span>
 						</div>
-						<div class="carousel-item" data-caption="Rymd">
-							<img src="assets/images/gif/Rymd.gif" class="d-block w-100" alt="...">
-						</div>
-						<div class="carousel-item" data-caption="Crystal Parallax">
-							<img src="assets/images/gif/Crystal Parallax.gif" class="d-block w-100" alt="...">
-						</div>
-						<div class="carousel-item" data-caption="Space Elevator">
-							<img src="assets/images/gif/Space Elevator.gif" class="d-block w-100" alt="...">
+						<div class="carousel-item" data-caption="Night Sky" data-view="night_sky">
+							<!-- <img src="/assets/images/gif/Rymd.gif" class="d-block w-100" alt="..."> -->
+							<span class="theme d-block w-100" alt="..." data-img="https://storage.ko-fi.com/cdn/useruploads/display/330f80a5-28d4-4807-8d08-e54e2bdcb7b9_bluecityrevisitedclean.gif"></span>
 						</div>
 					</div>
 					<button class="carousel-control-prev" type="button" data-target="#themeCarousel" data-slide="prev">
@@ -172,30 +239,43 @@
 				</div>
 
 				<div class="drag-drop artist-music-name">
-					<span id="carouselCaption">Image Caption</span>
-					<!-- <span>Unknown</span> <br> <span class="music-name">Track</span> -->
+					<span id="carouselCaption">...</span>
 				</div>
 			</div>
 
 			<div class="inputs right-side">
-				<!-- <h4 class="upload-title">Upload Music Here</h4> -->
-				<div class="input-group">
-					<input name="artist" type="text" class="form-control prompt-message" placeholder="Prompt Message"
-						pattern="[A-Za-z\s]+" title="Enter a valid prompt message" required>
+				<div class="input-group prompt-container">
+					<!-- <i class="fas fa-hand-sparkles"></i> -->
+					<span class="generate-prompt">
+						<svg fill="#e1e1e1" width="1rem" height="1rem" viewBox="0 0 512 512" id="icons"
+							xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M208,512a24.84,24.84,0,0,1-23.34-16l-39.84-103.6a16.06,16.06,0,0,0-9.19-9.19L32,343.34a25,25,0,0,1,0-46.68l103.6-39.84a16.06,16.06,0,0,0,9.19-9.19L184.66,144a25,25,0,0,1,46.68,0l39.84,103.6a16.06,16.06,0,0,0,9.19,9.19l103,39.63A25.49,25.49,0,0,1,400,320.52a24.82,24.82,0,0,1-16,22.82l-103.6,39.84a16.06,16.06,0,0,0-9.19,9.19L231.34,496A24.84,24.84,0,0,1,208,512Zm66.85-254.84h0Z" />
+							<path
+								d="M88,176a14.67,14.67,0,0,1-13.69-9.4L57.45,122.76a7.28,7.28,0,0,0-4.21-4.21L9.4,101.69a14.67,14.67,0,0,1,0-27.38L53.24,57.45a7.31,7.31,0,0,0,4.21-4.21L74.16,9.79A15,15,0,0,1,86.23.11,14.67,14.67,0,0,1,101.69,9.4l16.86,43.84a7.31,7.31,0,0,0,4.21,4.21L166.6,74.31a14.67,14.67,0,0,1,0,27.38l-43.84,16.86a7.28,7.28,0,0,0-4.21,4.21L101.69,166.6A14.67,14.67,0,0,1,88,176Z" />
+							<path
+								d="M400,256a16,16,0,0,1-14.93-10.26l-22.84-59.37a8,8,0,0,0-4.6-4.6l-59.37-22.84a16,16,0,0,1,0-29.86l59.37-22.84a8,8,0,0,0,4.6-4.6L384.9,42.68a16.45,16.45,0,0,1,13.17-10.57,16,16,0,0,1,16.86,10.15l22.84,59.37a8,8,0,0,0,4.6,4.6l59.37,22.84a16,16,0,0,1,0,29.86l-59.37,22.84a8,8,0,0,0-4.6,4.6l-22.84,59.37A16,16,0,0,1,400,256Z" />
+						</svg>
+					</span>
+					<input name="prompt" type="text" class="form-control prompt-message" placeholder="Prompt Message"
+						pattern="[A-Za-z\s]+" title="Enter a valid prompt message">
 				</div>
-				<div class="input-group">
-					<textarea name="title" class="form-control custom-text" rows="1" placeholder="Custom Text"
+				<div class="input-group textarea-container">
+					<i class="fas fa-folder-plus attachTextFile"></i>
+					<textarea name="customText" class="form-control custom-text" rows="2" placeholder="Custom Text"
 						pattern="[A-Za-z0-9\s]+" title="Enter a valid custom text here"></textarea>
 				</div>
 
 				<div class="input-group audio-selector-container">
-					<select class="custom-select audio-selector" id="inputGroupSelect04"
+					<select name="audio" class="custom-select audio-selector" id="inputGroupSelect04"
 						aria-label="Example select with button addon" placeholder="Choose audio...">
 						<option selected disabled hidden>Choose audio...</option>
 						<option value="">None</option>
-						<option value="forest.mp3">♪ &nbsp;Frederic Chopin - Mysterious Forest&nbsp;</option>
-						<option value="2">♪ &nbsp;Frederic Chopin - Mysterious Forest&nbsp;</option>
-						<option value="3">♪ &nbsp;Frederic Chopin - Mysterious Forest&nbsp;</option>
+						<option value="forest.mp3">♪ &nbsp;Mysterious Forest - Frederic Chopin&nbsp;</option>
+						<option value="motivation.mp3">♪ &nbsp;Epic Motivational - StereojamMusic&nbsp;</option>
+						<option value="horror.mp3">♪ &nbsp;Dark Horror&nbsp;</option>
+						<option value="purity.mp3">♪ &nbsp;Purity - BigRicePiano&nbsp;</option>
+						<option value="jazz.mp3">♪ &nbsp;Jazz Music for Reading&nbsp;</option>
 					</select>
 					<div class="input-group-append" style="width: auto;">
 						<button class="btn browse-btn" type="button">Browse</button>
@@ -206,33 +286,30 @@
 				<!-- Lyrics Drop Zone -->
 				<div class="level-settings">
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-						<label class="form-check-label" for="inlineCheckbox1">Capitals</label>
+						<input name="capitals" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="capitals"
+							style="cursor: pointer;">
+						<label class="form-check-label" for="inlineCheckbox1" style="cursor: pointer;">Capitals</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-						<label class="form-check-label" for="inlineCheckbox2">Punctuations</label>
+						<input name="punctuations" class="form-check-input" type="checkbox" id="inlineCheckbox2"
+							value="punctuations" style="cursor: pointer;">
+						<!-- <label class="form-check-label" for="inlineCheckbox2" style="cursor: pointer;">Punctuations</label> -->
+						<label class="form-check-label" for="inlineCheckbox2" style="cursor: pointer;">Symbols</label>
 					</div>
 
-					<div class="form-check" style="width: fit-content;  padding: 0;">
-						<select class="form-select speed-setting" name="speed" aria-label="Default select example">
-							<option value="1">0.25</option>
-							<option value="2">0.5</option>
-							<option value="3">0.75</option>
-							<option selected>1x</option>
-							<option value="1">1.25</option>
-							<option value="2">1.5</option>
-							<option value="3">1.75</option>
-							<option value="3">2.0</option>
-						</select>
-						<!-- <label class="form-check-label" for="customOption4">Speed</label> -->
+					<!-- <div data-mdb-input-init class="form-outline" style="width: 22rem;"> -->
+					<div class="form-check form-check-inline text-length-container" style="width: fit-content;">
+						<!-- <i class="fas fa-stream"></i> -->
+						<i class="fas fa-list-ol"></i>
+						<input name="length" type="number" id="form1" min="5" max="2500" step="100" placeholder="___"
+							class="form-control form-icon-trailing text-length" />
 					</div>
 
 				</div>
 			</div>
 		</div>
 		<!-- <div class="upload-footer"> -->
-		<div class="modal-footer upload-footer border-0">
+		<div class="modal-footer upload-footer border-0" style="border: none !important;">
 			<button type="submit" class="btn btn-outline-primary"><i class="fas fa-keyboard"></i></i>&nbsp;Begin</button>
 		</div>
 	</form>
