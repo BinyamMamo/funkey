@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const uploadController = require('../controllers/upload');
 const dashboardController = require('../controllers/dashboard');
+const practiceController = require('../controllers/practice')
 const User = require('../models/User');
 const Music = require('../models/Music');
 const musicRoutes = require('./music.routes');
@@ -14,8 +15,16 @@ const fakeRoute = require('./faker.routes');
 //   // res.render('home', { musics, avatar: null });
 // });
 
+router.post('/practice', practiceController.practice);
+
 router.get('/practice', async (req, res) => {
+  // res.render('practice/practice');
   res.render('practice/practice');
+});
+
+router.get('/practice/partials/:partialName', (req, res) => {
+  const partialName = req.params.partialName;
+  res.render(`practice/partials/${partialName}`);
 });
 
 router.get('/piano', async (req, res) => {

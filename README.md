@@ -1,4 +1,4 @@
-<h1 align="center">⌨️ Funkey - Typing Practice Website</h1>
+<h1 align="center">Funkey - Typing Practice Website ⌨️</h1>
 
 <p align="center">
 <img src="public/assets/images/logo.png" width="50%">
