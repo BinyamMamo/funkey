@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Funkey | Home page</title>
@@ -84,6 +83,17 @@
 			opacity: 0.95;
 			cursor: pointer;
 			transition: font-weight 0.25s ease;
+
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-evenly;
+			gap: 0.25em;
+			align-items: center;
+		}
+
+		.practice-typing-video-overlay h1 * {
+			display: inline-block;
 		}
 
 		.practice-typing-video-overlay h1:hover {
@@ -213,9 +223,10 @@
 				<li><a href="/piano">Piano</a></li>
 				<% if (!avatar) { %>
 					<li class="login"><a href="/login" class="active">Login</a></li>
-				<% } else { %>
-						<li><a href="/profile">Profile <span class="profile-pic-cont"><img class="profile-pic" src="<%= avatar %>" alt=""></span></a></li>
-				<% } %>
+					<% } else { %>
+						<li><a href="/profile">Profile <span class="profile-pic-cont"><img class="profile-pic" src="<%= avatar %>"
+										alt=""></span></a></li>
+						<% } %>
 							<!-- <li><a href="profile.html">Login <img src="assets/images/logo.png" alt=""></a></li> -->
 			</ul>
 			<a class='menu-trigger'>
@@ -318,7 +329,7 @@
 						</div>
 						<div class="col-lg-12">
 							<div class="main-button view-library-btn">
-								<a href="/browse">Browse More</a>
+								<a href="/browse">Browse <i class="fas fa-music"></i></a>
 							</div>
 						</div>
 					</div>
@@ -331,7 +342,8 @@
 											 $(this).parent().find('video').prop('muted',
 											 !$(this).parent().find('video').prop('muted'));"></i>
 						<div class="practice-typing-video-overlay">
-							<h1 class="btn btn-dark" onclick="location.href='/piano'"><i class="fas fa-music"></i>&nbsp; Play
+							<h1 class="btn btn-dark" onclick="location.href='/piano'"><i class="fab fa-itunes-note"></i> <span> Play </span>
+							<!-- <h1 class="btn btn-dark" onclick="location.href='/piano'"><i class="fas fa-music"></i>&nbsp; Play -->
 							</h1>
 						</div>
 						<video class="practice-typing-video" width="90%" autoplay muted loop>
@@ -556,6 +568,14 @@
 		<script src="/js/custom.js" defer></script>
 		<script src="/js/levels.js" defer></script>
 		<script defer>
+			let lastScroll = 0;
+			window.addEventListener('scroll', () => {
+				if (Date.now() - lastScroll > 100) {
+					// Your scroll event logic here
+					lastScroll = Date.now();
+				}
+			});
+
 			$(document).ready(function () {
 				$('#levelsModal').modal({
 					backdrop: true, // Allows closing the modal by clicking outside of it

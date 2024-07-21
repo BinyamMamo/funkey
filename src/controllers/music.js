@@ -6,11 +6,11 @@ const getMusics = async (req, res) => {
   let musics = [];
   try {
     musics = await Music.find({ public: true });
-    if (req.session && req.session.userId) {
-      let userId = req.session.userId;
-      let privateMusics = await Music.find({ userId });
-      musics.concat(privateMusics);
-    }
+    // if (req.session && req.session.userId) {
+    //   let userId = req.session.userId;
+    //   let privateMusics = await Music.find({ userId });
+    //   musics.concat(privateMusics);
+    // }
   } catch (err) {
     console.error(err);
   }

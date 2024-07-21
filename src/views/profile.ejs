@@ -21,7 +21,7 @@
 		integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-	<title>Funkey | Home page</title>
+	<title>Funkey | Profile</title>
 
 
 	<!-- Additional CSS Files -->
@@ -61,6 +61,23 @@
 		.btn:focus {
 			outline: none;
 			/* box-shadow: none; */
+		}
+
+		.logout-btn {
+			background-color: transparent !important;
+			color: #fff !important;
+			text-decoration: none !important;
+			border-color: #fff !important;
+			border-width: 2px;
+			border-width: 2px !important;
+			transition: border-width 0.5s ease;
+		}
+		
+		.logout-btn:hover {
+			font-weight: 700;
+			border-width: 2px !important;
+			border-color: #0351a4aa !important;
+			background-color: transparent !important;
 		}
 	</style>
 </head>
@@ -373,10 +390,7 @@
 			$('.logout-btn').on('click', function (e) {
 				e.preventDefault();
 				affirm('Are u sure, you want to logout?').then((affirmed) => {
-					if (affirmed)
-						location.href = '/';
-					else
-						alert('something went wrong');
+					if (affirmed) location.href = '/logout';
 				});
 			});
 		});

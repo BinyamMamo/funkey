@@ -977,6 +977,17 @@ Gaming Library Style
 	text-align: center;
 }
 
+.view-library-btn a {
+	font-family: 'Poppins', sans-serif;
+	/* font-weight: bold; */
+	font-size: 1rem;
+	padding: 0.5em 1em;
+}
+
+.view-library-btn a:hover {
+	background-color: #639aeb99 !important;
+	color: #ffffffcc !important;
+}
 /* 
 ---------------------------------------------
 Footer Style

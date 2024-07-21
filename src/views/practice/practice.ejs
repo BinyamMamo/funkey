@@ -4,8 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-
+	<title>Funkey | Practice Typing</title>
+	<link rel="shortcut icon" href="/assets/icon/funkey.ico" type="image/x-icon">
 
 	<!-- Google Fonts -->
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -74,7 +74,7 @@
 </head>
 
 <body>
-	<div onclick="location.href='/'" class="logo" style="cursor: pointer;">
+	<div onclick="location.href='/'" class="logo" style="cursor: pointer; z-index: 10001;">
 		<img src="assets/images/logo.png" alt="">
 		<!-- <button class="btn btn-outline-light" id="timer">00:00</button> -->
 		<h4 class="logo-header">
@@ -92,8 +92,7 @@
 		<span class="sr-only">Loading...</span>
 	</div>
 	<!-- Modals 2 - add fade-->
-	<div class="modal upload-modal" tabindex="-1" id="practiceModal" aria-labelledby="uploadModalLabel" aria-hidden="true"
-		style="display: block !important">
+	<div class="modal fade upload-modal" tabindex="-1" id="practiceModal" aria-labelledby="uploadModalLabel" aria-hidden="true">
 		<%- include('practiceMenus.ejs') %>
 	</div>
 	
@@ -115,6 +114,9 @@
 
 	<script defer>
 		$(document).ready(function () {
+
+			$('#practiceModal').modal('show');
+
 			let theme = localStorage.getItem('theme') || '/practice/partials/fireflies';
 			fetch(theme).then(res => {
 				if (!res.ok)

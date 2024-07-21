@@ -31,19 +31,24 @@ router.get('/piano', async (req, res) => {
 	res.render('piano/piano');
 });
 
+router.get('/tos', async (req, res) => {
+	res.render('tos');
+});
+
 router.get('/', async (req, res) => {
 	let musics = await Music.find();
   let avatar = null;
-  if (req.session.userId) {
-		avatar = req.session.avatar;
-    console.log('not logged in');
-  } else console.log('we are logged in');
+	if (req.user)
+		avatar = req.user.avatar;
 	res.render('home', { musics, avatar });
 });
 
 router.get('/browse', async (req, res) => {
 	let musics = await Music.find();
-  res.render('browse', { musics, avatar: null });
+	let avatar = null;
+	if (req.user)
+		avatar = req.user.avatar;
+  res.render('browse', { musics, avatar });
   // res.render('home', { musics, avatar: null });
 });
 
