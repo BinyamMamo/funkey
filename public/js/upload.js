@@ -2,21 +2,19 @@ $(document).ready(function () {
   $('input[name="artist"]').on('input', function () {
     const value = $(this).val();
     const output = $('.artist-music-name span');
-		output[0].innerHTML = value;
-		
-    if (output.text().length < 25)
-			output[1].innerHTML = ' - ';
-		else output[1].innerHTML = '<br>';
+    output[0].innerHTML = value;
+
+    if (output.text().length < 25) output[1].innerHTML = ' - ';
+    else output[1].innerHTML = '<br>';
     if (value == '') output[0].innerHTML = 'Unkown';
   });
 
   $('input[name="title"]').on('input', function () {
     const value = $(this).val();
     const output = $('.artist-music-name span');
-		output[2].innerHTML = value;
+    output[2].innerHTML = value;
 
-    if (output.text().length < 25)
-			output[1].innerHTML = ' - ';
+    if (output.text().length < 25) output[1].innerHTML = ' - ';
     else output[1].innerHTML = '<br>';
     if (value == '') output[1].innerHTML = 'Track';
   });
@@ -87,7 +85,7 @@ $(document).ready(function () {
 
   function uploadFile(file, element) {
     let filePath = $(element).find('input[type="hidden"]').val();
-    if (filePath) {
+    if (filePath && filePath != '') {
       fetch('/deleteUpload', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
@@ -146,6 +144,7 @@ $(document).ready(function () {
         toastDanger(response.error);
       }
     };
+    console.log('input:', $(element).find('input[type="hidden"]')[0]);
 
     xhr.send(formData);
   }
@@ -247,4 +246,29 @@ $(document).ready(function () {
       fileName.html(`${file.originalname}`);
     }
   }
+
+  $('#upload-form').on('submit', function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+
+		$('.spinner-overlay').show();
+		fetch('/uploadMusic', {
+			method: 'POST',
+			body: formData,
+			headers: {
+				'Accept': 'application/json',
+			}}).then(res => {  // parse json
+				if (!res.ok)
+					return res.json().then(err => Promise.reject(err))
+				return res.json()
+			}).then(res => { // get response
+				$('.spinner-overlay').hide();
+				console.log(res.message);
+				toastSuccess(res.message);
+			}).catch(err => {  // catch error
+				$('.spinner-overlay').hide();
+				console.error(err);
+				toastDanger(err.message);
+			});
+  });
 });
