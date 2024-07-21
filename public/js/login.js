@@ -13,6 +13,7 @@ $(document).ready(function () {
         body: JSON.stringify({ email, password }),
       });
 
+			console.log('response:', response);
       const data = await response.json();
 
       if (response.ok) {
@@ -38,6 +39,7 @@ $(document).ready(function () {
 
   $('.google-login').on('click', async function (event) {
     event.preventDefault();
+
     $('.spinner').show();
     window.location.href = '/auth/google';
   });

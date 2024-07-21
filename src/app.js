@@ -1,12 +1,14 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
-const session = require('express-session');
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('./models/User');
+const flash = require('connect-flash');
+const MongoStore = require('connect-mongo');
+const session = require('express-session');
+require('./config/passport-config');
 
-const routes = require('./routes/routes');
 const connectDB = require('./config/db');
+const routes = require('./routes/routes');
 const errorHandler = require('./middleware/error_handler');
 const notFoundHandler = require('./middleware/notFoundHandler');
 
@@ -14,77 +16,34 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-app.use(
-  session({
-    secret: 'Funkey user',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    },
-  })
-);
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    collectionName: 'sessions',
+  }),
+	cookie: {
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: false,
+    httpOnly: true
+  }
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:5000/auth/google/callback',
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      let user = await User.findOne({ email: profile.emails[0].value });
-      if (user) {
-        user.name = profile.displayName;
-        user.avatar = profile._json.picture;
-        await user.save();
-        return done(null, user);
-      }
+// Set up flash
+app.use(flash());
 
-      user = new User({
-        id: profile.id,
-        name: profile.displayName,
-        email: profile.emails[0].value,
-        avatar: profile._json.picture,
-        password: '',
-      });
-
-      await user.save();
-      return done(null, user);
-    }
-  )
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user._id);
+// Middleware to set flash messages and user to locals for access in views
+app.use((req, res, next) => {
+  res.locals.success_messages = req.flash('success');
+  res.locals.error_messages = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
 });
-
-passport.deserializeUser(async (userId, done) => {
-  try {
-    const user = await User.findById(userId);
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});
-
-app.get(
-  '/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-  })
-);
-
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    res.redirect('/profile');
-  }
-);
 
 // Set EJS as the view engine
 app.set('views', path.join(__dirname, 'views'));

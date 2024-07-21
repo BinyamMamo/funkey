@@ -5,7 +5,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Funkey | Login</title>
-	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
+
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<link rel="stylesheet" href="css/basics.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/signup.css">
@@ -15,6 +18,10 @@
 	<link rel="shortcut icon" href="assets/icon/logo.ico" type="image/x-icon">
 
 	<style>
+		* {
+			font-family: 'Poppins', sans-serif;
+		}
+
 		a:hover {
 			text-decoration: none;
 		}
@@ -35,6 +42,54 @@
 			width: 2.5rem;
 			height: 2.5rem;
 		}
+
+		.login {
+			font-size: 1.25rem;
+			font-weight: 700;
+			letter-spacing: 1px;
+		}
+
+		.google-btn {
+			margin: 0.5em 0;
+			width: 100%;
+			background: white;
+			color: #444;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			display: inline-block;
+			font-size: 1rem;
+			/* font-weight: bold; */
+			padding: 10px 20px;
+			text-align: center;
+			text-decoration: none;
+			transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+		}
+
+		.google-btn:hover {
+			background-color: #f8f8f8;
+			border-color: #ccc;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+		}
+
+		.google-btn img {
+			height: 100%;
+			margin-right: 8px;
+			vertical-align: middle;
+			transition: 0.5s ease;
+		}
+
+		button:active,
+		button:focus,
+		button:hover {
+			outline: none;
+			box-shadow: none;
+		}
+
+		button:active,
+		button:focus,
+		button:hover {
+			opacity: 0.95;
+		}
 	</style>
 
 </head>
@@ -48,20 +103,19 @@
 			<div class="card-body">
 				<form class="login-form">
 					<div class="avatar-container" data-type="image">
-						<i class="fas fa-camera-retro icon"></i>
 					</div>
 					<input type="file" id="avatar-upload" style="display: none" accept="images">
 					<input type="hidden" name="avatar" value="assets/images/logo.png">
-					<div class="form-group">
+					<div class="form-group my-3">
 						<label for="email"><i class="fa fa-envelope"></i> &nbsp;Email</label>
 						<input name="email" type="email" class="form-control" id="email" placeholder="Your Email" required>
 					</div>
-					<div class="form-group">
+					<div class="form-group my-3">
 						<label for="password"><i class="fa fa-lock"></i> &nbsp;Password</label>
 						<input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
 					</div>
 
-					<div class="form-check">
+					<div class="form-check my-3">
 						<label class="form-check-label"> &nbsp;
 							<a href="/signup" class="text-primary">
 								<i class="fas fa-user-plus"></i>
@@ -69,18 +123,33 @@
 							</a>
 						</label>
 					</div>
-					<button id="login-btn" type="submit" class="btn btn-primary btn-block mt-4">Login</button>
+					<button id="login-btn" type="submit" class="btn btn-primary btn-block mt-4 login">Login</button>
 				</form>
 
-				<hr>
-				<button class="btn btn-light text-secondary google-login" style="width: 100%; margin: auto; font-size: 1.25rem; font-weight: 500;">
-					<i class="fab fa-google"></i>&nbsp; Sign in with Google
+				<div class="d-flex align-items-center my-4" style="margin: auto; width: 100%;">
+					<hr class="flex-grow-1" style="border-color: #575757">
+					<span class="mx-3">Or</span>
+					<hr class="flex-grow-1" style="border-color: #575757">
+				</div>
+
+				<button class="google-btn google-login" style="margin-top: 0;">
+					<img
+						src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/36px-Google_%22G%22_logo.svg.png?20230822192911"
+						alt="Google Logo" width="20" height="20">
+					Continue with Google
 				</button>
+				<button class="google-btn" style="display: none">
+					<img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="Google Logo" width="20"
+						height="20">
+					Continue with Github
+				</button>
+				<!-- <button class="btn btn-light text-dark google-login" style="width: 100%; margin: auto; font-size: 1.25rem; font-weight: 500;">
+					<i class="fab fa-google"></i>&nbsp; Sign in with Google
+				</button> -->
 			</div>
 		</div>
 	</div>
 	</div>
-
 
 	<div class="toast-container" id="toast-container">
 	</div>
@@ -94,7 +163,7 @@
 	<script src="js/login.js"></script>
 	<script src="js/toasts.js"></script>
 	<script src="js/particles.js"></script>
-		
+
 </body>
 
 </html>

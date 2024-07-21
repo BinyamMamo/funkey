@@ -4,96 +4,30 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Sign Up</title>
-	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
-	<link rel="stylesheet" href="css/basics.css">
+	<title>Terms and Conditions | Funkey</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/signup.css">
-	<link rel="stylesheet" href="css/toasts.css">
-	<link rel="stylesheet" href="css/particles.css">
 
 	<style>
-		a:hover {
-			text-decoration: none;
+		.logo {
+			position: fixed;
+			top: 2rem;
+			left: 2rem;
 		}
 
-		.form-check {
-			user-select: none;
-			cursor: pointer;
-		}
-
-		.form-check-label {
-			cursor: pointer;
-		}
-
-		.spinner {
-			display: block;
-			position: absolute;
-			left: 45%;
-			top: 50%;
-			z-index: 1000;
-
-			font-size: 1.5rem;
-			width: 2.5rem;
-			height: 2.5rem;
+		.logo img {
+			width: 10rem;
+			height: 10rem;
 		}
 	</style>
 </head>
 
-<body>
-	<header>
-		<!-- <img class="logo" src="assets/images/logo.png"> -->
-	</header>
+<body class="" style="background-color: #27292a;">
 
-	<div class="container">
-		<div class="spinner-border text-primary spinner" role="status" style="display: none">
-			<span class="sr-only">...</span>
-		</div>
-		<div class="card mt-5">
-			<div class="card-body">
-				<form class="signup-form">
-					<div class="avatar-container" data-type="image">
-						<i class="fas fa-camera-retro icon"></i>
-					</div>
-					<input type="file" id="avatar-upload" style="display: none" accept="images">
-					<input type="hidden" name="avatar" value="assets/images/logo.png">
-					<div class="form-group">
-						<label for="name"><i class="fa fa-user"></i> &nbsp;Name</label>
-						<input name="name" type="text" class="form-control" id="name" placeholder="Your Name" required>
-					</div>
-					<div class="form-group">
-						<label for="email"><i class="fa fa-envelope"></i> &nbsp;Email</label>
-						<input name="email" type="email" class="form-control" id="email" placeholder="Your Email" required>
-					</div>
-					<div class="form-group">
-						<label for="password"><i class="fa fa-lock"></i> &nbsp;Password</label>
-						<input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
-					</div>
-					<div class="form-group">
-						<label for="confirm-password"><i class="fa fa-key"></i> &nbsp;Repeat your password</label>
-						<input type="password" class="form-control" id="confirm-password" placeholder="Repeat your password">
-					</div>
-					<div class="form-group">
-						<label class="form-label"> &nbsp;
-							Have account already?
-							<a href="/login" class="text-primary">
-								<i class="fas fa-sign-in-alt"></i>
-								Login
-							</a>
-						</label>
-					</div>
-					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="terms">
-						<label class="form-check-label" for="terms">I agree to all statements in <a href="#" class="text-primary"
-								data-toggle="modal" data-target="#termsModal">Terms of service</a></label>
-					</div>
-					<button type="submit" class="btn btn-primary btn-block mt-4">Register</button>
-				</form>
-			</div>
-		</div>
-	</div>
+	<div onclick="location.href='/'" class="logo" style="cursor: pointer; z-index: 10001;">
+		<img src="assets/images/logo.png" alt="">
 	</div>
 
+	<!-- Terms and Conditions Modal -->
 	<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
@@ -148,17 +82,16 @@
 		</div>
 	</div>
 
-	<div class="toast-container" id="toast-container">
-	</div>
-
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
 
-	<script src="js/signup.js"></script>
-	<script src="js/toasts.js"></script>
-	<script src="js/particles.js"></script>
+	<script defer>
+		$(document).ready(function () {
+			$('#termsModal').modal('show');
+		});
+	</script>
+
 </body>
 
 </html>

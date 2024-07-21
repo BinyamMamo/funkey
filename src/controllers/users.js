@@ -9,15 +9,14 @@ const renderSignup = async (req, res) => {
 };
 
 const renderLogin = async (req, res) => {
-	if (req.session.userId)
-		res.redirect('/');
+	// if (req.session.userId)
+	// 	res.redirect('/');
   res.sendFile(urlFor('login.html'));
 };
 
 const handleSignup = async (req, res) => {
   try {
-    let formData = req.body;
-    const { name, email, password, avatar } = formData;
+    const { name, email, password, avatar } = req.body;
 
     if (!validEmail(email)) {
       res.status(400).json({ error: 'Invalid Email' });
@@ -44,36 +43,6 @@ const handleSignup = async (req, res) => {
 
     await user.save();
     res.status(200).json({ msg: 'User registered successfully!', user });
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-const handleLogin = async (req, res) => {
-  try {
-    let formData = req.body;
-    const { email, password } = formData;
-
-    if (!validEmail(email)) {
-      res.status(400).json({ error: 'Invalid Email' });
-      throw new Error('Invalid email');
-    }
-
-    let user = await User.findOne({ email });
-    if (!user) {
-      res.status(400).json({ error: 'User not found!' });
-      throw new Error('User not found!');
-    }
-
-    const correct = await bcrypt.compare(password, user.password);
-    if (!correct) {
-      res.status(400).json({ error: 'Incorrect password!' });
-      throw new Error('Incorrect password!');
-    }
-
-		req.session.userId = user._id;
-		req.session.avatar = user.avatar;
-    res.status(200).json({ msg: 'signed in successfully!', user });
   } catch (err) {
     console.error(err);
   }
@@ -126,7 +95,6 @@ module.exports = {
   handleSignup,
   handleLogout,
   renderLogin,
-  handleLogin,
   deleteUser,
   getUsers,
 };
