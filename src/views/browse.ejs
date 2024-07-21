@@ -80,6 +80,13 @@
 		.library-filter li:last-child:hover {
 			border-top: 1px solid #1f212299;
 		}
+
+		.login {
+			padding: 0 !important;
+			height: 1em !important;
+			line-height: 1.2 !important;
+			margin-top: 0.5em;
+		}
 	</style>
 </head>
 
@@ -113,7 +120,7 @@
 				<li><a href="/match">Piano</a></li>
 				<!-- <li><a href="match.html">Match</a></li> -->
 				<% if (!avatar) { %>
-					<li><a href="/login" class="active">Login</a></li>
+					<li class="login"><a href="/login" class="active">Login</a></li>
 					<% } else { %>
 						<li><a href="/profile">Profile <span class="profile-pic-cont"><img class="profile-pic" src="<%= avatar %>" alt=""></span></a></li>
 						<% } %>

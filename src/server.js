@@ -1,81 +1,81 @@
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const session = require('express-session');
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-// Parse URL-encoded form data
-// Middleware to parse JSON and urlencoded data
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+require('dotenv').config();
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-app.use(express.static(__dirname));
+// Initialize session and passport
+app.use(session({
+  secret: 'your-session-secret',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Set up Multer storage
-const storage = multer.diskStorage({
-  destination: function (request, file, callback) {
-    callback(null, 'uploads/');
-  },
-  filename: function (request, file, callback) {
-    callback(
-      null,
-      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
-    );
-  },
+// Configure Passport to use Google OAuth 2.0
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:5000/auth/google/callback"
+},
+async (accessToken, refreshToken, profile, done) => {
+  // Here you would typically save the user to your database
+  // For this example, we are passing the profile to the done callback
+  // Customize this part based on your user model
+	console.log('profile:', profile);
+  const user = {
+    id: profile.id,
+    displayName: profile.displayName,
+    email: profile.emails[0].value,
+    profilePic: profile._json.picture
+  };
+	console.log('user:', user);
+  return done(null, user);
+}));
+
+passport.serializeUser((user, done) => {
+  done(null, user);
 });
 
-// Initialize Multer upload
-const upload = multer({ storage: storage });
-
-// Middleware to track upload progress
-app.use((req, res, next) => {
-  let uploadedBytes = 0;
-  req.on('data', (chunk) => {
-    uploadedBytes += chunk.length;
-    const progress = (uploadedBytes / req.headers['content-length']) * 100;
-    // console.log(`Upload progress: ${progress.toFixed(2)}%`);
-  });
-  next();
+passport.deserializeUser((user, done) => {
+  done(null, user);
 });
 
-app.get('/signup', async (request, response) => {
-  response.sendFile(__dirname + '/signup.html');
-});
+// Google OAuth routes
+app.get('/', (req, res) => res.send('home page'));
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-app.get('/upload', async (request, response) => {
-	response.sendFile(__dirname + '/upload.html');
-  // response.sendFile(__dirname + '/upload.html');
-});
-
-app.post('/upload', upload.single('file'), (req, res) => {
-  try {
-    // Validate file type (ensure it's an image, video, or lyrics)
-    const allowedMimeTypes = {
-			image: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
-			video: ['video/mp4', 'video/webm', 'video/ogg'],
-			lyrics: ['text/plain', 'text/lrc', 'text/srt'],
-		};		
-
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded.' });
-    }
-
-    if (!allowedMimeTypes[req.body.type].includes(req.file.mimetype)) {
-      return res.status(400).json({ error: 'Invalid file type.' });
-    }
-
-    // Respond with success message
-    res.status(200).json(req.file);
-  } catch (error) {
-    console.error('Error handling file upload:', error);
-    res.status(500).json({ error: 'Internal server error.' });
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    res.redirect('/profile');
   }
+);
+
+// Profile route to show user information
+app.get('/profile', (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  res.send(`
+    <h1>${req.user.displayName}</h1>
+    <p>Email: ${req.user.email}</p>
+    <img src="${req.user.profilePic}" alt="Profile Picture" />
+    <p><a href="/logout">Logout</a></p>
+  `);
 });
 
-app.post('/signup', async (req, res) => {
-	// console.log(req);
-	res.status(200).json(req.body);
-	// res.json('signed in successfully!');
+app.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect('/');
+  });
 });
 
 app.listen(PORT, () => {

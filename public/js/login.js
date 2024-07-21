@@ -16,13 +16,13 @@ $(document).ready(function () {
       const data = await response.json();
 
       if (response.ok) {
-				console.log(data.user);
-				
+        console.log(data.user);
+
         // Redirect to homepage
-				window.location.href = '/';
+        window.location.href = '/';
         setTimeout(() => {
-					toastSuccess(data.msg);
-					$('.spinner').hide();
+          toastSuccess(data.msg);
+          $('.spinner').hide();
         }, 500);
       } else {
         $('.spinner').hide();
@@ -34,5 +34,11 @@ $(document).ready(function () {
       toastError(`Error: ${error.message}`);
       console.error('Error:', error);
     }
+  });
+
+  $('.google-login').on('click', async function (event) {
+    event.preventDefault();
+    $('.spinner').show();
+    window.location.href = '/auth/google';
   });
 });
