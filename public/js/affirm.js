@@ -16,7 +16,7 @@ function affirm(message) {
 													${message}
 											</div>
 											<div class="modal-footer border-0">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+													<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> -->
 													<button type="button" class="btn btn-danger" id="affirmYesButton">Yes</button>
 											</div>
 									</div>

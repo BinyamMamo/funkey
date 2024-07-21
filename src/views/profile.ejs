@@ -51,7 +51,12 @@
 			background-color: #1f2122dd !important;
 		}
 
-
+		.login {
+			padding: 0 !important;
+			height: 1em !important;
+			line-height: 1.2 !important;
+			margin-top: 0.5em;
+		}
 
 		.btn:focus {
 			outline: none;
@@ -103,7 +108,7 @@
 							<li><a href="/piano">Piano</a></li>
 							<!-- <li><a href="/match">Match</a></li> -->
 							<% if (!user) { %>
-								<li><a href="/login" class="active">Login</a></li>
+								<li class="login"><a href="/login" class="active">Login</a></li>
 								<% } else { %>
 									<li>
 										<a href="/profile" class="active">Profile <span class="profile-pic-cont">
