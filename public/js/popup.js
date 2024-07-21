@@ -2,7 +2,6 @@ $(document).ready(function () {
 	let LIBRARY_FILTER = 'library';
 
 	function updateMusicLibrary(filter=LIBRARY_FILTER) {
-		console.log('updaing favrotaies')
 		fetch(`/${filter}`)
 		.then((res) => {
 			if (!res.ok)
