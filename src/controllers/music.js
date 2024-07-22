@@ -1,6 +1,8 @@
 // Music Controller
 const fs = require('fs');
 const Music = require('../models/Music');
+const Roles = require('../utils/roles');
+const { scopeMusics, canAccess } = require('../middleware/permissions');
 
 const getMusics = async (req, res) => {
   let musics = [];
@@ -19,24 +21,17 @@ const getMusics = async (req, res) => {
 
 const uploadMusic = async (req, res) => {
   try {
-    console.log('-----------------');
-    console.log(req.body);
+    let public = req.user.role === Roles.ADMIN;
+    let { artist, title, video, lyrics, thumbnail } = req.body;
 
-    let { artist, title, video, lyrics, thumbnail, public } = req.body;
-    if (req.body.role && req.body.role === 'admin') public = true;
-    else if (!req.session || !req.session.userId) {
-      res
-        .status(400)
-        .json({ message: 'You need to sign in to upload musics!' });
-      throw new Error('User is not signed in!');
-    }
-		
-    // validate the above
-
-    let userId = req.session.userId;
-    let musicByTitle = await Music.findOne({ title });
+    let userId = req.user._id;
+    let musicByTitle = await Music.findOne({
+      title: new RegExp(`^${title}$`, 'i'),
+    });
     if (musicByTitle) {
-      let musicByArtist = await Music.findOne({ artist });
+      let musicByArtist = await Music.findOne({
+        artist: new RegExp(`^${artist}$`, 'i'),
+      });
       if (
         public &&
         musicByArtist &&
@@ -45,7 +40,9 @@ const uploadMusic = async (req, res) => {
         res.status(400).json({
           message: 'Music with the same artist and title exists in db',
         }); // TODO: CHANGE THE STATUS CODE
-        throw new Error('Music with the same artist and title exists in db');
+        console.error({
+          error: 'Music with the same artist and title exists in db',
+        });
       }
       console.log('musicByArtist:', JSON.stringify(musicByArtist));
     }
@@ -55,16 +52,15 @@ const uploadMusic = async (req, res) => {
       title,
       video,
       lyrics,
-      thumbnail: thumbnail || 'assets/images/default_thumbnail.jpg',
-      public: !public ? false : public,
+      thumbnail: thumbnail || '/assets/images/default_thumbnail.jpg',
+      public,
       userId,
     });
 
     await music.save();
-
-    console.log('Music uploaded succesfully!', music);
     res.status(201).json({ message: 'Music uploaded succesfully!', music });
   } catch (err) {
+    res.send(400);
     console.error(err);
   }
 };
@@ -123,7 +119,7 @@ const deleteMusic = async (req, res) => {
 
 const updateViews = async (req, res) => {
   try {
-    let musicId = req.params.musicId || null;
+    let musicId = req.params.id || null;
 
     let music = await Music.findById(musicId);
     if (!music) {
@@ -176,14 +172,14 @@ const toggleFavorite = async (req, res) => {
     }
 
     music.favorite = music.favorite ? false : true;
-		if (music.favorite) {
-			const currentDate = new Date();
-			const day = currentDate.getDate();
-			const month = currentDate.getMonth() + 1; // Months are zero-indexed, so add 1
-			const year = currentDate.getFullYear();
+    if (music.favorite) {
+      const currentDate = new Date();
+      const day = currentDate.getDate();
+      const month = currentDate.getMonth() + 1; // Months are zero-indexed, so add 1
+      const year = currentDate.getFullYear();
 
-			music.favoritedAt = `${day}/${month}/${year}`;
-		}
+      music.favoritedAt = `${day}/${month}/${year}`;
+    }
     await music.save();
     res.json({ message: 'Music added to favourites successfully!' });
   } catch (err) {
@@ -194,29 +190,52 @@ const toggleFavorite = async (req, res) => {
 const getFavorites = async (req, res) => {
   try {
     let musics = await Music.find({ favorite: true });
-    res.json({ message: 'successfully loaded favorite musics!', musics });
+    res.json({ message: 'successfully loaded favorite musics!', musics: scopeMusics(req, musics) });
   } catch (err) {
     console.error(err);
   }
 };
 
 const getMusic = async (req, res) => {
-	try {
-		let musicId = req.id || null;
-		let music = await Music.findById(musicId);
-		if (!music) {
-			res.status(400).json('Music not found!')
-			throw new Error('music not found');
-		}
+  try {
+    let musicId = req.id || null;
+    let music = await Music.findById(musicId);
+    if (!music) {
+      res.status(400).json('Music not found!');
+      throw new Error('music not found');
+    }
 
-		res.json({message: 'music fetched successfully', music});
-	} catch (err) {
-		console.error(err);
-	}
+    res.json({ message: 'music fetched successfully', music: scopeMusics(req, [music])[0] });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const search = async (req, res) => {
+  const query = req.query.query || '';
+
+  try {
+		if (!query || query == '' || query == ' ')
+			return res.json({musics: await Music.find()});
+
+		const musics = await Music.find({
+      $or: [
+        { title: new RegExp(query, 'i') },
+        { artist: new RegExp(query, 'i') }
+      ]
+    });
+
+    // Send results as JSON
+    res.json({musics});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({message: 'Server Error'});
+  }
 }
 
 module.exports = {
-	getMusic,
+	search,
+  getMusic,
   getMusics,
   uploadMusic,
   renderMusic,

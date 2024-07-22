@@ -2,10 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const { urlFor } = require('../utils/helpers');
-
-const renderUpload = async (req, res) => {
-  res.sendFile(urlFor('upload.html'));
-};
+const Roles = require('../utils/roles');
 
 // Set up Multer storage
 const storage = multer.diskStorage({
@@ -51,7 +48,7 @@ const postupload = async (req, res) => {
       return res.status(400).json({ error: 'Invalid file type.' });
     }
 
-    res.status(200).json({...req.file, message: 'uploaded succesfully!'});
+    res.status(200).json({ ...req.file, message: 'uploaded succesfully!' });
   } catch (error) {
     console.error('Error handling file upload:', error);
     res.status(500).json({ error: 'Internal server error.' });
@@ -59,24 +56,36 @@ const postupload = async (req, res) => {
 };
 
 const deleteUpload = async (req, res) => {
-	try {
-		let filePath = req.body.filePath || null;
+  try {
+    let filePath = req.body.filePath || null;
 
-		if (!filePath) {
-			res.status(400).json({message: 'Deletion not successful!'})
-			throw new Error('Deletion not successful!');
-		}
+    if (!filePath) {
+      res.status(400).json({ message: 'File not found!' });
+      console.error({ error: 'File not found!' });
+    }
 
-		fs.unlinkSync(filePath);
-		res.status(200).json({message: 'Succesfully deleted!'});
-	} catch(err) {
-		console.error(err);
-	}
-}
+		if (filePath.startsWith('/'))
+			filePath = filePath.substring(1);
+
+    let music = await Music.find({
+      $or: [{ video: `/${filePath}` }, { lyrics: `/${filePath}` }],
+    });
+
+    if (music && req.user.role != Roles.ADMIN) {
+      res.status(400).json({ message: 'Deletion not allowed!' });
+      console.error({ error: 'Deletion not allowed!' });
+    }
+
+    fs.unlinkSync(filePath);
+    res.status(200).json({ message: 'Succesfully deleted!' });
+  } catch (err) {
+    res.sendStatus(400);
+    console.error(err);
+  }
+};
 
 module.exports = {
-  renderUpload,
-	deleteUpload,
-	postupload,
-	upload,
+  deleteUpload,
+  postupload,
+  upload,
 };

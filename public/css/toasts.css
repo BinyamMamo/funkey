@@ -9,7 +9,7 @@
 	border-radius: 5px;
 	position: fixed;
 	left: 1em;
-	bottom: 1em;
+	top: 1em;
 	/* width: max-content; */
 	padding: 0.25em 0.25em;
 }

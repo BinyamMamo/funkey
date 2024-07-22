@@ -8,7 +8,7 @@ $(document).ready(function () {
     $('.spinner').show();
     try {
       const response = await fetch('/login', {
-        method: 'POST',
+				method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
@@ -17,17 +17,17 @@ $(document).ready(function () {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data.user);
-
+				console.log(data.user);
+				
         // Redirect to homepage
-        window.location.href = '/';
+				toastSuccess(data.message);
         setTimeout(() => {
-          toastSuccess(data.msg);
-          $('.spinner').hide();
+					$('.spinner').hide();
+					window.location.href = data.redirect_url;
         }, 500);
       } else {
         $('.spinner').hide();
-        toastError(data.error);
+        toastError(data.message);
         console.error(data.error);
       }
     } catch (error) {
@@ -42,5 +42,9 @@ $(document).ready(function () {
 
     $('.spinner').show();
     window.location.href = '/auth/google';
+		setTimeout(() => {
+			$('.spinner').hide();
+			toastDanger('signin with google is taking too long...')
+		}, 5000);
   });
 });

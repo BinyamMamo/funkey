@@ -121,7 +121,7 @@ $(document).ready(function () {
 				console.log(data.user);
 				
         // Redirect to homepage
-				window.location.href = '/';  // tODO: think about redirecting to profile page
+				window.location.href = '/login';  // tODO: think about redirecting to profile page
         setTimeout(() => {
 					toastSuccess(data.msg);
 					$('.spinner').hide();

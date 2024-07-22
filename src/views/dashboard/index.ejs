@@ -147,14 +147,14 @@
 						<div class="dropdown-menu" style="margin: auto; margin-right: 5rem;">
 							<a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> Profile</a>
 							<a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a>
-							<a class="dropdown-item" href="#">Logout <i class="fas fa-sign-out-alt"></i></a>
+							<a class="dropdown-item" href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
 						</div>
 					</div>
 				</div>
 
 
 				<div class="stats-container-row">
-					<div class="stats-container">
+					<div class="stats-container" onclick="location.href='/dashboard/users'" role="button">
 						<div class="column">
 							<i class="fas fa-users"></i>
 						</div>
@@ -164,7 +164,7 @@
 						</div>
 					</div>
 					
-					<div class="stats-container">
+					<div class="stats-container" onclick="location.href='/dashboard/musics'" role="button">
 						<div class="column">
 							<i class="bi bi-music-note-list"></i>
 						</div>

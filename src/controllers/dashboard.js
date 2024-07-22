@@ -5,6 +5,9 @@ let Music = require('../models/Music');
 
 const renderDashboard = async (req, res) => {
   try {
+		console.log('req.user:', req.user);
+		console.log(!req.user || req.user.role != 'ADMIN');
+		if (!req.user || req.user.role != 'ADMIN') return res.redirect('/login');
     const userCount = await User.countDocuments();
     const musicCount = await Music.countDocuments();
     const uploadCount = await User.countDocuments({ public: false });

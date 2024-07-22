@@ -69,9 +69,9 @@ app.get('/error', (req, res) => {
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-const PORT = 5000;
-app.listen(PORT, () => {
+const port = process.env.PORT;
+app.listen(port, () => {
   console.clear();
   console.log('\x1Bc'); // Clears the console (Linux only)
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${port}`);
 });
