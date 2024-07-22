@@ -106,21 +106,22 @@ $(document).ready(function () {
     $(this).find('i').toggleClass('far fas');
     let musicId = $('.levels-form').find('input[name="music"]').val();
 
-    let favorite = $(`[data-id="${musicId}"]`).find('input[name="favorite"]');
-    favorite.val(favorite.val() == 'true' ? 'false' : 'true');
-		let musicLibrary = $('.music-library');
+    // let favorite = $(`[data-id="${musicId}"]`).find('input[name="favorite"]');
+    // favorite.val(favorite.val() == 'true' ? 'false' : 'true');
+		// let musicLibrary = $('.music-library');
 		
-		if (favorite.val() == 'false')
-			musicLibrary.find(`[data-fav-id="${musicId}"]`).remove();
-		else {
-			updateMusicLibrary();
-		}
+		// if (favorite.val() == 'false')
+		// 	musicLibrary.find(`[data-fav-id="${musicId}"]`).remove();
+		// else {
+		// 	updateMusicLibrary();
+		// }
 		
 		fetch('/music/favorite', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ id: musicId }),
 		});
+		location.reload();
   });
 
   $('.levels-form').on('submit', function (e) {

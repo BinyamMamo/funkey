@@ -60,6 +60,15 @@ router.post(
   uploadController.postupload
 );
 
+router.get('/profile', async (req, res) => {
+	let musics = await Music.find().limit(4);
+  if (!req.isAuthenticated())
+    return res.redirect('/login');
+
+  let user = req.user;
+	res.render('profile', { user, musics });
+});
+
 router.use(musicRoutes);
 router.use(userRoutes);
 router.use(fakeRoute);

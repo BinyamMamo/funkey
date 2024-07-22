@@ -65,7 +65,7 @@ Funkey is a web application designed to help users improve their typing skills i
 
 ## Usage
 
-1. Visit the Funkey website at [http://localhost:3000](http://localhost:3000).
+1. Visit the Funkey website at [http://localhost:5000](http://localhost:5000).
 2. Choose your preferred typing mode (lyrics, AI-generated texts, or virtual piano).
 3. Start typing and improve your speed and accuracy!
 
