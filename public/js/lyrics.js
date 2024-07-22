@@ -3,7 +3,6 @@
 // let DEFAULT_TEXT = "Lorem ipsum dolor sit amet consectetur adipisicing elit";
 let DEFAULT_TEXT = '...'; // "♪"
 let textboxContent = DEFAULT_TEXT;
-const SPEED = 1;
 
 const WHITESPACE_OPTIONS = ['·', '&nbsp;', '_'];
 const WHITESPACE = WHITESPACE_OPTIONS[1];
@@ -18,6 +17,13 @@ const wpm = document.getElementById('wpm');
 let wpm_array = [];
 
 let interval_id = null;
+
+const SPEED = parseFloat(localStorage.getItem('speed'));
+const capitals = localStorage.getItem('capitals') != 'true' ? false : true;
+const punctuation =
+  localStorage.getItem('punctuation') != 'true' ? false : true;
+const double_spaces =
+  localStorage.getItem('double_spaces') != 'true' ? false : true;
 
 $(document).ready(function () {
   // console.clear();
@@ -102,7 +108,6 @@ function begin_music() {
 function fillTextBox(line) {
   cursor = 0;
   line = parse(line);
-  line = easy(line);
   textboxContent = line;
   textboxContent = textboxContent.replace(/\n/g, '<br>');
   textbox.innerHTML = '';
@@ -133,32 +138,31 @@ document.body.ondblclick = (ev) => {
     console.log('played');
     timer();
     interval_id = setInterval(timer, 100);
-		$('.keyboard-container').show();
+    $('.keyboard-container').show();
   } else if (vid) {
-		vid.pause();
+    vid.pause();
     console.log('paused');
     clearInterval(interval_id);
     interval_id = null;
-		let averagey =
-		wpm_array.reduce(
-			(accumulator, currentValue) =>
-				accumulator + (isNaN(currentValue) ? 0 : currentValue),
-			0
-		) / wpm_array.length;
-		$('.stats-container .wpm-display').text(`${Math.round(averagey)} wpm`);
+    let averagey =
+      wpm_array.reduce(
+        (accumulator, currentValue) =>
+          accumulator + (isNaN(currentValue) ? 0 : currentValue),
+        0
+      ) / wpm_array.length;
+    $('.stats-container .wpm-display').text(`${Math.round(averagey)} wpm`);
     $('.stats-container').show();
     $('.keyboard-container').hide();
 
-
-		$('.stats-container .close-stats').on('click', function (e) {
+    $('.stats-container .close-stats').on('click', function (e) {
       e.preventDefault();
-			console.log('time', time);
+      console.log('time', time);
       if (!interval_id) {
         interval_id = setInterval(timer, 100);
-			}
+      }
       if (vid.paused) vid.play();
       $('.stats-container').hide();
-			$('.keyboard-container').show();
+      $('.keyboard-container').show();
     });
   }
 };
@@ -197,10 +201,6 @@ function update_wpm() {
   wpm_count *= 60000;
   wpm_count /= 5;
 
-  console.log('cursor', cursor);
-  console.log('time', time);
-  console.log('prev time', previous_time);
-  console.log(wpm_count);
   previous_time = time;
 
   if (isNaN(wpm_count) || wpm_count === Number.POSITIVE_INFINITY) wpm_count = 0;
@@ -214,19 +214,24 @@ function parse(line) {
   line = line.replace(/^ /, '');
   line = line.replace(/ $/, '');
 
-  return line;
-}
-
-function easy(line) {
-  line = line.toLowerCase();
-  line = line.replace(/[^(a-z| |\n)]/g, ''); // couldn't inlcude braces ()
-  line = line.replace(/ +/g, ' ');
+  if (!capitals) line = line.toLowerCase();
+  if (!punctuation) {
+		line = line.replace(/[^(a-z| |\n)]/g, '');
+    line = line.replace(/\(/g, '');
+    line = line.replace(/\)/g, '');
+  }
+	if (!double_spaces) {
+		line = line.trim().replace(/\n+/g, '\n');
+		line = line.replace(/  +/g, ' ');
+		line = line.replace(/\n /g, '\n');
+		line = line.replace(/ \n/g, '\n');
+	}
 
   return line;
 }
 
 let time = 0;
-let curr = 0;
+let curr = -1;
 function timer() {
   const time_cont = document.getElementById('timer');
 
@@ -245,20 +250,21 @@ function timer() {
   else output += `${Math.floor(sec)}`;
 
   let stamp = null;
+  // if (curr + 1 < lyrics.length) stamp = lyrics[curr + 1].stamp;
   if (curr + 1 < lyrics.length) stamp = lyrics[curr + 1].stamp;
   else {
     let averagey =
-		wpm_array.reduce(
-			(accumulator, currentValue) =>
-				accumulator + (isNaN(currentValue) ? 0 : currentValue),
-			0
-		) / wpm_array.length;
-		console.log('FINALLY WE HAVE FINISHED');
-		document.body.ondblclick = null;
+      wpm_array.reduce(
+        (accumulator, currentValue) =>
+          accumulator + (isNaN(currentValue) ? 0 : currentValue),
+        0
+      ) / wpm_array.length;
+    console.log('FINALLY WE HAVE FINISHED');
+    document.body.ondblclick = null;
     $('.keyboard-container').hide();
     $('.ratings-parent').show();
-		$('.stats-container .wpm-display').text(`${Math.round(averagey)} wpm`);
-		
+    $('.stats-container .wpm-display').text(`${Math.round(averagey)} wpm`);
+
     console.log('Average wpm:', averagey);
     fillTextBox(averagey.toString());
     // container.innerHTML = `WPM: ${averagey}`;
@@ -272,8 +278,8 @@ function timer() {
   lyrics_time *= 1000;
   lyrics_time += parseInt(stamp[2].replace(',', ''));
 
-  // if (time * SPEED > lyrics_time) {
-  if (time + 1500 * SPEED > lyrics_time) {
+  // if ((time - 1500) * SPEED > lyrics_time) {
+  if (time * SPEED > lyrics_time) {
     curr++;
     if (curr >= lyrics.length) {
       console.log('Finished!'); // FInal Finish
@@ -300,7 +306,8 @@ function timer() {
 
   time_cont.innerHTML = output;
   // time += 1000 * SPEED;
-  time += 100 * SPEED;
+  // time += 100 * SPEED;
+  time += 100;
 }
 
 function do_seeking() {

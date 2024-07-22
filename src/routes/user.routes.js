@@ -3,15 +3,15 @@ const passport = require('passport');
 const router = express.Router();
 
 const User = require('../models/User');
+const Roles = require('../utils/roles');
 const userController = require('../controllers/users');
+const { authUser, authRole } = require('../middleware/auth');
 const dashboardController = require('../controllers/dashboard');
 
-router.get('/users', userController.getUsers);
 router.get('/login', userController.renderLogin);
 router.get('/signup', userController.renderSignup);
 router.delete('/delete', userController.deleteUser);
-router.get('/dashboard/users', dashboardController.renderUsers);
-
+router.get('/dashboard/users', authUser, authRole(Roles.ADMIN), dashboardController.renderUsers);
 
 router.post('/signup', userController.handleSignup);
 
@@ -22,8 +22,12 @@ router.post('/login', (req, res, next) => {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
     req.logIn(user, (err) => {
+			let redirect_url = '/';
       if (err) return next(err);
-      return res.status(200).json({ message: 'Login successful' });
+			console.log('user:', user);
+      if (user.role == 'ADMIN')
+        redirect_url = '/dashboard';
+      return res.status(200).json({ message: 'Login successful', redirect_url });
     });
   })(req, res, next);
 });
@@ -59,6 +63,5 @@ router.get('/logout', (req, res, next) => {
     });
   });
 });
-
 
 module.exports = router;

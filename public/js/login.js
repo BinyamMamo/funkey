@@ -20,14 +20,14 @@ $(document).ready(function () {
 				console.log(data.user);
 				
         // Redirect to homepage
-        window.location.href = '/';
+				toastSuccess(data.message);
         setTimeout(() => {
-          toastSuccess(data.msg);
-          $('.spinner').hide();
+					$('.spinner').hide();
+					window.location.href = data.redirect_url;
         }, 500);
       } else {
         $('.spinner').hide();
-        toastError(data.error);
+        toastError(data.message);
         console.error(data.error);
       }
     } catch (error) {

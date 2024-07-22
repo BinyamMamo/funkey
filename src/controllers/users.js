@@ -5,13 +5,11 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 const renderSignup = async (req, res) => {
-  res.sendFile(urlFor('signup.html'));
+  res.render('signup');
 };
 
 const renderLogin = async (req, res) => {
-	// if (req.session.userId)
-	// 	res.redirect('/');
-  res.sendFile(urlFor('login.html'));
+  res.render('login');
 };
 
 const handleSignup = async (req, res) => {
@@ -60,15 +58,6 @@ const handleLogout = async (req, res) => {
 	} catch (err) { console.error(err); }
 }
 
-const getUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
 const deleteUser = async (req, res) => {
   try {
     const id = req.body.id || null;
@@ -96,5 +85,4 @@ module.exports = {
   handleLogout,
   renderLogin,
   deleteUser,
-  getUsers,
 };

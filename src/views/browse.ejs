@@ -5,7 +5,7 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Funkey | Home page</title>
+	<title>Funkey | Browse Musics</title>
 
 	<!-- Google Fonts -->
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -28,10 +28,20 @@
 	<link rel="stylesheet" href="/css/homepage.css">
 	<link rel="stylesheet" href="/css/levels.css">
 	<link rel="stylesheet" href="/css/toasts.css">
+	<link rel="stylesheet" href="/css/practice.css">
 
 	<link rel="shortcut icon" href="assets/icon/funkey.ico" type="image/x-icon">
 
 	<style>
+
+		.main-nav {
+			padding: 5px 0 !important;
+		}
+
+		.page-content {
+			margin-top: 2rem !important;
+		}
+
 		.most-popular {
 			margin-top: 0px;
 		}
@@ -85,6 +95,97 @@
 			line-height: 1.2 !important;
 			margin-top: 0.5em;
 		}
+
+		#searchText:focus {
+			border-bottom-left-radius: 0 !important;
+			border-bottom-right-radius: 0 !important;
+		}
+
+		.search-result {
+			overflow-x: hidden;
+			overflow-y: scroll;
+			/* background-color: #27292a; */
+			background-color: #242628;
+
+			display: block;
+			width: 170%;
+			height: 15rem;
+			position: absolute;
+			border-radius: 5px;
+			border-top-left-radius: 0;
+			/* border-top: 1px solid #2229; */
+			border-top: 1px solid #2229;
+			display: none;
+		}
+
+		.search-result .item {
+			margin: 0.75em 0;
+		}
+
+		.search-result .item .view-n-rating div {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-evenly;
+			gap: 0.35rem;
+			align-items: center;
+		}
+
+		.search-result .item .view-n-rating i {
+			position: relative !important;
+			top: auto !important;
+			left: auto !important;
+			color: #5e8de7 !important;
+			display: block !important;
+			font-size: 0.95rem !important;
+		}
+
+		.search-result .item .view-n-rating span {
+			display: block !important;
+			color: #e1e1e1;
+			font-size: 0.9rem !important;
+		}
+
+		.clip-thumbnail {
+			position: relative;
+			display: block;
+			width: 3.5rem;
+			height: 3.5rem;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			border-radius: 50%;
+			/* border-radius: 5px; */
+			opacity: 0.85;
+		}
+
+		.clip-thumbnail .overlay {
+			width: 100%;
+			height: 100%;
+			background-color: #fff3;
+			border-radius: 50%;
+			opacity: 0;
+			transition: 0.7s ease;
+			cursor: pointer;
+		}
+
+		.clip-thumbnail .overlay:hover {
+			opacity: 0.9;
+		}
+
+		.clip-thumbnail .overlay,
+		.clip-thumbnail .overlay i {
+			display: block;
+			position: absolute;
+			left: 50% !important;
+			top: 50% !important;
+			transform: translate(-50%, -50%) !important;
+			color: #27292aaa !important;
+		}
+
+		.clip-title {
+			font-size: 1rem;
+		}
 	</style>
 </head>
 
@@ -107,6 +208,48 @@
 				<form id="search" action="#">
 					<input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
 					<i class="fa fa-search"></i>
+					<div class="search-result" id="searchResults">
+
+						<% musics.forEach(music=> { %>
+
+							<div class="item music-clip"
+								style="background-color: #27292a88; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; padding: 0.4em; gap: 0.15em;">
+								<div class="thumb" style="margin: 0;">
+									<span data-id="<%= music._id %>" class="clip-thumbnail"
+										style="background-image: url('<%= music.thumbnail %>')">
+										<span class="overlay">
+
+											<i class="fas fa-play"></i>
+										</span>
+									</span>
+								</div>
+								<div class="down-content"
+									style="width: 100%; padding-left: 0.5em; display: flex; flex-direction: column; justify-content: space-around; gap: 0.5em">
+									<h4 class="clip-title" data-id="<%= music._id %>" style="line-height: 1.2; cursor: pointer;">
+										<%= music.title %>
+									</h4>
+									<div class="view-n-rating"
+										style="display: flex; flex-direction: row; justify-content: flex-start; flex-wrap: wrap; gap: 1.15em">
+										<div>
+											<span>
+												<%= music.rating.toFixed(2) %>
+											</span>
+											<i class="fa fa-star"></i>
+										</div>
+										<div>
+											<span>
+												<%= music.views %>
+											</span>
+											<i class="fa fa-users"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<% }); %>
+
+
+					</div>
 				</form>
 			</div>
 			<!-- ***** Search End ***** -->
@@ -133,6 +276,9 @@
 	</header>
 	<!-- ***** Header Area End ***** -->
 
+
+
+	<!-- container begin -->
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
@@ -201,7 +347,7 @@
 															<%= music.title %>
 														</span></h4>
 													<ul>
-														<li><i class="fa fa-thumbs-up"></i>
+														<li><i class="fa fa-star"></i>
 															<%= music.rating.toFixed(1) %>
 														</li>
 														<li><i class="fas fa-users"></i>
@@ -249,9 +395,11 @@
 						<div class="col-lg-12">
 							<div class="d-flex align-items-center my-4" style="margin: auto; width: 90%; display: none">
 								<hr class="flex-grow-1" style="border-color: #57575722;">
-								<span class="mx-3"><a class="btn btn-secondary" style="background-color: #5e8de7; border: none; border-radius: 23px;" href="/profile">View Your Library</a></span>
+								<span class="mx-3"><a class="btn btn-secondary"
+										style="background-color: #5e8de7; border: none; border-radius: 23px;" href="/profile">View Your
+										Library</a></span>
 								<hr class="flex-grow-1" style="border-color: #57575722;">
-							</div>			
+							</div>
 						</div>
 					</div>
 					<!-- ***** Gaming Library End ***** -->
@@ -324,6 +472,73 @@
 
 			// $('#levelsModal').modal('hide');
 			// $('#levelsModal').hide();
+
+
+			$('#searchText').on('focus', function () {
+				$('#searchResults').show();
+			});
+
+			$('#searchText').on('blur', function () {
+				$('#searchResults').hide();
+			});
+
+			$('#searchText').on('input', function () {
+				const query = $(this).val();
+
+				// if (query.length < 2) { // Optional: avoid sending requests for very short queries
+				// 	// $('#searchResults').html('');
+				// 	return;
+				// }
+
+				$.ajax({
+					url: '/search',
+					type: 'GET',
+					data: { query },
+					success: function (data) {
+						// Display results
+						$('#searchResults').html(data.map(music => `
+						<div class="item music-clip"
+								style="background-color: #27292a88; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; padding: 0.4em; gap: 0.15em;">
+								<div class="thumb" style="margin: 0;">
+									<span data-id="${music._id}" class="clip-thumbnail"
+										style="background-image: url('${music.thumbnail}')">
+										<span class="overlay">
+
+											<i class="fas fa-play"></i>
+										</span>
+									</span>
+								</div>
+								<div class="down-content"
+									style="width: 100%; padding-left: 0.5em; display: flex; flex-direction: column; justify-content: space-around; gap: 0.5em">
+									<h4 class="clip-title" data-id="${music._id}" style="line-height: 1.2; cursor: pointer;">
+										${music.title}
+									</h4>
+									<div class="view-n-rating"
+										style="display: flex; flex-direction: row; justify-content: flex-start; flex-wrap: wrap; gap: 1.15em">
+										<div>
+											<span>
+												${music.rating.toFixed(2)}
+											</span>
+											<i class="fa fa-star"></i>
+										</div>
+										<div>
+											<span>
+												${music.views}
+											</span>
+											<i class="fa fa-users"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+      `).join(''));
+					},
+					error: function (err) {
+						console.error(err);
+						$('#searchResults').html('Error fetching results');
+					}
+				});
+			});
+
 
 		});
 	</script>

@@ -251,6 +251,10 @@ $(document).ready(function () {
     event.preventDefault();
     const formData = new FormData(this);
 
+		console.log('formData:');
+		formData.forEach((key, value) => {
+			console.log(key, ':', value);
+		})
 		$('.spinner-overlay').show();
 		fetch('/uploadMusic', {
 			method: 'POST',
@@ -265,6 +269,9 @@ $(document).ready(function () {
 				$('.spinner-overlay').hide();
 				console.log(res.message);
 				toastSuccess(res.message);
+				setTimeout(() => {
+					location.reload();
+				}, 500);
 			}).catch(err => {  // catch error
 				$('.spinner-overlay').hide();
 				console.error(err);

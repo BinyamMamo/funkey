@@ -245,7 +245,7 @@
 						<div class="dropdown-menu" style="margin: auto; margin-right: 5rem;">
 							<a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> Profile</a>
 							<a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a>
-							<a class="dropdown-item" href="#">Logout <i class="fas fa-sign-out-alt"></i></a>
+							<a class="dropdown-item" href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
 						</div>
 					</div>
 				</div>
@@ -404,7 +404,7 @@
 			});
 
 			function deleteUser(id) {
-				fetch('/delete', {
+				fetch('/deleteMusic', {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json'
@@ -412,26 +412,13 @@
 					body: JSON.stringify({ id }),
 				}).then(response => response.json())
 					.then(res => {
-						const row = document.getElementById(id);
-						if (row) {
-							let ordinal = $(row).find('.ordinal');
-							let index = parseInt(ordinal.text());
-
-							let next = $(row).next()[0];
-							while ($(next).is('tr')) {
-								$(next).find('.ordinal').html(`${index++}`);
-								next = $(next).next()[0];
-							}
-							console.log('User Deleted!');
-
-							row.parentNode.removeChild(row);
-						} else {
-							console.error(`Row with ID "${rowId}" not found.`);
-						}
-						toastSuccess(res.msg);
+						toastSuccess(res.message);
+						setTimeout(() => {
+							location.reload();
+						}, 2000);
 					}).catch(err => {
+						toastDanger(err.message);
 						console.error(err);
-						toastDanger(err.toString());
 					});
 			}
 		});

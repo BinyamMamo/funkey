@@ -1,19 +1,51 @@
+<style>
+	.spinner-overlay {
+		width: 100vw;
+		height: 100vh;
+		position: fixed;
+		left: 0;
+		top: 0;
+		display: block;
+		background-color: #f7f7f733;
+		pointer-events: auto;
+		z-index: 10001 !important;
+	}
+
+	.spinner {
+		display: block;
+		position: fixed;
+		left: 47%;
+		top: 45%;
+
+		font-size: 2rem;
+		width: 5rem;
+		height: 5rem;
+	}
+</style>
+
 <div class="modal-dialog">
-	<form id="upload-form" class="upload-container modal-content">
+	<div class="spinner-overlay" style="display: none">
+		<div class="spinner-border text-primary spinner" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+
+	<form id="upload-form" class="upload-container modal-content" enctype="multipart/form-data">
 		<div class="upload-header modal-header">
-			<h5 class="upload-title modal-title" id="uploadModalLabel">Upload Music</h5>
-			<i onclick="$('#uploadModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
+			<h5 class="upload-title modal-title" id="uploadModalLabel">Upload Music 🎧</h5>
+			<i onclick="$('#practiceModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
 				data-bs-dismiss="modal" aria-label="Close"></i>
 		</div>
 		<div class="upload-body modal-body">
 			<div class="left-side">
-				<div class="uploaded-thumbnail drop-zone" data-type="image" data-image-url="assets/images/default_thumbnail.jpg">
+				<div class="uploaded-thumbnail drop-zone" data-type="image"
+					data-image-url="/assets/images/default_thumbnail.jpg">
 					<div class="upload-icon">
 						<i class="fa fa-file-image" aria-hidden="true"></i>
 					</div>
 					<input type="hidden" name="thumbnail" value="">
 				</div>
-				<input type="file" accept="image/*" id="thumbnail-upload" style="display: none;">
+				<input type="file" name="files" accept="image/*" id="thumbnail-upload" style="display: none;">
 				<div class="drag-drop artist-music-name">
 					<span>Unknown</span><span> - </span><span class="music-name">Track</span>
 					<!-- <span>Unknown</span> <br> <span class="music-name">Track</span> -->
@@ -36,7 +68,7 @@
 					<span>
 						<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
 						Drop video here, or <a href="javascript:void(0)">browse</a>
-						<input class="drop-browse" type="file" accept="video/*" style="display: none">.
+						<input name="files" class="drop-browse" type="file" accept="video/*" style="display: none">.
 					</span>
 					<input type="hidden" name="video" value="">
 					<div class="progress-container" style="display: none">
@@ -56,7 +88,8 @@
 				<div class="drag-drop drop-zone lyrics-drop" data-type="lyrics">
 					<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
 					<span>Drop Lyrics here, or <a href="javascript:void(0)">browse</a>
-						<input class="drop-browse" type="file" name="video" accept="text/*" style="display: none">.
+						<!-- <input class="drop-browse" type="file" name="video" accept="text/*" style="display: none">. -->
+						<input class="drop-browse" type="file" name="files" accept="text/*" style="display: none">.
 					</span>
 					<input type="hidden" name="lyrics" value="">
 					<div class="progress-container" style="display: none">
@@ -66,9 +99,9 @@
 					<div class="file-details" style="display: none">
 						<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
 						<div class="file-name text-truncate" id="fileName"></div>
-						<button type="button" class="close" data-dismiss="file-name" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+						<span aria-hidden="true" class="cancel-upload">
+							<i class="fas fa-times"></i>
+						</span>
 					</div>
 				</div>
 			</div>

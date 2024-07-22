@@ -127,6 +127,15 @@ $(document).ready(function () {
   $('.levels-form').on('submit', function (e) {
     e.preventDefault();
     let musicId = $('.levels-form').find('input[name="music"]').val();
+		let capitals = $('.levels-form').find('input[name="capital-letters"]').prop('checked');
+		let punctuation = $('.levels-form').find('input[name="Punctuation"]').prop('checked');
+		let double_spaces = $('.levels-form').find('input[name="double-spaces"]').prop('checked');
+		let speed = $('.levels-form').find('select[name="speed"]').val();
+
+		localStorage.setItem('capitals', capitals);
+		localStorage.setItem('punctuation', punctuation);
+		localStorage.setItem('double_spaces', double_spaces);
+		localStorage.setItem('speed', speed);
     window.location.href = `/music/${musicId}`;
   });
 
@@ -140,4 +149,31 @@ $(document).ready(function () {
 		LIBRARY_FILTER = 'uploaded';
 		updateMusicLibrary();
 	});
+
+
+	$('.levels-form').find('.level-buttons label[data-level="easy"]').on('click', function (e) {
+		e.preventDefault();
+		$('.levels-form').find('input[name="capital-letters"]').prop('checked', false);
+		$('.levels-form').find('input[name="Punctuation"]').prop('checked', false);
+		$('.levels-form').find('input[name="double-spaces"]').prop('checked', false);
+		$('.levels-form').find('select[name="speed"]').val('0.75');
+	});
+
+	$('.levels-form').find('.level-buttons label[data-level="medium"]').on('click', function (e) {
+		e.preventDefault();
+		$('.levels-form').find('input[name="capital-letters"]').prop('checked', false);
+		$('.levels-form').find('input[name="Punctuation"]').prop('checked', false);
+		$('.levels-form').find('input[name="double-spaces"]').prop('checked', false);
+		$('.levels-form').find('select[name="speed"]').val('1.0');
+	});
+
+	$('.levels-form').find('.level-buttons label[data-level="hard"]').on('click', function (e) {
+		e.preventDefault();
+		$('.levels-form').find('input[name="capital-letters"]').prop('checked', true);
+		$('.levels-form').find('input[name="Punctuation"]').prop('checked', true);
+		$('.levels-form').find('input[name="double-spaces"]').prop('checked', false);
+		$('.levels-form').find('select[name="speed"]').val('1.25');
+	});
+
+
 });
