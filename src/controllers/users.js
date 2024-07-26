@@ -45,6 +45,38 @@ const handleSignup = async (req, res) => {
     console.error(err);
   }
 };
+const editProfile = async (req, res) => {
+  try {
+    const { originalEmail, name, email, avatar } = req.body;
+
+
+		console.log({ originalEmail, name, email, avatar });
+    if (!validEmail(email)) {
+      res.status(400).json({ error: 'Invalid Email' });
+      console.error('Invalid email');
+    }
+
+    if (name.length < 3) {
+      res.status(400).json({ error: 'Name should be >3 characters' });
+      console.error('Name should be >3 characters');
+    }
+
+		let user = await User.findOne({ email: originalEmail });
+    if (!user) {
+      res.status(400).json({ error: 'User Not Found' });
+      throw new Error('User not found');
+    }
+    user.name = name;
+    user.email = email;
+    user.avatar = `${avatar}`;
+
+    await user.save();
+    res.status(200).json({ msg: 'User registered successfully!', user });
+  } catch (err) {
+		res.send(400);
+    console.error(err);
+  }
+};
 
 const handleLogout = async (req, res) => {
 	try {
@@ -79,10 +111,36 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const updateHour = async (req, res) => {
+	try {
+		let duration = req.body.watchHour || 0;
+		let user = await User.findById(req.user._id);
+		user.watchHour += duration;
+		await user.save();
+		console.log('User watch hour is updated by', duration);
+		res.status(200).json({message: 'update successful'});
+	} catch(err) { console.error(err); }
+}
+
+const updateScore = async (req, res) => {
+	try {
+		let score = req.body.score || 0;
+		let user = await User.findById(req.user._id);
+		user.score += score;
+		await user.save();
+
+		console.log('user score updated by', score);
+		res.status(200).json({message: 'update successful'});
+	} catch(err) { console.error(err); }
+}
+
 module.exports = {
-  renderSignup,
+	renderSignup,
   handleSignup,
   handleLogout,
   renderLogin,
+	updateScore,
+  editProfile,
   deleteUser,
+	updateHour
 };

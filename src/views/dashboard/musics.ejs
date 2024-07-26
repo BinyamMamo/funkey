@@ -243,7 +243,7 @@
 					<div class="dropdown">
 						<span class="profile-pic" data-toggle="dropdown" aria-expanded="false"></span>
 						<div class="dropdown-menu" style="margin: auto; margin-right: 5rem;">
-							<a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> Profile</a>
+							<a class="dropdown-item" href="/profile"><i class="fas fa-user-circle"></i> Profile</a>
 							<a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a>
 							<a class="dropdown-item" href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
 						</div>
@@ -267,7 +267,6 @@
 									<th scope="col">Artist</th>
 									<th scope="col">Rating</th>
 									<th scope="col">Views</th>
-									<th scope="col">Favorite</th>
 									<th scope="col">Created</th>
 									<th scope="col">Music Video</th>
 									<th scope="col">Lyrics</th>
@@ -295,13 +294,6 @@
 												</td>
 												<td>
 													<%= music.views %>
-												</td>
-												<td class="favorite">
-													<% if (music.favorite) {%>
-														<i class="fas fa-heart"></i>
-														<% } else { %>
-															<i class="far fa-heart"></i>
-															<% } %>
 												</td>
 												<td>
 													<%= music.updatedAt %>

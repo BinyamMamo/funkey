@@ -202,7 +202,7 @@
 					<div class="dropdown">
 						<span class="profile-pic" data-toggle="dropdown" aria-expanded="false"></span>
 						<div class="dropdown-menu" style="margin: auto; margin-right: 5rem;">
-							<a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> Profile</a>
+							<a class="dropdown-item" href="/profile"><i class="fas fa-user-circle"></i> Profile</a>
 							<a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a>
 							<a class="dropdown-item" href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
 						</div>
@@ -216,35 +216,26 @@
 							<thead class="thead-dark">
 								<tr>
 									<th scope="col">#</th>
+									<th scope="col">Avatar</th>
 									<th scope="col">Username</th>
 									<th scope="col">Email</th>
-									<th scope="col">Avatar</th>
+									<th scope="col">Watch Hour</th>
+									<th scope="col">Score</th>
 									<th scope="col">Delete</th>
 								</tr>
 							</thead>
-
-							<!-- Add Users -->
-							<tbody class="add-row">
-								<tr>
-									<th scope="row">$</th>
-									<th><input type="text" name="name" placeholder="username"></th>
-									<th><input type="email" name="email" placeholder="email"></th>
-									<th class="avatar-container">
-										<button class="btn btn-secondary"><i class="fas fa-user-circle"></i></button>
-										<input type="file" style="display: none">
-										<input type="hidden" name="avatar" value="">
-									</th>
-									<th><button class="btn btn-primary"><i class="fas fa-user-plus"></i></button></th>
-								</tr>
-							</tbody>
 
 							<!-- Fake Users -->
 							<tbody class="fake-users">
 								<tr>
 									<form id="fakeUsersForm">
 										<th scope="row">$</th>
+										<th class="avatar-container">
+											<h2>🤖</h2>
+										</th>
 										<th>Generate</th>
-										<th>Users</th>
+										<th>Fake</th>
+										<th>users</th>
 										<th class="avatar-container">
 											<input type="number" class="form-control" id="numberOfUsers" placeholder="🤖" min="1">
 										</th>
@@ -264,14 +255,20 @@
 												<th scope="row" class="ordinal">
 													<%= index + 1 %>
 												</th>
+												<td class="avatar-container"><img src="<%= user.avatar %>" class="avatar"></td>
 												<td>
 													<%= user.name %>
 												</td>
 												<td>
 													<%= user.email %>
 												</td>
+												<td>
+													<%= user.watchHour %>
+												</td>
+												<td>
+													<%= user.score %>
+												</td>
 													<!-- TODO: Remove this 👇 -->
-													<td class="avatar-container"><img src="<%= user.avatar %>" class="avatar"></td>
 													<td><i data-id="<%= user._id %>" class="fas fa-trash-alt delete-btn"></i></td>
 											</tr>
 											<% }); %>

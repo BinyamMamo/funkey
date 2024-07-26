@@ -8,11 +8,12 @@ const renderDashboard = async (req, res) => {
 		console.log('req.user:', req.user);
 		console.log(!req.user || req.user.role != 'ADMIN');
 		if (!req.user || req.user.role != 'ADMIN') return res.redirect('/login');
+    const musics = await Music.find();
     const userCount = await User.countDocuments();
     const musicCount = await Music.countDocuments();
     const uploadCount = await User.countDocuments({ public: false });
 
-    const topUsers = await User.find().sort({ views: -1 }).limit(5);
+    const topUsers = await User.find().sort({ score: -1, watchHour: -1 }).limit(5);
     // const popularMusics = await Music.find().sort({ rating: -1, views: -1 }).limit(5);
     const popularMusics = await Music.aggregate([
       {
@@ -34,6 +35,7 @@ const renderDashboard = async (req, res) => {
       numUploads: uploadCount,
       topUsers,
       popularMusics,
+			musics
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

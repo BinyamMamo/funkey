@@ -41,6 +41,13 @@ function fillTextBox() {
   }
 }
 
+let handleEnter = (event) => {
+  if (event.key === 'Escape' || event.key === 'Enter') {
+    $('.stats-container').find('.resume:visible').trigger('click');
+    document.removeEventListener('keydown', handleEnter);
+  }
+};
+
 let time = null;
 let timerId = null;
 document.addEventListener('keypress', (ev) => {
@@ -60,6 +67,26 @@ document.addEventListener('keypress', (ev) => {
     (ev.key === 'Enter' && text[cursor] == '\n') ||
     ev.key == text[cursor]
   ) {
+    let textContainer = $('.text-scroll')[0];
+    let container = $('.text-scroll')[0];
+    console.log('scrolled');
+    if (textContainer.scrollHeight > textContainer.clientHeight) {
+    	textContainer.scrollTop = textContainer.scrollTop + 0.5;
+    }
+
+		if (ev.key === 'Enter' && text[cursor] == '\n')
+			textContainer.scrollTop = textContainer.scrollTop + 55;
+
+    // const scrollIncrement = 20; // You can adjust this value
+    // const maxScrollTop = container.scrollHeight - container.clientHeight;
+
+    // if (container.scrollTop + container.clientHeight < container.scrollHeight) {
+    //   container.scrollTop = Math.min(
+    //     container.scrollTop + scrollIncrement,
+    //     maxScrollTop
+    //   );
+    // }
+
     let curr = document.getElementsByClassName('cursor')[0];
     if (cursor + 1 < text.length && text[cursor + 1] != '\n')
       curr.classList.remove('cursor');
@@ -76,6 +103,7 @@ document.addEventListener('keypress', (ev) => {
       let minute = time / 60000;
 
       document.body.ondblclick = null;
+      document.addEventListener('keydown', handleEnter);
       let wpm = Math.round(words / minute);
       $('.stats-container')
         .find('.replay')
@@ -90,7 +118,9 @@ document.addEventListener('keypress', (ev) => {
           $('.char').first().addClass('cursor');
           $('.stats-container').hide();
 
-          document.body.ondblclick = (e) => { showStats(e) };
+          document.body.ondblclick = (e) => {
+            showStats(e);
+          };
         });
 
       $('.stats-container').find('.wpm-display').text(`${wpm} wpm`);
@@ -131,12 +161,9 @@ $(document).ready(function () {
     let caption = activeItem.getAttribute('data-caption');
     $('#carouselCaption').text(caption);
     localStorage.setItem('themeCarousel', e.to.toString());
+    $('body').css('background-image', `url('${$(activeItem).find('span')[0].dataset.img}')`);
     $(this).find('input[name="theme"]').val(activeItem.dataset.view);
   });
-  $('#themeCarousel').carousel({
-    pause: true,
-  });
-  $('#themeCarousel').carousel(parseInt(localStorage.getItem('themeCarousel')));
 });
 
 let bgMusic = new Audio(`/assets/audio/forest.mp3`);
@@ -146,7 +173,9 @@ $(document).ready(function () {
     $('.spinner').show();
     $('#practiceModal').hide();
 
-    document.body.ondblclick = (e) => { showStats(e) };
+    document.body.ondblclick = (e) => {
+      showStats(e);
+    };
 
     let textarea = $(this).find('textarea');
     let prompt = $(this).find('input[name="prompt"]').val();
@@ -183,6 +212,7 @@ $(document).ready(function () {
       text = textarea.val();
       if (!capitals) text = text.toLowerCase();
       if (!punctuations) text = text.replace(/[^(A-Z|a-z| |\n)]/g, '');
+      $('.spinner').hide();
       beginPractice();
       if (bgMusic) bgMusic.play();
       return;
@@ -220,12 +250,12 @@ $(document).ready(function () {
       });
   });
 
-	function getRandomInt(min, max) {
-		const randomBuffer = new Uint32Array(1);
-		window.crypto.getRandomValues(randomBuffer);
-		let randomNumber = randomBuffer[0] / (0xFFFFFFFF + 1);
-		return Math.floor(randomNumber * (max - min) + min);
-	}
+  function getRandomInt(min, max) {
+    const randomBuffer = new Uint32Array(1);
+    window.crypto.getRandomValues(randomBuffer);
+    let randomNumber = randomBuffer[0] / (0xffffffff + 1);
+    return Math.floor(randomNumber * (max - min) + min);
+  }
 
   $('.generate-prompt').on('click', function (e) {
     e.preventDefault();
@@ -251,8 +281,18 @@ $(document).ready(function () {
     }, 40);
   });
 
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      console.log('Escape key pressed');
+      event.preventDefault();
+      showStats(event);
+    }
+  });
+
   function showStats(e) {
     e.preventDefault();
+
+    document.addEventListener('keydown', handleEnter);
     let words = cursor / 5;
     let minute = time / 60000;
     $('.stats-container')
@@ -263,10 +303,9 @@ $(document).ready(function () {
       });
 
     let wpm = Math.round(words / minute);
-		if (words < 5 || time < 1000	)
-    	$('.stats-container').find('.wpm-display').text(` _ wpm`);
-    else
-			$('.stats-container').find('.wpm-display').text(`${wpm} wpm`);
+    if (words < 5 || time < 1000)
+      $('.stats-container').find('.wpm-display').text(` _ wpm`);
+    else $('.stats-container').find('.wpm-display').text(`${wpm} wpm`);
     $('.stats-container').find('.close-stats').show();
     $('.stats-container').find('.replay').hide();
     $('.stats-container').toggle();

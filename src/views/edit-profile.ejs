@@ -147,14 +147,14 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 				<input type="hidden" name="original-email" value="<%= user.email %>" style="display: none">
 				<div class="col-md-6 border-right" style="border-color: #333 !important;">
 					<div class="d-flex flex-column align-items-center text-center">
-						<div class="edit-avatar" data-img="/assets/images/logo.png">
+						<div class="edit-avatar" data-img="/assets/images/logo.png" data-type="image">
 							<div class="avatar-overlay">
 								<i class="fas fa-edit"></i>
 							</div>
 
-							<input type="file" style="display: none">
-							<input type="hidden" name="avatar" value="" style="display: none">
+							<input type="hidden" name="avatar" value="<%= user.avatar %>" style="display: none">
 						</div>
+						<input id="thumbnail-upload" name="files"  accept="image/*" type="file" style="display: none">
 						<span class="text-white font-weight-bold text-truncate" style="width: 100%; display: block;"><%= user.name %></span>
 						<span class="text-white-50 text-truncate" style="width: 100%; display: block;"><%= user.email %></span>
 					</div>

@@ -22,6 +22,21 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
   },
+	watchHour: {
+		type: Number,
+		min: 0,
+		default: 0
+	},
+	score: {
+		type: Number,
+		min: 0,
+		default: 0
+	},
+	stars: {
+		type: Number,
+		min: 0,
+		default: 0
+	}
 });
 
 const User = mongoose.model('User', userSchema);

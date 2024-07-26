@@ -83,7 +83,7 @@
 
 	</div>
 
-	<div class="container">
+	<div class="container text-scroll">
 		<div class="textbox practice-text" id="textbox">
 		</div>
 	</div>
@@ -92,10 +92,11 @@
 		<span class="sr-only">Loading...</span>
 	</div>
 	<!-- Modals 2 - add fade-->
-	<div class="modal fade upload-modal" tabindex="-1" id="practiceModal" aria-labelledby="uploadModalLabel" aria-hidden="true">
+	<div class="modal fade upload-modal" tabindex="-1" id="practiceModal" aria-labelledby="uploadModalLabel"
+		aria-hidden="true" data-keyboard="false" and data-backdrop="static">
 		<%- include('practiceMenus.ejs') %>
 	</div>
-	
+
 	<!-- <div class="stats-container" style="display: none"> -->
 	<div class="stats-container" style="display: none">
 		<%- include('stats.ejs') %>
@@ -114,6 +115,10 @@
 
 	<script defer>
 		$(document).ready(function () {
+
+			$('#practiceModal').modal({
+				keyboard: false
+			});
 
 			$('#practiceModal').modal('show');
 
@@ -137,6 +142,12 @@
 				console.log('img data', img);
 				$(element).css('background-image', `url('${img}')`);
 			});
+
+			$('#themeCarousel').carousel({
+				pause: true,
+			});
+			$('#themeCarousel').carousel(parseInt(localStorage.getItem('themeCarousel')));
+
 		});
 	</script>
 
