@@ -45,35 +45,40 @@ const handleSignup = async (req, res) => {
     console.error(err);
   }
 };
+
 const editProfile = async (req, res) => {
   try {
+		console.log('req.body:', req.body);
+		console.log('req.file:', req.file);
     const { originalEmail, name, email, avatar } = req.body;
 
 
 		console.log({ originalEmail, name, email, avatar });
     if (!validEmail(email)) {
-      res.status(400).json({ error: 'Invalid Email' });
-      console.error('Invalid email');
+			res.status(400).json({ message: 'Invalid Email' });
+      return console.error('Invalid email');
     }
 
     if (name.length < 3) {
-      res.status(400).json({ error: 'Name should be >3 characters' });
-      console.error('Name should be >3 characters');
+      res.status(400).json({ message: 'Name should be >3 characters' });
+      return console.error('Name should be >3 characters');
     }
 
 		let user = await User.findOne({ email: originalEmail });
     if (!user) {
-      res.status(400).json({ error: 'User Not Found' });
-      throw new Error('User not found');
+      res.status(400).json({ message: 'User Not Found' });
+      return console.error('User not found');
     }
     user.name = name;
     user.email = email;
     user.avatar = `${avatar}`;
+		console.log({ originalEmail, name, email, avatar });
 
     await user.save();
-    res.status(200).json({ msg: 'User registered successfully!', user });
+		console.log('done////');
+    res.status(200).json({ message: 'User registered successfully!', user });
   } catch (err) {
-		res.send(400);
+		res.sendStatus(400);
     console.error(err);
   }
 };

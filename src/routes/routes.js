@@ -12,6 +12,9 @@ const fakeRoute = require('./faker.routes');
 const { authUser, authRole } = require('../middleware/auth');
 const { scopeMusics, canAccess } = require('../middleware/permissions');
 const Roles = require('../utils/roles');
+const userController = require('../controllers/users');
+
+router.put('/profile/edit', authUser, uploadController.uploadCloud.single('file'), userController.editProfile);
 
 router.get('/', async (req, res) => {
 	let musics = await Music.find();
@@ -28,11 +31,11 @@ router.get('/browse', async (req, res) => {
 
 router.post(
 	'/upload',
-  uploadController.upload.single('file'),
+  uploadController.uploadLocal.single('file'),
   uploadController.postupload
 );
 
-router.post('/uploadMusic', authUser, uploadController.upload.array('files'),	musicController.uploadMusic);
+router.post('/uploadMusic', authUser, uploadController.uploadLocal.array('files'),	musicController.uploadMusic);
 router.get('/dashboard', dashboardController.renderDashboard);
 
 router.get('/profile', authUser, async (req, res) => {
