@@ -145,7 +145,7 @@
 					<div class="dropdown">
 						<span class="profile-pic" data-toggle="dropdown" aria-expanded="false"></span>
 						<div class="dropdown-menu" style="margin: auto; margin-right: 5rem;">
-							<a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> Profile</a>
+							<a class="dropdown-item" href="/profile"><i class="fas fa-user-circle"></i> Profile</a>
 							<a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a>
 							<a class="dropdown-item" href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
 						</div>
@@ -179,7 +179,9 @@
 							<i class="fas fa-cloud-upload-alt"></i>
 						</div>
 						<div class="column">
-							<span class="stats-count"><%= numUploads %></span>
+							<!-- <span class="stats-count">numUploads</span> -->
+							 
+							<span class="stats-count"><%= musics.filter(music => music.public = false).length %></span>
 							<span class="stats-caption">Uploads</span>
 						</div>
 					</div>
@@ -225,17 +227,25 @@
 						<tr class="thead-dark">
 							<th scope="col">Avatar</th>
 							<th scope="col">Name</th>
-							<th scope="col">Hours</th>
+							<th scope="col">Watch Hour</th>
 							<th scope="col">Score</th>
 						</tr>
 					</thead>
 					<tbody>
+
+
 						<% topUsers.forEach(user => { %>
+						<% // JavaScript code to convert milliseconds to a human-readable format
+									const timeInMs = user.watchHour;
+									const totalMinutes = Math.floor(timeInMs / (1000 * 60));
+									const hours = Math.floor(totalMinutes / 60);
+									const minutes = totalMinutes % 60;
+									const formattedTime = `${hours}hrs ${minutes}min`; %>
 							<tr>
 								<td class="align-middle thumbnail-container" scope="row"><span class="thumbnail avatar" data-img="<%= user.avatar %>"></span></td>
 								<td class="align-middle"><%= user.name %></td>
-								<td class="align-middle"><%= user.hours || '7hrs45min' %></td>
-								<td class="align-middle" style="text-align: center;"><%= user.score || '24' %></td>
+								<td class="align-middle"><%= formattedTime || '-' %></td>
+								<td class="align-middle" style="text-align: center;"><%= user.score || '-' %></td>
 							</tr>
 						<% }); %>
 						</tbody>

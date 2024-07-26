@@ -14,12 +14,13 @@ router.delete('/delete', userController.deleteUser);
 router.get('/dashboard/users', authUser, authRole(Roles.ADMIN), dashboardController.renderUsers);
 
 router.post('/signup', userController.handleSignup);
+router.put('/profile/edit', authUser, userController.editProfile);
 
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) return next(err);
+	passport.authenticate('local', (err, user, info) => {
+		if (err) return next(err);
     if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+			return res.status(401).json({ message: 'Invalid username or password' });
     }
     req.logIn(user, (err) => {
 			let redirect_url = '/';
@@ -27,35 +28,35 @@ router.post('/login', (req, res, next) => {
 			console.log('user:', user);
       if (user.role == 'ADMIN')
         redirect_url = '/dashboard';
-      return res.status(200).json({ message: 'Login successful', redirect_url });
+			return res.status(200).json({ message: 'Login successful', redirect_url });
     });
   })(req, res, next);
 });
 
 router.get(
-  '/auth/google',
+	'/auth/google',
   passport.authenticate('google', {
     scope: ['profile', 'email'],
   })
 );
 
 router.get(
-  '/auth/google/callback',
+	'/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/profile');
+		res.redirect('/profile');
   }
 );
 
 // Logout route
 router.get('/logout', (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
+	req.logout((err) => {
+		if (err) {
+			return next(err);
     }
     req.session.destroy((err) => {
-      if (err) {
-        console.error('Error destroying session:', err);
+			if (err) {
+				console.error('Error destroying session:', err);
         return next(err);
       }
       res.clearCookie('connect.sid'); // Clear the cookie
@@ -63,5 +64,8 @@ router.get('/logout', (req, res, next) => {
     });
   });
 });
+
+router.post('/update/watchHour', authUser, userController.updateHour);
+router.put('/update/score', authUser, userController.updateScore);
 
 module.exports = router;

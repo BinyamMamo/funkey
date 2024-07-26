@@ -75,3 +75,5 @@ app.listen(port, () => {
   console.log('\x1Bc'); // Clears the console (Linux only)
   console.log(`Server is running on port ${port}`);
 });
+
+module.exports = app;

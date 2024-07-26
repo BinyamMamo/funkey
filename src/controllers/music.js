@@ -214,8 +214,10 @@ const getMusic = async (req, res) => {
 const search = async (req, res) => {
   const query = req.query.query || '';
 
+	console.log('query:', query);
+
   try {
-		if (!query || query == '' || query == ' ')
+		if (query == '' || query == ' ')
 			return res.json({musics: await Music.find()});
 
 		const musics = await Music.find({

@@ -17,7 +17,7 @@
 		top: 45%;
 		transform: translateY(-50%);
 		right: 0.5em;
-		z-index: 1000000;
+		z-index: 1000;
 		color: #e1e1e1;
 		cursor: pointer;
 		transition: 0.5s ease;
@@ -151,7 +151,7 @@
 		position: absolute;
 		right: 0.5em;
 		top: 0.5em;
-		z-index: 100;
+		z-index: 1001;
 		font-size: 1rem;
 		color: #e1e1e1;
 		cursor: pointer;
@@ -183,13 +183,17 @@
 		top: 50%;
 		transform: translateY(-50%);
 	}
+	
+	#practiceModal {
+		z-index: 10001 !important;
+	}
 </style>
 
 <div class="modal-dialog">
 	<form id="practice-menu" class="upload-container modal-content">
 		<div class="upload-header modal-header" style="border-color: #27292aaa !important;">
 			<h5 class="upload-title modal-title" id="uploadModalLabel">Practice Typing ✨</h5>
-			<i onclick="$('#uploadModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
+			<i onclick="$('#practiceModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
 				data-bs-dismiss="modal" aria-label="Close"></i>
 		</div>
 		<div class="upload-body modal-body">
@@ -301,7 +305,7 @@
 					<div class="form-check form-check-inline text-length-container" style="width: fit-content;">
 						<!-- <i class="fas fa-stream"></i> -->
 						<i class="fas fa-list-ol"></i>
-						<input name="length" type="number" id="form1" min="5" max="2500" step="100" placeholder="___"
+						<input name="length" type="number" id="form1" min="100" max="2500" step="100" placeholder="___"
 							class="form-control form-icon-trailing text-length" />
 					</div>
 

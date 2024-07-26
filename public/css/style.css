@@ -81,7 +81,7 @@ body {
 
 header {
   position: fixed;
-  z-index: 1002;
+  z-index: 1000;
   /* margin-left: 34px; */
   margin: 14px;
   padding: 24px;

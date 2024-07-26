@@ -206,7 +206,7 @@
 			<!-- ***** Search End ***** -->
 			<div class="search-input">
 				<form id="search" action="#">
-					<input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
+					<input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" />
 					<i class="fa fa-search"></i>
 					<div class="search-result" id="searchResults">
 
@@ -482,7 +482,8 @@
 				$('#searchResults').hide();
 			});
 
-			$('#searchText').on('input', function () {
+			$('#searchText').on('input', function (e) {
+				e.preventDefault();
 				const query = $(this).val();
 
 				// if (query.length < 2) { // Optional: avoid sending requests for very short queries
@@ -496,7 +497,8 @@
 					data: { query },
 					success: function (data) {
 						// Display results
-						$('#searchResults').html(data.map(music => `
+						console.log('data:', data);
+						$('#searchResults').html(data.musics.map(music => `
 						<div class="item music-clip"
 								style="background-color: #27292a88; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; padding: 0.4em; gap: 0.15em;">
 								<div class="thumb" style="margin: 0;">

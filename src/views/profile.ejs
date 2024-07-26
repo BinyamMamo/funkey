@@ -246,14 +246,29 @@
 																	</div>
 										</div>
 									</div>
-									<div class="col-lg-4 align-self-center">
-										<ul>
-											<li>Stars Earned <span>16</span></li>
-											<li>Online Matches <span>None</span></li>
-											<li>Musics Uploaded <span>3</span></li>
-											<li>Hours Practiced <span>29</span></li>
-										</ul>
-									</div>
+
+									<% // JavaScript code to convert milliseconds to a human-readable format const
+										timeInMs=user.watchHour; const totalMinutes=Math.floor(timeInMs / (1000 * 60)); const
+										hours=Math.floor(totalMinutes / 60); const minutes=totalMinutes % 60; const
+										formattedTime=`${hours}hrs ${minutes}min`; %>
+
+
+										<div class="col-lg-4 align-self-center">
+											<ul>
+												<li>Score <span>
+														<%= user.score %>
+													</span></li>
+												<li>Stars Earned <span>
+														<%= user.stars %>
+													</span></li>
+												<li>Musics Uploaded <span>
+														<%= musics.filter(music=> music.userId = user._id).length %>
+													</span></li>
+												<li>Hours Practiced <span>
+														<%= formattedTime %>
+													</span></li>
+											</ul>
+										</div>
 								</div>
 
 
@@ -404,7 +419,7 @@
 	<script src="/js/popup.js" defer></script>
 	<script src="/js/custom.js" defer></script>
 	<script src="/js/levels.js" defer></script>
-	<script src="/js/upload.js" defer></script>
+	<!-- <script src="/js/upload.js" defer></script> -->
 	<script src="/js/toasts.js"></script>
 	<script src="/js/affirm.js"></script>
 
@@ -415,27 +430,6 @@
 				affirm('Are u sure, you want to logout?').then((affirmed) => {
 					if (affirmed) location.href = '/logout';
 				});
-			});
-
-			$('#edit-form').on('submit', function (event) {
-				event.preventDefault();
-
-				let formData = new FormData(this);
-				for (let [key, value] of formData.entries()) {
-					console.log(`${key}: ${value}`);
-				}
-
-				console.log('formData:', formData);
-				$(this).find('.spinner-overlay').show();
-
-				setTimeout(() => {
-					$(this).find('.spinner-overlay').hide();
-					toastDanger('couldn\t edit profile')
-				}, 1000);
-				// fetch('/profile/edit', {
-				// 	method: 'POST',
-				// 	body: formData
-				// });
 			});
 		}); // doc ready
 
@@ -481,6 +475,82 @@
 						}
 					})
 				});
+			});
+
+
+
+			$('.edit-avatar').click(function (e) {
+				e.preventDefault();
+				$('#thumbnail-upload').trigger('click');
+			});
+
+			$('#thumbnail-upload').on('cancel', () => {
+				console.log('Cancelled.');
+			});
+
+			$('#thumbnail-upload').on('change', function () {
+				let element = $(this).prev()[0];
+				let file = this.files[0];
+				let type = element.dataset.type;
+
+				var formData = new FormData();
+				formData.append('file', file);
+				formData.append('type', type);
+
+				const xhr = new XMLHttpRequest();
+				xhr.open('POST', '/upload', true);
+
+				xhr.onreadystatechange = () => {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						console.log('Upload complete!');
+						let response = JSON.parse(xhr.response);
+						$('.edit-avatar').css('background-image', `url('/${response.path}')`);
+						toastSuccess('Thumbnail uploaded successfully!');
+					} else if (xhr.readyState == 4) {
+						let response = { error: 'nothing' };
+						if (xhr.responseText) {
+							try {
+								response = JSON.parse(xhr.responseText);
+								console.log('response:', response);
+							} catch (e) {
+								console.error('Parsing error:', e);
+							}
+						} else {
+							console.warn('Empty response');
+						}
+					}
+				};
+
+				xhr.send(formData);
+			});
+
+
+			$('.edit-form').on('submit', function (e) {
+				e.preventDefault();
+				const avatar = $(this).find('input[name="avatar"]').val();
+				const name = $(this).find('input[name="name"]').val();
+				const email = $(this).find('input[name="email"]').val();
+				const originalEmail = $(this).find('input[name="original-email"]').val();
+
+				fetch('/profile/edit', {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ avatar, name, email, originalEmail })
+				}).then(res => {
+					if (!res.ok) return res.json().then(err => Promise.reject(err));
+					return res.json();
+				}).then(res => {
+					$('.spinner-overlay').hide();
+					toastSuccess(res.message);
+					setTimeout(() => {
+					$('#editModal').modal('hide');
+				}, 500);
+				}).catch(err => {
+					console.error(err.message);
+				})
+
 			});
 		});
 	</script>
