@@ -1,24 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const multer = require('multer');
 const { urlFor } = require('../utils/helpers');
 const Roles = require('../utils/roles');
+const multer = require('multer');
+const { cloudStorage, localStorage } = require('../config/cloudinary-config');
 
-// Set up Multer storage
-const storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, 'uploads/');
-  },
-  filename: function (req, file, callback) {
-    callback(
-      null,
-      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
-
-// Initialize Multer upload
-const upload = multer({ storage: storage });
+const uploadLocal = multer({ storage: localStorage });
+const uploadCloud = multer({ storage: cloudStorage });
 
 // Middleware to track upload progress
 // app.use((req, res, next) => {
@@ -64,8 +52,7 @@ const deleteUpload = async (req, res) => {
       console.error({ error: 'File not found!' });
     }
 
-		if (filePath.startsWith('/'))
-			filePath = filePath.substring(1);
+    if (filePath.startsWith('/')) filePath = filePath.substring(1);
 
     let music = await Music.find({
       $or: [{ video: `/${filePath}` }, { lyrics: `/${filePath}` }],
@@ -87,5 +74,6 @@ const deleteUpload = async (req, res) => {
 module.exports = {
   deleteUpload,
   postupload,
-  upload,
+  uploadLocal,
+  uploadCloud,
 };

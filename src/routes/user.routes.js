@@ -14,7 +14,6 @@ router.delete('/delete', userController.deleteUser);
 router.get('/dashboard/users', authUser, authRole(Roles.ADMIN), dashboardController.renderUsers);
 
 router.post('/signup', userController.handleSignup);
-router.put('/profile/edit', authUser, userController.editProfile);
 
 router.post('/login', (req, res, next) => {
 	passport.authenticate('local', (err, user, info) => {

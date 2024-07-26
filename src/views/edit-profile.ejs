@@ -144,17 +144,16 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 		<div class="modal-body" style="background-color: #1f2122 !important; border-radius: 7px !important;">
 			<div class="container rounded bg-white d-flex flex-row align-items-end"
 				style="width: 100%; background-color: #1f2122 !important; padding: 0; justify-content: space-between; gap: 0.5em;">
-				<input type="hidden" name="original-email" value="<%= user.email %>" style="display: none">
+				<input type="hidden" name="originalEmail" value="<%= user.email %>" style="display: none">
 				<div class="col-md-6 border-right" style="border-color: #333 !important;">
 					<div class="d-flex flex-column align-items-center text-center">
 						<div class="edit-avatar" data-img="/assets/images/logo.png" data-type="image">
 							<div class="avatar-overlay">
 								<i class="fas fa-edit"></i>
 							</div>
-
 							<input type="hidden" name="avatar" value="<%= user.avatar %>" style="display: none">
 						</div>
-						<input id="thumbnail-upload" name="files"  accept="image/*" type="file" style="display: none">
+						<input id="thumbnail-upload" name="file"  accept="image/*" type="file" style="display: none">
 						<span class="text-white font-weight-bold text-truncate" style="width: 100%; display: block;"><%= user.name %></span>
 						<span class="text-white-50 text-truncate" style="width: 100%; display: block;"><%= user.email %></span>
 					</div>
