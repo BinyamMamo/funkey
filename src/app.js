@@ -73,7 +73,7 @@ const port = process.env.PORT;
 app.listen(port, () => {
   console.clear();
   console.log('\x1Bc'); // Clears the console (Linux only)
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
 
 module.exports = app;
