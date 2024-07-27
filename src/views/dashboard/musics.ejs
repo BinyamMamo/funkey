@@ -147,6 +147,64 @@
 			font-size: 1.5rem;
 			/* font-weight: bold; */
 		}
+
+		.thumbnail-container {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.video-thumbnail {
+			margin: 10px;
+			cursor: pointer;
+			/* width: 200px; */
+			width: auto;
+			height: 2rem;
+			/* width: 5rem; */
+			overflow: hidden;
+			background-color: transparent;
+
+			border-radius: 2px;
+			/* border-radius: 23px; */
+		}
+
+		#videoModal .modal-dialog {
+			max-width: 100% !important;
+			width: 100%;
+		}
+
+		#videoModal .modal-content {
+			width: 70vw;
+			margin: auto;
+			font-family: 'Poppins', sans-serif;
+		}
+
+		#videoModal .modal-body {
+			padding: 0 !important;
+			width: 100% !important;
+		}
+
+		#videoModal .modal-footer {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1em;
+		}
+
+		.has-search .form-control {
+			padding-left: 2.375rem;
+		}
+
+		.has-search .form-control-feedback {
+			position: absolute;
+			z-index: 2;
+			display: block;
+			width: 2.375rem;
+			height: 2.375rem;
+			line-height: 2.375rem;
+			text-align: center;
+			pointer-events: none;
+			color: #aaa;
+		}
 	</style>
 	<link rel="stylesheet" href="/css/toasts.css">
 </head>
@@ -251,9 +309,14 @@
 				</div>
 
 
-				<div style="width: 100%; padding: 1em 0;">
+				<div
+					style="width: 100%; padding: 1em 0; display: flex; justify-content: space-between; gap: 1em; align-items: center;">
 					<button style="margin-left: 1em;" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal"><i
 							class="fas fa-cloud-upload-alt"></i> Upload</button>
+					<div class="form-group has-search" style="margin: 0 !important;">
+						<span class="fa fa-search form-control-feedback"></span>
+						<input type="text" class="form-control" placeholder="Search">
+					</div>
 				</div>
 
 				<div class="musics-table" style="width: 100%;">
@@ -262,13 +325,12 @@
 							<thead class="thead-dark">
 								<tr>
 									<th scope="col">#</th>
-									<th scope="col">Thumbnail</th>
 									<th scope="col">Music</th>
 									<th scope="col">Artist</th>
 									<th scope="col">Rating</th>
 									<th scope="col">Views</th>
 									<th scope="col">Created</th>
-									<th scope="col">Music Video</th>
+									<th scope="col">Video</th>
 									<th scope="col">Lyrics</th>
 									<th scope="col">Delete</th>
 								</tr>
@@ -281,32 +343,35 @@
 												<th scope="row" class="ordinal">
 													<%= index + 1 %>
 												</th>
-												<td class="thumbnail-container"><span style="background-image: url('/<%= music.thumbnail %>');"
-														class="table-thumbnail"></span></td>
-												<td>
+												<!-- <td class="thumbnail-container"><span style="background-image: url('<%= music.thumbnail %>');"
+														class="table-thumbnail"></span></td> -->
+												<td class="music-title">
 													<%= music.title %>
 												</td>
-												<td>
+												<td class="music-artist">
 													<%= music.artist %>
 												</td>
-												<td>
+												<td class="music-rating">
 													<%= music.rating.toFixed(2) %>
 												</td>
-												<td>
+												<td class="music-views">
 													<%= music.views %>
 												</td>
 												<td>
 													<%= music.updatedAt %>
 												</td>
 												<td>
-													<a href="/<%= music.video %>">
-														<%= music.video %>
-													</a>
+													<video class="video-thumbnail" data-id="<%= music._id %>"
+														poster="https://res.cloudinary.com/dv5x2gpmz/image/upload/v1722103219/uploads/progress/sehmvzsercprkv74wpxp.png"
+														preload="none" data-thumbnail="<%= music.thumbnail %>" data-video-url="<%= music.video %>" data-toggle="modal"
+														data-target="#videoModal">
+													</video>
 												</td>
 												<td>
-													<a href="/<%= music.lyrics %>">
-														<%= music.lyrics %>
-													</a>
+													<img controls class="video-thumbnail"
+														src="https://res.cloudinary.com/dv5x2gpmz/image/upload/v1722102753/uploads/progress/xibczkcluseoyguohpcv.png"
+														preload="none" data-lyrics-url="<%= music.lyrics %>" data-toggle="modal"
+														data-target="#myModal">
 												</td>
 												<td class="delete-container">
 													<i data-id="<%= music._id %>" class="fas fa-trash-alt delete-btn"></i>
@@ -329,6 +394,35 @@
 	</div>
 
 
+	<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" style="font-weight: bold;" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<video id="videoPlayer" width="100%" height="500px" controls></video>
+				</div>
+				<div class="modal-footer">
+					<div class="column">
+						<button type="button" class="btn rating" data-dismiss="modal">4.8 <i
+								class="fas fa-star-half-alt"></i></button>
+						<button type="button" class="btn views">342 <i class="fas fa-users"></i></button>
+					</div>
+					<div class="column">
+						<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">342 <i class="fas fa-users"></i></button> -->
+						<button type="button" class="btn btn-danger text-light play"><i class="fas fa-play-circle text-light"></i>
+							&nbsp;Play</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -336,7 +430,8 @@
 
 	<script src="/js/toasts.js"></script>
 	<script src="/js/affirm.js"></script>
-	<script src="/js/upload.js" defer></script>
+	<!-- <script src="/js/upload.js" defer></script> -->
+	<script src="/js/uploader.js" defer></script>
 
 	<script>
 		$(document).ready(function () {
@@ -413,6 +508,45 @@
 						console.error(err);
 					});
 			}
+		});
+	</script>
+
+	<script defer>
+		$(document).ready(function () {
+			$('#videoModal').on('hide.bs.modal', function (event) {
+				console.log('closing music');
+				var videoPlayer = document.getElementById("videoPlayer");
+				videoPlayer.pause();
+				videoPlayer.removeAttribute('src');
+				videoPlayer.load();
+			});
+
+			// Add event listeners to thumbnails
+			$('.video-thumbnail').each((_, thumbnail) => {
+				$(thumbnail).on('click', function (event) {
+
+					console.log('launching modal...');
+					const musicId = $(thumbnail).data('id');
+					const thumbnailUrl = $(thumbnail).data('thumbnail');
+
+					const musicContainer = $(`#${musicId}`);
+					let title = $(musicContainer).find('.music-title').text();
+					let views = $(musicContainer).find('.music-views').text();
+					let artist = $(musicContainer).find('.music-artist').text();
+					let rating = $(musicContainer).find('.music-rating').text();
+					$('#videoModal .modal-title').text(`${artist} - ${title}`);
+					$('#videoModal .music-rating').text(rating);
+					$('#videoModal .music-views').text(views);
+					$('#videoModal #videoPlayer').text(views);
+
+					var videoUrl = thumbnail.getAttribute('data-video-url');
+					console.log('videoUrl:', videoUrl);
+					var videoPlayer = document.getElementById("videoPlayer");
+					videoPlayer.src = videoUrl;
+					videoPlayer.poster = thumbnailUrl;
+					$('#levelsModal').modal('show');
+				})
+			});
 		});
 	</script>
 

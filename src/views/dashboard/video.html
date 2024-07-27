@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Video Dashboard</title>
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch+Pop&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+	<div class="thumbnail-container">
+		<video controls class="video-thumbnail" poster="https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp" preload="none" data-video-url="path/to/video1.mp4" data-toggle="modal" data-target="#videoModal"></video>
+		<video controls class="video-thumbnail" poster="https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp" preload="none" data-video-url="path/to/video2.mp4"  data-toggle="modal" data-target="#videoModal"></video>
+		<!-- Add more thumbnails as needed -->
+	</div>
+
+	<!-- The Modal -->
+
+	<!-- Modal -->
+
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script defer>
+		// Get the modal
+
+		// When the user clicks anywhere outside of the modal, close it
+		$('#videoModal').on('hide.bs.modal', function (event) {
+			console.log('closing music');
+			var videoPlayer = document.getElementById("videoPlayer");
+			videoPlayer.pause();
+			videoPlayer.removeAttribute('src');
+			videoPlayer.load();
+		});
+
+		$('#videoModal').on('show.bs.modal', function (event) {
+			console.log('showing music');
+			var videoUrl = this.getAttribute('data-video-url');
+			var videoPlayer = document.getElementById("videoPlayer");
+			videoPlayer.src = videoUrl;
+		});
+
+		// Add event listeners to thumbnails
+		$('.video-thumbnail').forEach(thumbnail => {
+				$(thumbnail).on('click', function (event) {
+
+					console.log('launching modal...');
+					const musicId = $(thumbnail).data('id');
+					const music = $('.musicTable').find('data-id=[musicId]');
+					if (music) {
+						$('#videoModal .modal-title').text(`${music.artist} - ${music.title}`);
+						$('#videoModal .thumbnail-img').attr('src', music.thumbnail);
+						$('#videoModal input[name="music"]').val(music._id);
+
+						$('.levels-form').find('.thumbnail-img-overlay i').removeClass('far fas');
+						if (music.favorite)
+							$('.levels-form').find('.thumbnail-img-overlay i').addClass('fas');
+						else $('.levels-form').find('.thumbnail-img-overlay i').addClass('far');
+						$('#levelsModal').modal('show');
+					}
+				})
+		});
+	</script>
+
+</body>
+
+</html>

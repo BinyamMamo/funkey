@@ -161,30 +161,28 @@
 	padding-top: 1em;
 	width: 100%;
 }
+	/* 
+	.upload-footer button {
+		font-size: 1.5rem;
+		font-weight: 500;
+		border-width: 1px;
+		color: #5e8de7 !important;
+		border-color: #5e8de7 !important;
+		
+		background-color: transparent;
+		transition: 0.7s;
+		border-radius: 5px;
+		margin: auto;
+		margin-bottom: 0.35em;
+		width: fit-content;
+	}
 
-.upload-footer button {
-  font-size: 1.5rem;
-  font-weight: 500;
-  border-width: 1px;
-  color: #5e8de7 !important;
-  border-color: #5e8de7 !important;
-	
-  background-color: transparent;
-  transition: 0.7s;
-  border-radius: 5px;
-	margin: auto;
-  margin-bottom: 0.35em;
-	width: fit-content;
-}
-
-.upload-footer button:hover {
-  /* color: #5e8de7 !important; */
-  background-color: #5e8de7 !important;
-  color: #f7f7f7 !important;
-  /* background-color: #5e8de7; */
-  border-radius: 10px;
-  border-color: transparent;
-}
+	.upload-footer button:hover {
+		background-color: #5e8de7 !important;
+		color: #f7f7f7 !important;
+		border-radius: 10px;
+		border-color: transparent;
+	} */
 
 .artist-music-name {
   width: 15rem;
