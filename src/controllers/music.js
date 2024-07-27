@@ -24,6 +24,7 @@ const uploadMusic = async (req, res) => {
     let public = req.user.role === Roles.ADMIN;
     let { artist, title, video, lyrics, thumbnail } = req.body;
 
+		console.log({ artist, title, video, lyrics, thumbnail });
     let userId = req.user._id;
     let musicByTitle = await Music.findOne({
       title: new RegExp(`^${title}$`, 'i'),
@@ -56,6 +57,8 @@ const uploadMusic = async (req, res) => {
       public,
       userId,
     });
+
+		console.log(music);
 
     await music.save();
     res.status(201).json({ message: 'Music uploaded succesfully!', music });

@@ -35,7 +35,8 @@ router.post(
   uploadController.postupload
 );
 
-router.post('/uploadMusic', authUser, uploadController.uploadLocal.array('files'),	musicController.uploadMusic);
+// router.post('/uploadMusic', authUser, uploadController.uploadLocal.array('files'),	musicController.uploadMusic);
+router.post('/music/upload', authUser, musicController.uploadMusic);
 router.get('/dashboard', dashboardController.renderDashboard);
 
 router.get('/profile', authUser, async (req, res) => {

@@ -6,6 +6,13 @@ const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 const session = require('express-session');
 require('./config/passport-config');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const connectDB = require('./config/db');
 const routes = require('./routes/routes');
@@ -58,6 +65,30 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
+
+app.get('/signed-upload', (req, res) => {
+  try {
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const paramsToSign = {
+      timestamp: timestamp,
+      folder: req.query.folder || 'default-folder',
+    };
+    const signature = cloudinary.utils.api_sign_request(
+      paramsToSign,
+      process.env.CLOUDINARY_API_SECRET
+    );
+
+    res.json({
+      signature: signature,
+      timestamp: timestamp,
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.use(routes);
 
 // Example route that throws an error
@@ -73,7 +104,7 @@ const port = process.env.PORT;
 app.listen(port, () => {
   console.clear();
   console.log('\x1Bc'); // Clears the console (Linux only)
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
 
 module.exports = app;
