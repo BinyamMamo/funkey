@@ -80,7 +80,7 @@ $(document).ready(function () {
   let lyricsUrl = $('.whole-body').find('input[type="hidden"]').val();
   // lyricsUrl = lyricsUrl || "/uploads/lyrics.txt";
   console.log('lyricsUrl', lyricsUrl);
-  ajax.open('GET', `/${lyricsUrl}`, true);
+  ajax.open('GET', `${lyricsUrl}`, true);
   ajax.send();
 });
 
