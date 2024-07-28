@@ -109,6 +109,14 @@
 	color: #5e8de7;
 }
 
+.profile-pic {
+	width: 30px;
+	height: 30px;
+	clip-path: circle();
+	object-fit: cover;
+	object-position: center;
+}
+
 .play-icon-container {
 	/* display: none; */
 	/* visibility: none; */

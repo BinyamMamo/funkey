@@ -18,6 +18,9 @@
 
 	<link rel="stylesheet" href="/css/upload.css">
 	<link rel="stylesheet" href="/css/dashboard.css">
+	<link rel="stylesheet" href="/css/loader-time.css">
+	<link rel="stylesheet" href="/css/loader-dancing.css">
+
 	<style>
 		body {
 			font-size: 0.875rem;
@@ -153,7 +156,8 @@
 			flex-wrap: wrap;
 		}
 
-		.video-thumbnail {
+		.video-thumbnail,
+		.lyrics-thumbnail {
 			margin: 10px;
 			cursor: pointer;
 			/* width: 200px; */
@@ -178,22 +182,22 @@
 			font-family: 'Poppins', sans-serif;
 		}
 
-		#videoModal .modal-body {
+		#videoModal .modal-body, #lyricsModal .modal-body {
 			padding: 0 !important;
 			width: 100% !important;
 		}
-
-		#videoModal .modal-footer {
+		
+		#videoModal .modal-footer, #lyricsModal .modal-footer {
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
+			justify-content: space-between !important;
 			gap: 1em;
 		}
 
 		.has-search .form-control {
 			padding-left: 2.375rem;
 		}
-
+		
 		.has-search .form-control-feedback {
 			position: absolute;
 			z-index: 2;
@@ -204,6 +208,22 @@
 			text-align: center;
 			pointer-events: none;
 			color: #aaa;
+		}
+
+		.lyrics-container {
+			padding: 1em;
+			width: 100%;
+			margin: 0;
+			height: 50vh;
+			border: none;
+			resize: none;
+		}
+
+		.lyrics-container:focus {
+			outline: none;
+			border: 1px solid #57575757;
+			border-left: none;
+			border-right: none;
 		}
 	</style>
 	<link rel="stylesheet" href="/css/toasts.css">
@@ -363,15 +383,13 @@
 												<td>
 													<video class="video-thumbnail" data-id="<%= music._id %>"
 														poster="https://res.cloudinary.com/dv5x2gpmz/image/upload/v1722103219/uploads/progress/sehmvzsercprkv74wpxp.png"
-														preload="none" data-thumbnail="<%= music.thumbnail %>" data-video-url="<%= music.video %>" data-toggle="modal"
-														data-target="#videoModal">
+														preload="none" data-thumbnail="<%= music.thumbnail %>" data-video-url="<%= music.video %>"
+														data-toggle="modal" data-target="#videoModal">
 													</video>
 												</td>
 												<td>
-													<img controls class="video-thumbnail"
-														src="https://res.cloudinary.com/dv5x2gpmz/image/upload/v1722102753/uploads/progress/xibczkcluseoyguohpcv.png"
-														preload="none" data-lyrics-url="<%= music.lyrics %>" data-toggle="modal"
-														data-target="#myModal">
+													<img data-id="<%= music._id %>" class="lyrics-thumbnail"
+														src="https://res.cloudinary.com/dv5x2gpmz/image/upload/v1722102753/uploads/progress/xibczkcluseoyguohpcv.png">
 												</td>
 												<td class="delete-container">
 													<i data-id="<%= music._id %>" class="fas fa-trash-alt delete-btn"></i>
@@ -416,6 +434,41 @@
 						<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">342 <i class="fas fa-users"></i></button> -->
 						<button type="button" class="btn btn-danger text-light play"><i class="fas fa-play-circle text-light"></i>
 							&nbsp;Play</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="lyricsModal" tabindex="-1" aria-labelledby="lyricsModalLabel" aria-hidden="true">
+
+		
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" style="font-weight: bold;" id="lyricsModalLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="loader-time">
+			
+					</div>
+					<i class="fas fa-edit edit-lyrics" style="display: block; position: absolute; top: 0.8em; right: 0.85em; z-index: 100; cursor: pointer"></i>
+					<textarea name="lyrics-container" class="lyrics-container" readonly style="position: relative;">
+					</textarea>
+				</div>
+				<div class="modal-footer">
+					<div class="column">
+						<button type="button" class="btn rating" data-dismiss="modal">4.8 <i
+								class="fas fa-star-half-alt"></i></button>
+						<button type="button" class="btn views">342 <i class="fas fa-users"></i></button>
+					</div>
+					<div class="column">
+						<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">342 <i class="fas fa-users"></i></button> -->
+						<button type="button" class="btn btn-info text-light play"><i class="fas fa-save"></i>
+							&nbsp;Save</button>
 					</div>
 				</div>
 			</div>
@@ -522,11 +575,16 @@
 			});
 
 			// Add event listeners to thumbnails
-			$('.video-thumbnail').each((_, thumbnail) => {
-				$(thumbnail).on('click', function (event) {
+			$('.video-thumbnail, .lyrics-thumbnail').each((_, thumbnail) => {
+				$(thumbnail).on('click', async function (event) {
 
+					$('#videoModal .modal-title').text('');
+					$('#videoModal .music-rating').text('');
+					$('#videoModal .music-views').text('');
 					console.log('launching modal...');
 					const musicId = $(thumbnail).data('id');
+					let res = await fetch(`/api/music/${musicId}`);
+					let music = await res.json();
 					const thumbnailUrl = $(thumbnail).data('thumbnail');
 
 					const musicContainer = $(`#${musicId}`);
@@ -547,6 +605,46 @@
 					$('#levelsModal').modal('show');
 				})
 			});
+
+			$('#lyricsModal .edit-lyrics').on('click', function (event) { 
+				event.preventDefault();
+				$(this).addClass('text-primary');
+				$('#lyricsModal .lyrics-container').removeAttr('readonly');
+			});
+			
+			$('#lyricsModal .lyrics-container').on('blur', function (event) { 
+				event.preventDefault();
+				$(this).attr('readonly', true);
+				$('#lyricsModal .edit-lyrics').removeClass('text-primary');
+			 });
+
+			$('.lyrics-thumbnail').each((_, thumbnail) => {
+				$(thumbnail).on('click', async function (event) {
+					$('#lyricsModal .modal-title').text('');
+					$('#lyricsModal .music-rating').text('');
+					$('#lyricsModal .music-views').text('');
+					$('#lyricsModal .lyrics-container').val('');
+					$('#lyricsModal').modal('show');
+					$('#lyricsModal .loader-time').show();
+					const musicId = $(thumbnail).data('id');
+
+					let res = await fetch(`/api/music/${musicId}`);
+					let data = await res.json();
+					let music = data.music;
+					$('#lyricsModal .modal-title').text(`${music.artist} - ${music.title}`);
+					$('#lyricsModal .music-rating').text(music.rating);
+					$('#lyricsModal .music-views').text(music.views);
+
+					const lyricsUrl = music.lyrics;
+					res = await fetch(lyricsUrl);
+					let lyrics = await res.text() || 'Couldn\'t fetch the lyrics';
+
+					$('#lyricsModal .loader-time').css('animation', 'none');
+					$('#lyricsModal .loader-time').hide();
+					$('#lyricsModal .lyrics-container').val(lyrics);
+				})
+			});
+
 		});
 	</script>
 

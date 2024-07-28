@@ -5,6 +5,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 const session = require('express-session');
+const apiRoutes = require('./routes/api.routes');
 require('./config/passport-config');
 const cloudinary = require('cloudinary').v2;
 
@@ -89,6 +90,7 @@ app.get('/signed-upload', (req, res) => {
   }
 });
 
+app.use('/api', apiRoutes);
 app.use(routes);
 
 // Example route that throws an error

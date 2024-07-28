@@ -1,9 +1,4 @@
 $(document).ready(function () {
-  // $('.drop-zone').on('click', function (e) {
-  //   e.preventDefault();
-  //   $('#fileInput').trigger('click');
-  // });
-
   $('.uploaded-thumbnail').click(function (e) {
     e.preventDefault();
     $('#thumbnail-upload').trigger('click');
@@ -20,6 +15,14 @@ $(document).ready(function () {
     handleUpload(file, element);
   });
 
+	$('.drag-drop').each(function (index, element) {
+		$(element)
+			.find('a')
+			.click(function () {
+				$(this).next('input').trigger('click');
+			});
+	});
+
   $('.drop-browse').on('cancel', () => {
     console.log('Cancelled.');
   });
@@ -27,18 +30,10 @@ $(document).ready(function () {
   $('.drop-browse').on('change', function () {
     console.log('I am changed');
     let element = $(this).parent().parent()[0];
-    let file = this.files[0];
 
-    handleUpload(file, element);
+    handleUpload(this.files[0], element);
   });
 
-  $('.drag-drop').each(function (index, element) {
-    $(element)
-      .find('a')
-      .click(function () {
-        $(this).next('input').trigger('click');
-      });
-  });
 
   var dropZone = $('.drop-zone');
 
@@ -107,41 +102,22 @@ $(document).ready(function () {
       .files[0];
     const lyrics = $(this).find('input[name="lyrics-upload"]')[0].files[0];
 
+		const videoDrop = $(this).find('.video-drop')[0];
+		const lyricsDrop = $(this).find('.lyrics-drop')[0];
+
     let music = {};
     music.title = $(this).find('input[name="title"]').val();
     music.artist = $(this).find('input[name="artist"]').val();
-    uploadFile(thumbnail)
-      .then((res) => {
-        music.thumbnail = res.url;
-        setTimeout(() => {
-          uploadFile(video).then((res) => {
-            music.video = res.url;
-            setTimeout(() => {
-              uploadFile(lyrics).then((res) => {
-                music.lyrics = res.url;
-                $('.spinner-overlay').hide();
-                console.log('saving music:', music);
-                saveMusic(music);
 
-                toastSuccess('upload complete!');
-              });
-            }, 1000);
-          });
-        }, 1000);
-        return 'done video';
-      })
-      .then((res) => {
-        console.log('finished', res);
-      })
-      .finally((res) => {
-        console.log('FINALLY', res);
-        console.log('FINALLY', music);
-      });
-    console.log('now uploading image');
+		music.thumbnail = await uploadFile(thumbnail, null);
+		music.video = await uploadFile(video, videoDrop);
+		music.lyrics = await uploadFile(lyrics, lyricsDrop);
 
-    // console.log('video:', video);
+		$('.spinner-overlay').hide();
+		console.log('saving music:', music);
+		saveMusic(music);
 
-    // await uploadFile(image);
+		toastSuccess('upload complete!');
   });
 
   function saveMusic(music) {
@@ -158,16 +134,15 @@ $(document).ready(function () {
       })
       .then((res) => {
         toastSuccess('upload complete!');
-        setTimeout(() => {
-          location.reload();
-        }, 500);
+				location.reload();
       }).catch(err => {
 				toastDanger(err.message);
+				toastDanger('try again!');
 				console.error(err);
 			});
   }
 
-  function uploadFile(file) {
+  function uploadFile(file, element) {
     return new Promise(async (resolve, reject) => {
       console.log('file:', file);
       let type = file.type.split('/')[0];
@@ -205,16 +180,19 @@ $(document).ready(function () {
           const percentComplete = Math.round(
             (event.loaded / event.total) * 100
           );
+
+					if (element)
+						handleProgress(element, percentComplete);
           // progressBar.value = percentComplete;
           // progressText.textContent = `${percentComplete}%`;
-          if (percentComplete < 50) {
-            grayValue = Math.round((percentComplete / 50) * 50); // 0-50
+          if (percentComplete < 60) {
+            grayValue = Math.round((percentComplete / 60) * 50); // 0-50
           } else {
-            grayValue = Math.round(200 + ((percentComplete - 50) / 50) * 105); // 150-255
+            grayValue = Math.round(225 + ((percentComplete - 60) / 40) * 30); // 150-255
           }
           const grayColor = `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
           $('.upload-btn').css('color', grayColor);
-          $('.upload-btn').css('border-color', '#575757');
+          $('.upload-btn').css('border-color', '#57575722');
 
           let max = $('html').css('--upload-btn-width');
           max = parseInt(max);
@@ -245,15 +223,27 @@ $(document).ready(function () {
           $('.upload-btn').css('color', '#f7f7f7');
           $(`.${icon}`).hide();
           $('.default-upload-icon').show();
-          resolve(response);
+          resolve(response.url);
         } else {
           console.log(xhr.response);
           alert('Error uploading file');
-          reject(this);
+          reject(this.url);
         }
       });
 
       xhr.send(formData);
     });
+  }
+
+	function handleProgress(element, percentComplete) {
+    if (!$(element).is('.uploaded-thumbnail')) {
+      const progressContainer = $(element).find('.progress-container');
+      const progressBar = $(element).find('.progress-bar');
+      const percentDisplay = $(element).find('.progress-text');
+
+      progressContainer.show();
+      progressBar.css('width', `${percentComplete}%`);
+      percentDisplay.html(`${Math.round(percentComplete)}%`);
+    }
   }
 });

@@ -128,6 +128,24 @@
 		#levelsModal .modal-header {
 			border-color: #1117 !important;
 		}
+
+		.profile-pic-cont {
+			font-weight: bold !important;
+			font-size: 1.15rem !important;
+			font-size: 1rem !important;
+			text-transform: lowercase !important;
+		}
+
+		.user-avatar {
+			/* box-shadow: 10px 10px 10px 10px inset #1f212277 !important; */
+			width: 21rem;
+			height: 18rem;
+
+			border-radius: 15px !important;
+			clip-path: inset();
+			object-fit: cover;
+			object-position: center;
+		}
 	</style>
 </head>
 
@@ -177,7 +195,7 @@
 								<li class="login"><a href="/login" class="active">Login</a></li>
 								<% } else { %>
 									<li>
-										<a href="/profile" class="active">Profile <span class="profile-pic-cont">
+										<a href="/profile" class="active profile-pic-cont">Profile <span>
 												<img class="profile-pic" src="<%= user.avatar %>" alt=""></span>
 										</a>
 									</li>
@@ -207,9 +225,9 @@
 								<div class="row">
 									<div class="col-lg-4">
 										<% if (!user) { %>
-											<img src="assets/images/logo.png" alt="" style="border-radius: 23px;">
+											<img class="user-avatar" src="assets/images/logo.png" alt="">
 											<% } else { %>
-												<img src="<%= user.avatar %>" alt="" style="border-radius: 23px;">
+												<img class="user-avatar" src="<%= user.avatar %>" alt="">
 												<% } %>
 									</div>
 									<div class="col-lg-4 align-self-center">
@@ -221,7 +239,8 @@
 											<% if (!user) {%>
 												<h4>Not Logged in</h4>
 												<% } else { %>
-													<h4 style="text-transform: uppercase; font-weight: bold; font-size: 2rem; margin: 10px 0 20px 0;">
+													<h4
+														style="text-transform: uppercase; font-weight: bold; font-size: 2rem; margin: 10px 0 20px 0;">
 														<%= user.name %>
 													</h4>
 													<% } %>
