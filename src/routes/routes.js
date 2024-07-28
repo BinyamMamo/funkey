@@ -6,9 +6,12 @@ const dashboardController = require('../controllers/dashboard');
 const practiceController = require('../controllers/practice')
 const User = require('../models/User');
 const Music = require('../models/Music');
-const musicRoutes = require('./music.routes');
+
+// const apiRoutes = require('./api.routes');
 const userRoutes = require('./user.routes');
 const fakeRoute = require('./faker.routes');
+const musicRoutes = require('./music.routes');
+
 const { authUser, authRole } = require('../middleware/auth');
 const { scopeMusics, canAccess } = require('../middleware/permissions');
 const Roles = require('../utils/roles');
@@ -65,7 +68,8 @@ router.get('/tos', async (req, res) => {
 });
 
 
-router.use(musicRoutes);
-router.use(userRoutes);
 router.use(fakeRoute);
+router.use(userRoutes);
+router.use(musicRoutes);
+// router.use('/api', apiRoutes);	
 module.exports = router;

@@ -37,9 +37,9 @@ $(document).ready(function () {
   });
 
   $('#thumbnail-upload').on('change', function () {
-    let element = $(this).prev();
+    let element = $(this).prev()[0];
 
-    uploadFile(this.files[0], element[0]);
+    handleUpload(this.files[0], element);
   });
 
   $('.drop-browse').on('cancel', () => {
@@ -48,9 +48,9 @@ $(document).ready(function () {
 
   $('.drop-browse').on('change', function () {
     console.log('I am changed');
-    let element = $(this).parent().parent();
+    let element = $(this).parent().parent()[0];
 
-    uploadFile(this.files[0], element[0]);
+    handlesFiles(this.files, element);
   });
 
   var dropZone = $('.drop-zone');
@@ -71,82 +71,22 @@ $(document).ready(function () {
       event.preventDefault();
       element.classList.remove('hover');
       var files = event.dataTransfer.files;
+      if ($(element).is('.uploaded-thumbnail'))
+        $(element).next('input[type="file"]')[0].files = files;
+      else $(element).find('input[type="file"]')[0].files = files;
+
       handlesFiles(files, element);
     });
   });
 
   function handlesFiles(files, element) {
-    if (files.length > 1) {
-      toastDanger('Upload one file only');
-    } else {
-      uploadFile(files[0], element);
-    }
-  }
+    if (files.length > 1) return toastDanger('Upload one file only');
 
-  function uploadFile(file, element) {
-    let filePath = $(element).find('input[type="hidden"]').val();
-    if (filePath && filePath != '') {
-      fetch('/deleteUpload', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filePath }),
-      })
-        .then((res) => {
-          if (!res.ok) return res.json().then((err) => Promise.reject(err));
-          return res.json();
-        })
-        .then((res) => {
-          toastSuccess(`previous upload is ${res.message}`);
-          console.log(`previous upload is ${res.message}`);
-        })
-        .catch((err) => {
-          toastDanger(err.message);
-          console.log(err.message);
-        });
-    }
-
+		let file = files[0];
     let type = element.dataset.type;
-
     if (!validFile(file, type)) return;
 
-    var formData = new FormData();
-    formData.append('file', file);
-    formData.append('type', type);
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/upload', true);
-
-    // Track progress
-    xhr.upload.onprogress = (event) => {
-      if (event.lengthComputable) {
-        const percentComplete = (event.loaded / event.total) * 100;
-        handleProgress(element, percentComplete);
-      }
-    };
-
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        // Handle server response (if needed)
-        console.log('Upload complete!');
-        let response = JSON.parse(xhr.response);
-        handleFileDetails(element, response);
-      } else if (xhr.readyState == 4) {
-        let response = { error: 'nothing' };
-        if (xhr.responseText) {
-          try {
-            response = JSON.parse(xhr.responseText);
-            // Process the JSON response
-          } catch (e) {
-            console.error('Parsing error:', e);
-          }
-        } else {
-          console.warn('Empty response');
-        }
-        toastDanger(response.error);
-      }
-    };
-    console.log('input:', $(element).find('input[type="hidden"]')[0]);
-
-    xhr.send(formData);
+    handleUpload(file, element);
   }
 
   function validFile(file, type) {
@@ -190,92 +130,140 @@ $(document).ready(function () {
     }
   }
 
-  function handleFileDetails(element, file) {
-    let type = element.dataset.type.toString().split('/')[0];
-    type = type.charAt(0).toUpperCase() + type.slice(1);
-
-    const hiddenInput = $(element).find('input[type="hidden"]');
-    hiddenInput.val(file.path);
+  function handleUpload(file, element) {
     if ($(element).is('.uploaded-thumbnail')) {
-      // $('.uploaded-thumbnail').css('background-image', `url('${file.path}')`);
-      $('.uploaded-thumbnail').css('background-image', `url('/${file.path}')`);
-      toastSuccess('Thumbnail uploaded successfully!');
-    } else {
-      toastSuccess(`${type} uploaded successfully!`);
+      if (!file) return console.error();
+      const blobUrl = URL.createObjectURL(file);
 
-      const fileDetails = $(element).find('.file-details');
-      const fileName = $(element).find('.file-name');
-      const progressContainer = $(element).find('.progress-container');
-      const closeBtn = $(element).find('.cancel-upload');
-
-      closeBtn.css('color', 'red');
-      closeBtn.click(function (e) {
-        e.preventDefault();
-        let icon = $(element).find('i');
-        $(icon[0]).show();
-        fileDetails.hide();
-        toastInfo('Upload removed');
-        $(element).find('input[type="file')[0].form.reset();
-        $(element).find('input[type="hidden').val('');
-
-        fetch('/deleteUpload', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ filePath: file.path }),
-        })
-          .then((res) => {
-            if (!res.ok) return res.json().then((err) => Promise.reject(err));
-            return res.json();
-          })
-          .then((res) => {
-            toastSuccess(res.message);
-            console.log(res.message);
-          })
-          .catch((err) => {
-            toastDanger(err.message);
-            console.log(err.message);
-          });
-      });
-
-      progressContainer.hide();
-      $(element).find('.progress-bar').css('width', '0%');
-      let icon = $(element).find('i');
-      $(icon[0]).hide();
-
-      fileDetails.show();
-      fileName.html(`${file.originalname}`);
+      $('.uploaded-thumbnail').css('background-image', `url('${blobUrl}')`);
+      return;
     }
+
+    const fileDetails = $(element).find('.file-details');
+    const fileName = $(element).find('.file-name');
+    const closeBtn = $(element).find('.cancel-upload');
+    let icon = $(element).find('i');
+
+    closeBtn.click(function (e) {
+      e.preventDefault();
+      $(icon[0]).show();
+      fileDetails.hide();
+      toastInfo('Upload removed');
+      $(element).find('input[type="file')[0].form.reset();
+      $(element).find('input[type="hidden').val('');
+    });
+
+    $(icon[0]).hide();
+    fileDetails.show();
+    fileName.html(`${file.name}`);
   }
 
-  $('#upload-form').on('submit', function (event) {
+  $('#upload-form').on('submit', async function (event) {
     event.preventDefault();
     const formData = new FormData(this);
 
-		console.log('formData:');
-		formData.forEach((key, value) => {
-			console.log(key, ':', value);
-		})
-		$('.spinner-overlay').show();
-		fetch('/uploadMusic', {
-			method: 'POST',
-			body: formData,
-			headers: {
-				'Accept': 'application/json',
-			}}).then(res => {  // parse json
-				if (!res.ok)
-					return res.json().then(err => Promise.reject(err))
-				return res.json()
-			}).then(res => { // get response
-				$('.spinner-overlay').hide();
-				console.log(res.message);
-				toastSuccess(res.message);
-				setTimeout(() => {
-					location.reload();
-				}, 500);
-			}).catch(err => {  // catch error
-				$('.spinner-overlay').hide();
-				console.error(err);
-				toastDanger(err.message);
-			});
+    $('.spinner-overlay').show();
+
+    const video = $(this).find('input[name="video-upload"]')[0].files[0];
+    const thumbnail = $(this).find('input[name="thumbnail-upload"]')[0].files[0];
+    const lyrics = $(this).find('input[name="lyrics-upload"]')[0].files[0];
+
+		const videoDrop = $(this).find('.video-drop')[0];
+		const lyricsDrop = $(this).find('.lyrics-drop')[0];
+    let music = {};
+    music.title = $(this).find('input[name="title"]').val();
+    music.artist = $(this).find('input[name="artist"]').val();
+
+    await uploadFile(thumbnail, null).then((res) => {
+      music.thumbnail = res.url;
+    });
+    
+		await uploadFile(video, videoDrop).then((res) => {
+      music.video = res.url;
+    });
+
+		await uploadFile(lyrics, lyricsDrop).then((res) => {
+      music.lyrics = res.url;
+    });
+
+		console.log('FINAL FINISH');
   });
+
+  function uploadFile(file, element) {
+    return new Promise(async (resolve, reject) => {
+      console.log('file:', file);
+      let type = file.type.split('/')[0];
+
+      let folderName = 'progress';
+      const response = await fetch(`/signed-upload?folder=${folderName}`);
+      const { signature, timestamp, cloud_name, api_key } =
+        await response.json();
+
+      const url = `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`;
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('api_key', api_key);
+      formData.append('timestamp', timestamp);
+      // formData.append('signature', signature);
+      formData.append('upload_preset', 'mrom3lig');
+      formData.append('folder', `uploads/${folderName}`);
+      formData.append('public_id', file.name.split('.')[0]);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+
+      // Update progress bar
+      xhr.upload.addEventListener('progress', function (event) {
+        if (event.lengthComputable) {
+          const percentComplete = Math.round(
+            (event.loaded / event.total) * 100
+          );
+					if (element)
+						handleProgress(element, percentComplete);
+        }
+      });
+
+      // Handle upload complete
+      xhr.addEventListener('load', function () {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          // alert('File uploaded successfully!');
+          console.log('File uploaded successfully!');
+          console.log('Upload response:', response);
+          resolve(response);
+        } else {
+          console.log(xhr.response);
+          alert('Error uploading file');
+          reject(this);
+        }
+      });
+
+      xhr.send(formData);
+    });
+  }
+
+  function saveMusic(music) {
+    fetch('/music/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(music),
+    })
+      .then((res) => {
+        if (!res.ok) return res.json().then((err) => Promise.reject(err));
+        return res.json();
+      })
+      .then((res) => {
+        toastSuccess('upload complete!');
+        setTimeout(() => {
+          location.reload();
+        }, 500);
+      })
+      .catch((err) => {
+        toastDanger(err.message);
+        console.error(err);
+      });
+  }
 });

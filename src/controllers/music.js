@@ -63,7 +63,7 @@ const uploadMusic = async (req, res) => {
     await music.save();
     res.status(201).json({ message: 'Music uploaded succesfully!', music });
   } catch (err) {
-    res.send(400);
+    res.sendStatus(400);
     console.error(err);
   }
 };
