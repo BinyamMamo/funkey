@@ -224,11 +224,11 @@ $(document).ready(function () {
           $('.upload-btn').css('color', '#f7f7f7');
           $(`.${icon}`).hide();
           $('.default-upload-icon').show();
-          resolve(response.url);
+          resolve(response.secure_url);
         } else {
           console.log(xhr.response);
           alert('Error uploading file');
-          reject(this.url);
+          reject(this.secure_url);
         }
       });
 
