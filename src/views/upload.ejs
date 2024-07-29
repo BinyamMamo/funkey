@@ -23,17 +23,150 @@
 	}
 </style>
 
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: 'Poppins', sans-serif;
+		--upload-btn-width: 215px;
+	}
+
+  .upload-btn {
+    /* margin: auto; */
+    position: relative;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    text-align: left;
+    text-decoration: none;
+    gap: 0.5em;
+    text-transform: uppercase;
+    width: var(--upload-btn-width);
+    /* width: 215px; */
+    overflow: hidden;
+    border-radius: 10px;
+    color: #f7f7f7;
+    font-size: 1.5rem;
+    /* background-color: #5e86e7; */
+    color: #5e86e7;
+    border: 2px solid #5e86e799;
+    border: 2px solid #5e86e7;
+    /* background-color: #f7f7f7 !important; */
+    background-color: transparent !important;
+    /* color: #f7f7f7;
+    border: 1px solid #f7f7f7; */
+    /* border: 2px solid #fff9; */
+    cursor: pointer;
+    transition: 1s ease;
+    border: none;
+  }
+
+
+
+  .upload-btn span {
+    display: block;
+    position: relative;
+    letter-spacing: 3px;
+    z-index: 1;
+    font-weight: bolder;
+    text-align: left;
+  }
+  
+  .upload-btn i {
+    display: block;
+    position: relative;
+    z-index: 100;
+  }
+
+
+  .upload-btn .liquid {
+    position: absolute;
+    /* top: calc(calc(var(--upload-btn-width) / -2) - 15px); */
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: var(--upload-btn-width);
+    /* background-color: #4973ff; */
+    background-color: #5e86e7;
+    /* box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5); */
+    transition: 0.5s;
+    color: #f7f7f7;
+    border-color: #5e86e7;
+    transition: 0.8s ease-out;
+  }
+
+
+  .upload-btn .liquid::after,
+  .upload-btn .liquid::before {
+    content: '';
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    /* background: #000; */
+  }
+
+
+  .upload-btn .liquid::before {
+    border-radius: 45%;
+    background: rgba(31, 33, 34, 1);
+    /* background: rgba(250, 250, 250, 1); */
+    animation: animate 5s linear infinite;
+  }
+  
+  .upload-btn .liquid::after {
+    border-radius: 40%;
+    background: rgba(31, 33, 34, 0.5);
+    /* background: rgba(250, 250, 250, 0.5); */
+    animation: animate 10s linear infinite;
+  }
+
+	.upload-btn:hover .liquid {
+		top: -120px;
+	}
+	
+	.upload-btn:hover {
+		color: #f7f7f7;
+	}
+
+	.upload-btn:focus {
+		border: none;
+		outline: none;
+	}
+
+	@keyframes animate {
+		0% {
+			transform: translate(-50%, -75%) rotate(0deg);
+		}
+
+		100% {
+			transform: translate(-50%, -75%) rotate(360deg);
+		}
+	}
+
+	#upload-form .modal-footer {
+		padding-bottom: 0.5em;
+	}
+</style>
+
 <div class="modal-dialog">
 	<div class="spinner-overlay" style="display: none">
-		<div class="spinner-border text-primary spinner" role="status">
-			<span class="sr-only">Loading...</span>
+		<div class="loader-dancing">
+
 		</div>
+		<!-- <div class="spinner-border text-primary spinner" role="status">
+			<span class="sr-only">Loading...</span>
+		</div> -->
 	</div>
 
-	<form id="upload-form" class="upload-container modal-content" enctype="multipart/form-data">
+	<form id="upload-form" class="upload-container modal-content">
 		<div class="upload-header modal-header">
 			<h5 class="upload-title modal-title" id="uploadModalLabel">Upload Music 🎧</h5>
-			<i onclick="$('#practiceModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
+			<i onclick="$('#uploadModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
 				data-bs-dismiss="modal" aria-label="Close"></i>
 		</div>
 		<div class="upload-body modal-body">
@@ -71,16 +204,16 @@
 						<input name="video-upload" class="drop-browse" type="file" accept="video/*" style="display: none">.
 					</span>
 					<input type="hidden" name="video" value="">
-					<div class="progress-container" style="display: none">
-						<div class="progress-bar"></div>
-						<div class="progress-text"></div>
-					</div>
 					<div class="file-details" style="display: none">
 						<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
 						<div class="file-name text-truncate" id="fileName"></div>
 						<span aria-hidden="true" class="cancel-upload">
 							<i class="fas fa-times"></i>
 						</span>
+					</div>
+					<div class="progress-container" style="display: none">
+						<div class="progress-bar"></div>
+						<div class="progress-text"></div>
 					</div>
 				</div>
 
@@ -92,10 +225,6 @@
 						<input class="drop-browse" type="file" name="lyrics-upload" accept="text/*" style="display: none">.
 					</span>
 					<input type="hidden" name="lyrics" value="">
-					<div class="progress-container" style="display: none">
-						<div class="progress-bar"></div>
-						<div class="progress-text"></div>
-					</div>
 					<div class="file-details" style="display: none">
 						<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
 						<div class="file-name text-truncate" id="fileName"></div>
@@ -103,12 +232,24 @@
 							<i class="fas fa-times"></i>
 						</span>
 					</div>
+					<div class="progress-container" style="display: none">
+						<div class="progress-bar"></div>
+						<div class="progress-text"></div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<!-- <div class="upload-footer"> -->
 		<div class="modal-footer upload-footer border-0">
-			<button type="submit" class="btn btn-outline-primary"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Upload</button>
+			<button type="submit" class="upload-btn">
+				<i class="fas fa-cloud-upload-alt default-upload-icon"></i>
+				<i class="fas fa-video video-upload-icon" style="display: none"></i>
+				<i class="far fa-image image-upload-icon" style="display: none"></i>
+				<i class="fas fa-file-alt text-upload-icon" style="display: none"></i>
+				<span class="progress-display">upload</span>
+				<div class="liquid" id="liquid"></div>
+			</button>
+			<!-- <button type="submit" class="btn btn-outline-primary"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Upload</button> -->
 		</div>
 	</form>
 </div>
