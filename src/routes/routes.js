@@ -20,17 +20,59 @@ const userController = require('../controllers/users');
 router.put('/profile/edit', authUser, uploadController.uploadCloud.single('file'), userController.editProfile);
 
 router.get('/', async (req, res) => {
-	let musics = await Music.find();
+	let musics = await Music.find().limit(8);
   let avatar = req.user && req.user.avatar;
 	res.render('home', { musics: scopeMusics(req, musics), avatar });
 	// res.render('home', { musics, avatar });
 });
 
 router.get('/browse', async (req, res) => {
-	let musics = await Music.find();
+	let LIMIT = 7;
+	let page = req.query.page || '1';
+	let sort = req.query.sort || 'alpha';
+	let order = req.query.order || '1';
+	
+	order = parseInt(order);
+	page = parseInt(page);
+	
+	const offset = (page - 1) * LIMIT;
+	let musics = [];
+
+	if (sort == 'alpha')
+		musics = await Music.find().sort({ artist: order, title: order }).skip(offset).limit(LIMIT);
+	else if (sort == 'popularity')
+		musics = await Music.aggregate([
+      {
+        $addFields: {
+          averageScore: { $avg: ['$rating', '$views'] },
+        },
+      },
+      {
+        $sort: { averageScore: order },
+      },
+      {
+        $limit: LIMIT,
+      },
+    ]).skip(offset).limit(LIMIT);
+	else
+		musics = await Music.find().skip(offset).limit(LIMIT);
+	
+	if (sort == 'random')
+		musics = shuffleArray(musics);
+
 	let avatar = req.user && req.user.avatar;
-  res.render('browse', { musics: scopeMusics(req, musics), avatar });
+	let musicsCount = await Music.countDocuments();
+  res.render('browse', { musics: scopeMusics(req, musics), avatar, musicsCount, page, LIMIT });
 });
+
+// Fisher-Yates (Knuth) shuffle function
+function shuffleArray(array) {
+	for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]]; // Swap elements
+	}
+	return array;
+}
 
 router.post(
 	'/upload',

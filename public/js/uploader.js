@@ -93,6 +93,7 @@ $(document).ready(function () {
 
   $('#upload-form').on('submit', async function (event) {
     event.preventDefault();
+		event.stopPropagation();
 
     $('.spinner-overlay').show();
 

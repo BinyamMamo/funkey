@@ -1,0 +1,119 @@
+<style>
+  #pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pagination {
+    background-color: transparent !important;
+  }
+
+  .page-link {
+    background-color: transparent !important;
+    color: #5e86e7;
+    border: none;
+  }
+
+  .page-link:not(.hellip):hover {
+    background-color: transparent;
+    color: #5e86e7;
+    border: 1px solid #5e86e722;
+  }
+
+  .page-link:focus,
+  .page-link:active {
+    outline: none;
+    box-shadow: none;
+    background-color: transparent;
+    border: none;
+    color: #5e86e7;
+  }
+
+  .page-item:has(.disabled)>a {
+    color: #575757 !important;
+  }
+
+  .page-item.active>a {
+    /* font-weight: bold; */
+    color: #f1f1f1 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+  }
+
+  .page-item {
+    user-select: none;
+  }
+</style>
+
+<% let noMusics=musicsCount %>
+<% let noPages=Math.round(noMusics / LIMIT) %>
+<% let first, last; 
+											if (noPages <=3) { first=1; last=noPages; } 
+											else { 
+												if (page <=2) { first=1; last=3; } 
+												else if (page>= noPages - 1) {
+												first = noPages - 2;
+												last = noPages;
+												} else {
+												first = page - 1;
+												last = page + 1;
+											}
+											}
+											%>
+<ul class="pagination">
+  <% if (page != 1) { %>
+  <li class="page-item prev">
+    <a class="page-link" href="?page=<%= page - 1 %>" aria-label="Next">
+      <span aria-hidden="true">&lt;</span>
+    </a>
+  </li>
+  <% } else { %>
+  <li class="page-item prev disabled">
+    <a class="page-link" href="?page=<%= page - 1 %>" aria-label="Next">
+      <span aria-hidden="true">&lt;</span>
+    </a>
+  </li>
+  <% } %>
+  <% if (first> 1) { %>
+  <li class="page-no page-item"><a class="page-link" href="?page=1">1</a></li>
+  <% if (first> 2) { %>
+  <li class="page-hellip page-item"><a class="page-link hellip" href="?page=<%= Math.ceil((first - 1) / 2) %>">&sdot;&sdot;&sdot;</a></li>
+  <% } %>
+  <% } %>
+
+  <% for (let i=first; i <=last; i++) { %>
+  <% if (page==i) { %>
+  <li class="page-no page-item active"><a class="page-link" href="#">
+      <%= i %>
+    </a></li>
+  <% } else { %>
+  <li class="page-no page-item"><a class="page-link" href="?page=<%= i %>">
+      <%= i %>
+    </a></li>
+  <% } %>
+  <% } %>
+
+  <% if (last < noPages) { %>
+  <% if (last < noPages - 1) { %>
+  <li class="page-hellip page-item"><a class="page-link hellip" href="?page=<%= Math.ceil((noPages + last) / 2) %>">&sdot;&sdot;&sdot;</a></li>
+  <% } %>
+  <li class="page-no page-item"><a class="page-link" href="?page=<%= noPages %>">
+      <%= noPages %>
+    </a></li>
+  <% } %>
+
+  <% if (page != noPages) { %>
+  <li class="page-item next">
+    <a class="page-link" href="?page=<%= page + 1 %>" aria-label="Next">
+      <span aria-hidden="true">&gt;</span>
+    </a>
+  </li>
+  <% } else { %>
+  <li class="page-item next disabled">
+    <a class="page-link" href="?page=<%= page + 1 %>" aria-label="Next">
+      <span aria-hidden="true">&gt;</span>
+    </a>
+  </li>
+  <% } %>
+</ul>
