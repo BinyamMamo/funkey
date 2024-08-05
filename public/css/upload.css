@@ -97,7 +97,8 @@
 
 .left-side img {
 	width: 15rem !important;
-  border-radius: 25px;
+  /* border-radius: 25px; */
+  border-radius: 15px;
 }
 
 .right-side h4 {
@@ -228,15 +229,20 @@
 }
 
 .uploaded-thumbnail {
-  position: relative;
-  background-image: url('https://tse2.mm.bing.net/th?id=OIG2.5dM5XXn27bsOWSTcjIWe&pid=ImgGn');
+	position: relative;
+  background-image: url('/assets/images/default_thumbnail_lq.jpg');
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
-
+	
   width: 15rem;
   height: 15rem;
-  border-radius: 23px;
+  /* border-radius: 23px; */
+  border-radius: 15px;
+}
+
+.uploaded-thumbnail > * {
+	border-radius: 15px !important;
 }
 
 .upload-header button.close {

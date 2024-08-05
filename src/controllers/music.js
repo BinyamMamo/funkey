@@ -1,8 +1,14 @@
 // Music Controller
-const fs = require('fs');
 const Music = require('../models/Music');
 const Roles = require('../utils/roles');
 const { scopeMusics, canAccess } = require('../middleware/permissions');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 const getMusics = async (req, res) => {
   let musics = [];
@@ -38,12 +44,12 @@ const uploadMusic = async (req, res) => {
         musicByArtist &&
         JSON.stringify(musicByArtist) == JSON.stringify(musicByTitle)
       ) {
-        res.status(400).json({
+				console.error({
+					error: 'Music with the same artist and title exists in db',
+				});
+        return res.status(400).json({
           message: 'Music with the same artist and title exists in db',
         }); // TODO: CHANGE THE STATUS CODE
-        console.error({
-          error: 'Music with the same artist and title exists in db',
-        });
       }
       console.log('musicByArtist:', JSON.stringify(musicByArtist));
     }
@@ -108,8 +114,8 @@ const deleteMusic = async (req, res) => {
     }
 
     // remove video and lyrics files from server
-    fs.unlinkSync(music.video);
-    fs.unlinkSync(music.lyrics);
+    deleteUpload(music.video);
+    deleteUpload(music.lyrics);
 
     res.status(200).json({
       message: `'${music.title}' by ${music.artist} is deleted succesfully!`,
@@ -235,6 +241,26 @@ const search = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({message: 'Server Error'});
+  }
+}
+
+// Functions
+
+async function deleteUpload(secure_url) {
+	// Extract the public ID from the secure URL
+  const urlParts = secure_url.split('/');
+  const publicIdWithExtension = urlParts[urlParts.length - 1];
+  const publicId = publicIdWithExtension.split('.')[0]; // Remove the file extension
+
+  try {
+    await cloudinary.uploader.destroy(publicId, (error, result) => {
+      if (error) {
+        console.error('Error deleting file:', error);
+        return res.status(500).send('Error deleting file');
+      }
+    });
+  } catch (error) {
+    console.error('Error:', error);
   }
 }
 

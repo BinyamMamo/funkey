@@ -1,248 +1,358 @@
 <style>
-	.spinner-overlay {
-		width: 100vw;
-		height: 100vh;
-		position: fixed;
-		left: 0;
-		top: 0;
-		display: block;
-		background-color: #f7f7f733;
-		pointer-events: auto;
-		z-index: 10001 !important;
-	}
+  .spinner-overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: block;
+    background-color: #f7f7f733;
+    pointer-events: auto;
+    z-index: 10001 !important;
+  }
 
-	.spinner {
-		display: block;
-		position: fixed;
-		left: 47%;
-		top: 45%;
+  .spinner {
+    display: block;
+    position: fixed;
+    left: 47%;
+    top: 45%;
 
-		font-size: 2rem;
-		width: 5rem;
-		height: 5rem;
-	}
+    font-size: 2rem;
+    width: 5rem;
+    height: 5rem;
+  }
 </style>
 
 <style>
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		font-family: 'Poppins', sans-serif;
-		--upload-btn-width: 215px;
-	}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    --upload-btn-width: 215px;
+  }
 
-	.upload-btn {
-		/* margin: auto; */
-		position: relative;
-		padding: 10px 20px;
-		display: flex;
-		justify-content: center !important;
-		align-items: center;
-		text-align: left;
-		text-decoration: none;
-		gap: 0.5em;
-		text-transform: uppercase;
-		width: var(--upload-btn-width);
-		/* width: 215px; */
-		/* width: 15rem; */
-		overflow: hidden;
-		border-radius: 10px;
-		color: #f7f7f7;
-		font-size: 1.5rem;
-		/* background-color: #5e86e7; */
-		color: #5e86e7;
-		border: 2px solid #5e86e799;
-		border: 2px solid #5e86e7;
-		/* background-color: transparent !important; */
-		background-color: #f7f7f7 !important;
-		/* color: #f7f7f7;
+  .upload-btn {
+    /* margin: auto; */
+    position: relative;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    text-align: left;
+    text-decoration: none;
+    gap: 0.5em;
+    text-transform: uppercase;
+    width: var(--upload-btn-width);
+    /* width: 215px; */
+    /* width: 15rem; */
+    overflow: hidden;
+    border-radius: 10px;
+    color: #f7f7f7;
+    font-size: 1.5rem;
+    /* background-color: #5e86e7; */
+    color: #5e86e7;
+    border: 2px solid #5e86e799;
+    border: 2px solid #5e86e7;
+    /* background-color: transparent !important; */
+    background-color: #f7f7f7 !important;
+    /* color: #f7f7f7;
 		border: 1px solid #f7f7f7; */
-		/* border: 2px solid #fff9; */
-		cursor: pointer;
-		transition: 1s ease;
-		border: none;
-	}
+    /* border: 2px solid #fff9; */
+    cursor: pointer;
+    transition: 1s ease;
+    border: none;
+  }
 
+  .upload-btn span {
+    display: block;
+    position: relative;
+    letter-spacing: 3px;
+    z-index: 1;
+    font-weight: bolder;
+    text-align: left;
+  }
 
-	.upload-btn span {
-		display: block;
-		position: relative;
-		letter-spacing: 3px;
-		z-index: 1;
-		font-weight: bolder;
-		text-align: left;
-	}
-	
-	.upload-btn i {
-		display: block;
-		position: relative;
-		z-index: 100;
-	}
+  .upload-btn i {
+    display: block;
+    position: relative;
+    z-index: 100;
+  }
 
-	.upload-btn .liquid {
-		position: absolute;
-		/* top: calc(calc(var(--upload-btn-width) / -2) - 15px); */
-		top: 100px;
-		left: 0;
-		width: 100%;
-		height: 215px;
-		/* background-color: #4973ff; */
-		background-color: #5e86e7;
-		/* box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5); */
-		transition: 0.5s;
-		color: #f7f7f7;
-		border-color: #5e86e7;
-		transition: 0.8s ease-out;
-	}
+  .upload-btn .liquid {
+    position: absolute;
+    /* top: calc(calc(var(--upload-btn-width) / -2) - 15px); */
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: 215px;
+    /* background-color: #4973ff; */
+    background-color: #5e86e7;
+    /* box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5); */
+    transition: 0.5s;
+    color: #f7f7f7;
+    border-color: #5e86e7;
+    transition: 0.8s ease-out;
+  }
 
-	.upload-btn .liquid::after,
-	.upload-btn .liquid::before {
-		content: '';
-		width: 200%;
-		height: 200%;
-		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translate(-50%, -75%);
-		/* background: #000; */
-	}
+  .upload-btn .liquid::after,
+  .upload-btn .liquid::before {
+    content: '';
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    /* background: #000; */
+  }
 
-	.upload-btn .liquid::before {
-		border-radius: 45%;
-		/* background: rgba(20, 20, 20, 1); */
-		background: rgba(250, 250, 250, 1);
-		animation: animate 5s linear infinite;
-	}
-	
-	.upload-btn .liquid::after {
-		border-radius: 40%;
-		/* background: rgba(20, 20, 20, 0.5); */
-		background: rgba(250, 250, 250, 0.5);
-		animation: animate 10s linear infinite;
-	}
+  .upload-btn .liquid::before {
+    border-radius: 45%;
+    /* background: rgba(20, 20, 20, 1); */
+    background: rgba(250, 250, 250, 1);
+    animation: animate 5s linear infinite;
+  }
 
-	.upload-btn:hover .liquid {
-		top: -120px;
-	}
-	
-	.upload-btn:hover {
-		color: #f7f7f7;
-	}
+  .upload-btn .liquid::after {
+    border-radius: 40%;
+    /* background: rgba(20, 20, 20, 0.5); */
+    background: rgba(250, 250, 250, 0.5);
+    animation: animate 10s linear infinite;
+  }
 
-	.upload-btn:focus {
-		border: none;
-		outline: none;
-	}
+  .upload-btn:hover .liquid {
+    top: -120px;
+  }
 
-	@keyframes animate {
-		0% {
-			transform: translate(-50%, -75%) rotate(0deg);
+  .upload-btn:hover {
+    color: #f7f7f7;
+  }
+
+  .upload-btn:focus {
+    border: none;
+    outline: none;
+  }
+
+  @keyframes animate {
+    0% {
+      transform: translate(-50%, -75%) rotate(0deg);
+    }
+
+    100% {
+      transform: translate(-50%, -75%) rotate(360deg);
+    }
+  }
+</style>
+
+<style>
+  .youtube-url {
+    border: 2px solid #5e86e7 !important;
+    /* border-right: none !important; */
+    color: #5e86e7 !important;
+  }
+
+  .youtube-url:focus {
+    border: 3px solid #5e86e7 !important;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .youtube-url::placeholder {
+    color: #7ab7fa;
+    color: #5e86e7 !important;
+  }
+
+  .youtube-icon {
+    margin-left: -2px;
+    background-color: #5e86e7 !important;
+  }
+  .youtube-icon i {
+    margin: auto;
+  }
+
+  .uploaded-thumbnail {
+    /* transition: opacity 0.75s ease-in-out; */
+    transition: 2s ease-in-out;
+  }
+
+  .small-thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+
+  @keyframes blink {
+    from,
+		to {
+			opacity: 1;
 		}
-
-		100% {
-			transform: translate(-50%, -75%) rotate(360deg);
-		}
-	}
+    50% {
+			opacity: 0.15;
+    }
+  }
 </style>
 
 <div class="modal-dialog">
-	<div class="spinner-overlay" style="display: none">
-		<div class="loader-dancing">
+  <div class="spinner-overlay" style="display: none">
+    <div class="loader-dancing"></div>
+  </div>
 
-		</div>
-		<!-- <div class="spinner-border text-primary spinner" role="status">
-			<span class="sr-only">Loading...</span>
-		</div> -->
-	</div>
+  <form id="upload-form" class="upload-container modal-content">
+    <div class="upload-header modal-header">
+      <h5 class="upload-title modal-title" id="uploadModalLabel">
+        Upload Music 🎧
+      </h5>
+      <i
+        onclick="$('#uploadModal').modal('hide')"
+        class="bi bi-x-octagon text-danger"
+        type="button"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></i>
+    </div>
+    <div class="upload-body modal-body">
+      <div class="left-side">
+        <img id="preload-img" style="display: none" alt="Preload Image" />
+        <div
+          class="uploaded-thumbnail drop-zone"
+          data-type="image"
+          data-image-url="/assets/images/default_thumbnail_lq.jpg"
+        >
+          <div class="upload-icon">
+            <i class="fa fa-file-image" aria-hidden="true"></i>
+          </div>
+          <input type="hidden" name="thumbnail" value="" />
+        </div>
+        <input
+          type="file"
+          name="thumbnail-upload"
+          accept="image/*"
+          id="thumbnail-upload"
+          style="display: none"
+        />
+        <div class="drag-drop artist-music-name">
+          <span>Unknown</span><span> - </span
+          ><span class="music-name">Track</span>
+        </div>
+      </div>
 
-	<form id="upload-form" class="upload-container modal-content">
-		<div class="upload-header modal-header">
-			<h5 class="upload-title modal-title" id="uploadModalLabel">Upload Music 🎧</h5>
-			<i onclick="$('#uploadModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
-				data-bs-dismiss="modal" aria-label="Close"></i>
-		</div>
-		<div class="upload-body modal-body">
-			<div class="left-side">
-				<div class="uploaded-thumbnail drop-zone" data-type="image"
-					data-image-url="/assets/images/default_thumbnail.jpg">
-					<div class="upload-icon">
-						<i class="fa fa-file-image" aria-hidden="true"></i>
-					</div>
-					<input type="hidden" name="thumbnail" value="">
-				</div>
-				<input type="file" name="thumbnail-upload" accept="image/*" id="thumbnail-upload" style="display: none;">
-				<div class="drag-drop artist-music-name">
-					<span>Unknown</span><span> - </span><span class="music-name">Track</span>
-					<!-- <span>Unknown</span> <br> <span class="music-name">Track</span> -->
-				</div>
-			</div>
+      <div class="inputs right-side">
+        <div class="input-group">
+          <input
+            name="artist"
+            type="text"
+            class="form-control"
+            placeholder="Artist Name"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <input
+            name="title"
+            type="text"
+            class="form-control"
+            placeholder="Music Name"
+            required
+          />
+        </div>
 
-			<div class="inputs right-side">
-				<!-- <h4 class="upload-title">Upload Music Here</h4> -->
-				<div class="input-group">
-					<input name="artist" type="text" class="form-control" placeholder="Artist Name" pattern="[A-Za-z\s]+"
-						title="Enter a valid artist name (letters and spaces only)" required>
-				</div>
-				<div class="input-group">
-					<input name="title" type="text" class="form-control" placeholder="Music Name" pattern="[A-Za-z0-9\s]+"
-						title="Enter a valid music name (letters, numbers, and spaces only)" required>
-				</div>
+        <!-- Video Drop Zone -->
+        <div class="drag-drop drop-zone video-drop" data-type="video">
+          <span>
+            <i
+              class="fas fa-file-video"
+              data-fa-transform="shrink-3 down-2 left-6 rotate--45"
+            ></i>
+            Drop video here, or <a href="javascript:void(0)">browse</a>
+            <input
+              name="video-upload"
+              class="drop-browse"
+              type="file"
+              accept="video/*"
+              style="display: none"
+            />.
+          </span>
+          <input type="hidden" name="video" value="" />
+          <div class="file-details" style="display: none">
+            <i
+              class="fas fa-file-video"
+              data-fa-transform="shrink-3 down-2 left-6 rotate--45"
+            ></i>
+            <div class="file-name text-truncate" id="fileName"></div>
+            <span aria-hidden="true" class="cancel-upload">
+              <i class="fas fa-times"></i>
+            </span>
+          </div>
+          <div class="progress-container" style="display: none">
+            <div class="progress-bar"></div>
+            <div class="progress-text"></div>
+          </div>
+        </div>
 
-				<!-- Video Drop Zone -->
-				<div class="drag-drop drop-zone video-drop" data-type="video">
-					<span>
-						<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
-						Drop video here, or <a href="javascript:void(0)">browse</a>
-						<input name="video-upload" class="drop-browse" type="file" accept="video/*" style="display: none">.
-					</span>
-					<input type="hidden" name="video" value="">
-					<div class="file-details" style="display: none">
-						<i class="fas fa-file-video" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
-						<div class="file-name text-truncate" id="fileName"></div>
-						<span aria-hidden="true" class="cancel-upload">
-							<i class="fas fa-times"></i>
-						</span>
-					</div>
-					<div class="progress-container" style="display: none">
-						<div class="progress-bar"></div>
-						<div class="progress-text"></div>
-					</div>
-				</div>
+        <!-- Lyrics Drop Zone -->
+        <div class="drag-drop drop-zone lyrics-drop" data-type="lyrics">
+          <i
+            class="fas fa-file-alt"
+            data-fa-transform="shrink-3 down-2 left-6 rotate--45"
+          ></i>
+          <span
+            >Drop Lyrics here, or <a href="javascript:void(0)">browse</a>
+            <!-- <input class="drop-browse" type="file" name="video" accept="text/*" style="display: none">. -->
+            <input
+              class="drop-browse"
+              type="file"
+              name="lyrics-upload"
+              accept="text/*"
+              style="display: none"
+            />.
+          </span>
+          <input type="hidden" name="lyrics" value="" />
+          <div class="file-details" style="display: none">
+            <i
+              class="fas fa-file-alt"
+              data-fa-transform="shrink-3 down-2 left-6 rotate--45"
+            ></i>
+            <div class="file-name text-truncate" id="fileName"></div>
+            <span aria-hidden="true" class="cancel-upload">
+              <i class="fas fa-times"></i>
+            </span>
+          </div>
+          <div class="progress-container" style="display: none">
+            <div class="progress-bar"></div>
+            <div class="progress-text"></div>
+          </div>
+        </div>
 
-				<!-- Lyrics Drop Zone -->
-				<div class="drag-drop drop-zone lyrics-drop" data-type="lyrics">
-					<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
-					<span>Drop Lyrics here, or <a href="javascript:void(0)">browse</a>
-						<!-- <input class="drop-browse" type="file" name="video" accept="text/*" style="display: none">. -->
-						<input class="drop-browse" type="file" name="lyrics-upload" accept="text/*" style="display: none">.
-					</span>
-					<input type="hidden" name="lyrics" value="">
-					<div class="file-details" style="display: none">
-						<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
-						<div class="file-name text-truncate" id="fileName"></div>
-						<span aria-hidden="true" class="cancel-upload">
-							<i class="fas fa-times"></i>
-						</span>
-					</div>
-					<div class="progress-container" style="display: none">
-						<div class="progress-bar"></div>
-						<div class="progress-text"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- <div class="upload-footer"> -->
-		<div class="modal-footer upload-footer border-0">
-			<button type="submit" class="upload-btn">
-				<i class="fas fa-cloud-upload-alt default-upload-icon"></i>
-				<i class="fas fa-video video-upload-icon" style="display: none"></i>
-				<i class="far fa-image image-upload-icon" style="display: none"></i>
-				<i class="fas fa-file-alt text-upload-icon" style="display: none"></i>
-				<span class="progress-display">upload</span>
-				<div class="liquid" id="liquid"></div>
-			</button>
-			<!-- <button type="submit" class="btn btn-outline-primary"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Upload</button> -->
-		</div>
-	</form>
+        <!-- Youtube URL -->
+        <div class="input-group flex-nowrap align-items">
+          <input
+            type="url"
+            class="form-control border-primary text-primary border-right-0 youtube-url"
+            placeholder="Enter youtube url here"
+            aria-label="Username"
+            aria-describedby="addon-wrapping"
+          />
+          <div
+            id="fetch-ytvideo"
+            class="input-group-prepend youtube-icon btn btn-primary border-primary"
+            style="width: auto"
+          >
+            <i class="fab fa-youtube text-light" style="font-size: 1.5rem"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="upload-footer"> -->
+    <div class="modal-footer upload-footer border-0">
+      <button type="submit" class="upload-btn">
+        <i class="fas fa-cloud-upload-alt default-upload-icon"></i>
+        <i class="fas fa-video video-upload-icon" style="display: none"></i>
+        <i class="far fa-image image-upload-icon" style="display: none"></i>
+        <i class="fas fa-file-alt text-upload-icon" style="display: none"></i>
+        <span class="progress-display">upload</span>
+        <div class="liquid" id="liquid"></div>
+      </button>
+      <!-- <button type="submit" class="btn btn-outline-primary"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Upload</button> -->
+    </div>
+  </form>
 </div>
