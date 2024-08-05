@@ -14,6 +14,10 @@ function toastDanger(message) {
   toastMessage(message, 'Error', 'toast-danger', 'fa fa-bug');
 }
 
+function toastError(message) {
+  toastMessage(message, 'Error', 'toast-danger', 'fa fa-bug');
+}
+
 function toastInfo(message) {
   toastMessage(message, 'Info', 'toast-info', 'fa fa-info-circle');
 }
@@ -25,6 +29,7 @@ toastContainer.classList.add('toast-container');
 document.body.appendChild(toastContainer);
 
 function toastMessage(message, header, category, categoryIcon) {
+	message = message.toString();
   let delay = 4000 + message.length * 50;
 
   // Create a new toast element

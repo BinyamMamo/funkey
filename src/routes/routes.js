@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/browse', async (req, res) => {
-	let LIMIT = 7;
+	const LIMIT = 7;
 	let page = req.query.page || '1';
 	let sort = req.query.sort || 'alpha';
 	let order = req.query.order || '1';
@@ -35,11 +35,11 @@ router.get('/browse', async (req, res) => {
 	order = parseInt(order);
 	page = parseInt(page);
 	
-	const offset = (page - 1) * LIMIT;
+	const OFFSET = (page - 1) * LIMIT;
 	let musics = [];
 
 	if (sort == 'alpha')
-		musics = await Music.find().sort({ artist: order, title: order }).skip(offset).limit(LIMIT);
+		musics = await Music.find().sort({ artist: order, title: order }).skip(OFFSET).limit(LIMIT);
 	else if (sort == 'popularity')
 		musics = await Music.aggregate([
       {
@@ -53,9 +53,9 @@ router.get('/browse', async (req, res) => {
       {
         $limit: LIMIT,
       },
-    ]).skip(offset).limit(LIMIT);
+    ]).skip(OFFSET).limit(LIMIT);
 	else
-		musics = await Music.find().skip(offset).limit(LIMIT);
+		musics = await Music.find().skip(OFFSET).limit(LIMIT);
 	
 	if (sort == 'random')
 		musics = shuffleArray(musics);

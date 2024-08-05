@@ -1,4 +1,24 @@
 $(document).ready(function () {
+  $('input[name="artist"]').on('input', function () {
+    const value = $(this).val();
+    const output = $('.artist-music-name span');
+    output[0].innerHTML = value;
+
+    if (output.text().length < 25) output[1].innerHTML = ' - ';
+    else output[1].innerHTML = '<br>';
+    if (value == '') output[0].innerHTML = 'Unkown';
+  });
+
+  $('input[name="title"]').on('input', function () {
+    const value = $(this).val();
+    const output = $('.artist-music-name span');
+    output[2].innerHTML = value;
+
+    if (output.text().length < 25) output[1].innerHTML = ' - ';
+    else output[1].innerHTML = '<br>';
+    if (value == '') output[1].innerHTML = 'Track';
+  });
+
   $('.uploaded-thumbnail').click(function (e) {
     e.preventDefault();
     $('#thumbnail-upload').trigger('click');
@@ -15,13 +35,13 @@ $(document).ready(function () {
     handleUpload(file, element);
   });
 
-	$('.drag-drop').each(function (index, element) {
-		$(element)
-			.find('a')
-			.click(function () {
-				$(this).next('input').trigger('click');
-			});
-	});
+  $('.drag-drop').each(function (index, element) {
+    $(element)
+      .find('a')
+      .click(function () {
+        $(this).next('input').trigger('click');
+      });
+  });
 
   $('.drop-browse').on('cancel', () => {
     console.log('Cancelled.');
@@ -33,7 +53,6 @@ $(document).ready(function () {
 
     handleUpload(this.files[0], element);
   });
-
 
   var dropZone = $('.drop-zone');
 
@@ -91,34 +110,69 @@ $(document).ready(function () {
     fileName.html(`${file.name}`);
   }
 
+  window.handleUpload = handleUpload;
+
   $('#upload-form').on('submit', async function (event) {
     event.preventDefault();
-		event.stopPropagation();
-
+    event.stopPropagation();
     $('.spinner-overlay').show();
-
-    const video = $(this).find('input[name="video-upload"]')[0].files[0];
-    console.log('video:', video);
-    const thumbnail = $(this).find('input[name="thumbnail-upload"]')[0]
-      .files[0];
-    const lyrics = $(this).find('input[name="lyrics-upload"]')[0].files[0];
-
-		const videoDrop = $(this).find('.video-drop')[0];
-		const lyricsDrop = $(this).find('.lyrics-drop')[0];
 
     let music = {};
     music.title = $(this).find('input[name="title"]').val();
     music.artist = $(this).find('input[name="artist"]').val();
 
-		music.thumbnail = await uploadFile(thumbnail, null);
-		music.video = await uploadFile(video, videoDrop);
-		music.lyrics = await uploadFile(lyrics, lyricsDrop);
+    let musicName = `${music.artist} - ${music.title}`;
+    let thumbnail = $(this).find('input[name="thumbnail-upload"]')[0].files[0];
+    if (thumbnail)
+      thumbnail = {
+        file: thumbnail,
+        type: thumbnail.type,
+        name: thumbnail.name,
+      };
+    else {
+      thumbnail = $(this).find('input[name="thumbnail"]').val();
+      thumbnail = {
+        file: thumbnail,
+        type: 'image/jpg',
+        name: `${musicName}.jpg`,
+      };
+    }
 
-		$('.spinner-overlay').hide();
-		console.log('saving music:', music);
-		saveMusic(music);
+    let video = $(this).find('input[name="video-upload"]')[0].files[0];
+    if (video) video = { file: video, type: video.type, name: video.name };
+    else {
+      video = $(this).find('input[name="video"]').val();
+      video = { file: video, type: 'video/mp4', name: `${musicName}.mp4` };
+    }
 
-		toastSuccess('upload complete!');
+    let lyrics = $(this).find('input[name="lyrics-upload"]')[0].files[0];
+    if (lyrics) lyrics = { file: lyrics, type: lyrics.type, name: lyrics.name };
+    else {
+      lyrics = $(this).find('input[name="lyrics"]').val();
+      lyrics = `${musicName} (Lyrics)\n0\n00:00:00,000 --> 00:00:00,000\n${musicName}\n\n${lyrics}`;
+      lyrics = {
+        file: new Blob([lyrics], { type: 'text/srt' }),
+        type: 'text/srt',
+        name: `${musicName}.srt`,
+      };
+    }
+
+    const videoDrop = $(this).find('.video-drop')[0];
+    const lyricsDrop = $(this).find('.lyrics-drop')[0];
+    console.log('thumbnail:', thumbnail);
+    console.log('video:', video);
+    console.log('lyrics:', lyrics);
+    console.log('lyrics url:', URL.createObjectURL(lyrics.file));
+
+    music.thumbnail = await uploadFile(thumbnail, null);
+    music.video = await uploadFile(video, videoDrop);
+    music.lyrics = await uploadFile(lyrics, lyricsDrop);
+
+    $('.spinner-overlay').hide();
+    console.log('saving music:', music);
+    saveMusic(music);
+
+    toastSuccess('upload complete!');
   });
 
   function saveMusic(music) {
@@ -135,18 +189,32 @@ $(document).ready(function () {
       })
       .then((res) => {
         toastSuccess('upload complete!');
-				location.reload();
-      }).catch(err => {
-				toastDanger(err.message);
-				toastDanger('try again!');
-				console.error(err);
-			});
+        location.reload();
+      })
+      .catch((err) => {
+        toastDanger(err.message);
+        toastDanger('try again!');
+        console.error(err);
+      });
   }
 
   function uploadFile(file, element) {
     return new Promise(async (resolve, reject) => {
-      console.log('file:', file);
+      console.log('file:', file.file);
       let type = file.type.split('/')[0];
+      let resourceType;
+
+      // // Determine resource type based on file type
+      // if (type === 'video') {
+      //   resourceType = 'video';
+      // } else if (typw === 'image') {
+      // } else if (file.type === 'text/srt' || file.type === 'text/plain') {
+      //   resourceType = 'raw';
+      // } else {
+      //   resourceType = 'auto';
+      // }
+      resourceType = type === 'video' || type === 'image'? type: 'raw';
+			
       let icon = `${type}-upload-icon`;
       $('.upload-btn').find('.liquid').css('top', `0px`);
 
@@ -155,37 +223,28 @@ $(document).ready(function () {
       const { signature, timestamp, cloud_name, api_key } =
         await response.json();
 
-      const url = `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`;
+      const url = `https://api.cloudinary.com/v1_1/${cloud_name}/${resourceType}/upload`;
 
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', file.file);
       formData.append('api_key', api_key);
       formData.append('timestamp', timestamp);
-      // formData.append('signature', signature);
       formData.append('upload_preset', 'mrom3lig');
-      formData.append('folder', `uploads/${folderName}`);
-      formData.append('public_id', file.name.split('.')[0]);
+      // formData.append('folder', `uploads/${folderName}`);
+      // formData.append('public_id', file.name.split('.')[0]);
+      formData.append('public_id', file.name);
 
       const xhr = new XMLHttpRequest();
       xhr.open('POST', url);
 
       // Show progress bar
-      // const progressContainer = document.getElementById('progressContainer');
-      // const progressBar = document.getElementById('progressBar');
-      // const progressText = document.getElementById('progressText');
-      // progressContainer.style.display = 'block';
-
-      // Update progress bar
       xhr.upload.addEventListener('progress', function (event) {
         if (event.lengthComputable) {
           const percentComplete = Math.round(
             (event.loaded / event.total) * 100
           );
 
-					if (element)
-						handleProgress(element, percentComplete);
-          // progressBar.value = percentComplete;
-          // progressText.textContent = `${percentComplete}%`;
+          if (element) handleProgress(element, percentComplete);
           if (percentComplete < 60) {
             grayValue = Math.round((percentComplete / 60) * 50); // 0-50
           } else {
@@ -199,11 +258,7 @@ $(document).ready(function () {
           max = parseInt(max);
           max = max / 2 + 20;
           let min = 30;
-          // let progress = Math.min(Math.max(parseInt(percentComplete), 20), max);
           let progress = ((max - min) / 100) * percentComplete + min;
-          console.log('max:', max);
-          console.log('percentComplete:', percentComplete);
-          console.log('progress:', progress);
           $('.upload-btn')
             .find('.progress-display')
             .html(`${percentComplete}%`);
@@ -217,9 +272,9 @@ $(document).ready(function () {
       xhr.addEventListener('load', function () {
         if (xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
-          // alert('File uploaded successfully!');
           console.log('File uploaded successfully!');
           console.log('Upload response:', response);
+          console.log('file just responded:', file);
           $('.upload-btn').css('border-color', '#f7f7f7');
           $('.upload-btn').css('color', '#f7f7f7');
           $(`.${icon}`).hide();
@@ -236,7 +291,7 @@ $(document).ready(function () {
     });
   }
 
-	function handleProgress(element, percentComplete) {
+  function handleProgress(element, percentComplete) {
     if (!$(element).is('.uploaded-thumbnail')) {
       const progressContainer = $(element).find('.progress-container');
       const progressBar = $(element).find('.progress-bar');

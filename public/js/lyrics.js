@@ -99,6 +99,7 @@ function playMusic(btn) {
 function begin_music() {
   vid.controls = false;
   vid.playbackRate = SPEED;
+  vid.volume = $('#volume').val();
 
   vid.play();
 
@@ -136,12 +137,27 @@ document.body.ondblclick = (ev) => {
   pauseEverything(ev);
 };
 
+
 document.addEventListener('keydown', function (event) {
-	if (event.key === 'Escape' || event.key === 'Enter') {
+	// console.log('event.key:', event.key);
+  if (event.key === 'Escape' || event.key === 'Enter') {
 		console.log('Escape key pressed');
-		event.preventDefault();
-		pauseEverything(event);
+    event.preventDefault();
+    pauseEverything(event);
   }
+
+  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+    $('#volume').show();
+    // setTimeout(() => {
+			// 	$('#volume').hide();
+    // }, 1000);
+  }
+
+  vid.volume = $('#volume').val();
+});
+
+document.addEventListener('keyup', function (event) {
+  $('#volume').hide();
 });
 
 function pauseEverything(ev) {
@@ -151,7 +167,7 @@ function pauseEverything(ev) {
     timer();
     interval_id = setInterval(timer, 100);
     $('.keyboard-container').show();
-		$('.stats-container').hide();
+    $('.stats-container').hide();
   } else if (vid) {
     vid.pause();
     console.log('paused');
@@ -166,12 +182,12 @@ function pauseEverything(ev) {
     $('.stats-container .wpm-display').text(`${Math.round(averagey)} wpm`);
     $('.stats-container').show();
     $('.keyboard-container').hide();
-
+		
     $('.stats-container .close-stats').on('click', function (e) {
-      e.preventDefault();
+			e.preventDefault();
       console.log('time', time);
       if (!interval_id) {
-        interval_id = setInterval(timer, 100);
+				interval_id = setInterval(timer, 100);
       }
       if (vid.paused) vid.play();
       $('.stats-container').hide();
@@ -181,10 +197,19 @@ function pauseEverything(ev) {
 }
 
 document.addEventListener('keypress', (ev) => {
-  if (cursor >= textboxContent.length) {
+	console.log('event.key:', ev.key);
+	if (ev.key === 'ArrowUp') {
+		console.log('before:', $('#volume').val());
+		$('#volume').val(Math.min($('#volume').val() + 0.1, 1.0));
+		console.log('after:', $('#volume').val());
+	}
+	
+	if (ev.key === 'ArrowDown')
+		$('#volume').val(Math.max($('#volume').val() - 0.1, 0.0));
+	if (cursor >= textboxContent.length) {
     console.log('FINISHED!!!');
   } else if (ev.key == textboxContent[cursor]) {
-    let curr = document.getElementsByClassName('cursor')[0];
+		let curr = document.getElementsByClassName('cursor')[0];
     curr.classList.remove('cursor');
     curr.classList.add('done');
     if (curr.nextElementSibling) {
@@ -212,15 +237,16 @@ function update_wpm() {
   if (isNaN(wpm_count) || wpm_count === Number.POSITIVE_INFINITY) wpm_count = 0;
   // wpm.innerHTML = `${Math.floor(wpm_count)}WPM`;
 
-	
-	fetch('/update/score', {
-		method: 'PUT',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({score: Math.min(Math.max(parseInt(wpm_count), 1), 100)})
-	});
-	console.log('score updating...');
+  fetch('/update/score', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      score: Math.min(Math.max(parseInt(wpm_count), 1), 100),
+    }),
+  });
+  console.log('score updating...');
 
   wpm_array.push(wpm_count);
 }
@@ -253,19 +279,17 @@ let curr = -1;
 function timer() {
   const time_cont = document.getElementById('timer');
 
-
-	if (watchHour >= 10000) {
-		fetch('/update/watchHour', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({watchHour})
-		})
-		watchHour = 0;
-		console.log('watch hour updatin...');
-	}
-
+  if (watchHour >= 10000) {
+    fetch('/update/watchHour', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ watchHour }),
+    });
+    watchHour = 0;
+    console.log('watch hour updatin...');
+  }
 
   sec = time / 1000;
   min = Math.floor(sec / 60);
@@ -294,16 +318,16 @@ function timer() {
     console.log('FINALLY WE HAVE FINISHED');
     document.body.ondblclick = null;
 
-		let score = Math.min(Math.max(parseInt(averagey), 1), 100);
+    let score = Math.min(Math.max(parseInt(averagey), 1), 100);
 
-		fetch('/update/score', {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({score})
-		});
-		console.log('score updated');
+    fetch('/update/score', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ score }),
+    });
+    console.log('score updated');
 
     $('.keyboard-container').hide();
     $('.ratings-parent').show();
@@ -353,7 +377,7 @@ function timer() {
   // time += 1000 * SPEED;
   // time += 100 * SPEED;
   time += 100;
-	watchHour += 100;
+  watchHour += 100;
 }
 
 function do_seeking() {
