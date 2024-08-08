@@ -64,7 +64,5 @@ router.get('/logout', (req, res, next) => {
   });
 });
 
-router.post('/update/watchHour', authUser, userController.updateHour);
 router.put('/update/score', authUser, userController.updateScore);
-
 module.exports = router;

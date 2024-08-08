@@ -162,7 +162,11 @@ $(document).ready(function () {
     $('#carouselCaption').text(caption);
     localStorage.setItem('themeCarousel', e.to.toString());
     $('body').css('background-image', `url('${$(activeItem).find('span')[0].dataset.img}')`);
+    $('body').css('background-position', `center`);
+    $('body').css('background-repeat', `no-repeat`);
+    $('body').css('background-size', `cover`);
     $(this).find('input[name="theme"]').val(activeItem.dataset.view);
+    localStorage.setItem('theme', `/practice/partials/${activeItem.dataset.view}`);
   });
 });
 

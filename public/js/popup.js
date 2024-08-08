@@ -37,7 +37,7 @@ $(document).ready(function () {
 								</li>
 								<li>
 									<h4>Type</h4>
-									<span>${ music.favorite ? 'favorite' : 'uploaded' }</span>
+									<span>${ music.type }</span>
 									</li>
 							<li>
 								<div class="btn btn-primary main-button library-play-btn" data-toggle="modal" data-target="#levelsModal" data-music="${ music._id }">Play</div>
@@ -146,7 +146,12 @@ $(document).ready(function () {
 	});
 	$('.library-filter').find('.uploaded').on('click', function (e) {
 		e.preventDefault();
-		LIBRARY_FILTER = 'uploaded';
+		LIBRARY_FILTER = 'uploads';
+		updateMusicLibrary();
+	});
+	$('.library-filter').find('.none').on('click', function (e) {
+		e.preventDefault();
+		LIBRARY_FILTER = 'library';
 		updateMusicLibrary();
 	});
 

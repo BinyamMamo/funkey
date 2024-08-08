@@ -5,9 +5,9 @@
 // });
 
 $(document).ready(function () {
-	// console.clear();
-  const selectedLevelText = $("#selectedLevelText");
-  const customOptions = $("#customOptions");
+  // console.clear();
+  const selectedLevelText = $('#selectedLevelText');
+  const customOptions = $('#customOptions');
 
   // $(".custom-btn").on("click", function () {
   //   // $("#customOptions").toggle();
@@ -20,19 +20,23 @@ $(document).ready(function () {
   //   }
   // });
 
-  $(".level-buttons .btn").on("click", function () {
-    $(".level-buttons .btn").removeClass("active");
-    $(this).addClass("active");
+  $('.level-buttons .btn').on('click', function () {
+    $('.level-buttons .btn').removeClass('active');
+    $(this).addClass('active');
 
-    const level = $(this).data("level");
-    $(".level-img").attr("src", `assets/images/${level.toLowerCase()}.png`);
+    const level = $(this).data('level');
+    $('.level-img').attr('src', `assets/images/${level.toLowerCase()}.png`);
     $(`.level-img`).show();
 
-		if (level == 'custom')
-			customOptions.show();
-		else
-			customOptions.hide();
-		updateLevel(level);
+    if (level == 'custom') {
+			$('.level-img-big').attr('src', `assets/images/${level.toLowerCase()}.png`);
+      $('.level-img-big').show();
+      customOptions.show();
+    } else {
+      $('.level-img-big').hide();
+      customOptions.hide();
+    }
+    updateLevel(level);
   });
 
   function updateLevel(level) {
@@ -40,30 +44,30 @@ $(document).ready(function () {
     // selectedLevelText.text(`Selected Level: ${levelText}`);
     selectedLevelText.text(`${levelText}`);
 
-    $("#start").show();
+    $('#start').show();
   }
 
   function getLevelText(level) {
     switch (level) {
-      case "easy":
-        return "Easy";
-      case "medium":
-        return "Medium";
-      case "hard":
-        return "Hard";
-      case "custom":
-        return "Custom";
+      case 'easy':
+        return 'Easy';
+      case 'medium':
+        return 'Medium';
+      case 'hard':
+        return 'Hard';
+      case 'custom':
+        return 'Custom';
       default:
-        return "Unknown";
+        return 'Unknown';
     }
   }
 
-  $(".bi-x-octagon").hover(
+  $('.bi-x-octagon').hover(
     function () {
-      $(this).removeClass("bi-x-octagon").addClass("bi-x-circle");
+      $(this).removeClass('bi-x-octagon').addClass('bi-x-circle');
     },
     function () {
-      $(this).removeClass("bi-x-circle").addClass("bi-x-octagon");
+      $(this).removeClass('bi-x-circle').addClass('bi-x-octagon');
     }
   );
 });

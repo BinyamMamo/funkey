@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const API_Controller = require('../controllers/api_controller');
 
+// user related endpoints
+router.get('/user/authenticated', API_Controller.checkAuth);
+
+// music related endpoints
 router.get('/musics', API_Controller.getMusics);
 router.get('/music/:id', API_Controller.getMusic);
 

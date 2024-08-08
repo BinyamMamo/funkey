@@ -1,0 +1,135 @@
+<!-- <link rel="stylesheet" href="/css/basics.css"> -->
+<link rel="stylesheet" href="/css/login.css">
+<link rel="stylesheet" href="/css/toasts.css">
+<link rel="stylesheet" href="/css/particles.css">
+
+<link rel="shortcut icon" href="/assets/icon/funkey.ico" type="image/x-icon">
+
+<style>
+	* {
+		font-family: 'Poppins', sans-serif;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	/* .container {
+		display: block;
+		width: 22rem;
+	} */
+
+	.spinner {
+		display: block;
+		position: absolute;
+		left: 45%;
+		top: 50%;
+		z-index: 1000;
+
+		font-size: 1.5rem;
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+
+	.google-btn {
+		padding: 0.5em 0.5em;
+		margin: 0.5em 0;
+		width: 70%;
+		background: white;
+		color: #444;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		display: inline-block;
+		font-size: 1rem;
+		font-weight: 500;
+		text-align: center;
+		text-decoration: none;
+		transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+	}
+
+	.google-btn:hover {
+		background-color: #f8f8f8;
+		border-color: #ccc;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	}
+
+	.google-btn img {
+		width: auto;
+		height: 1.15rem;
+		margin-right: 8px;
+		vertical-align: middle;
+		transition: 0.5s ease;
+	}
+
+	button:active,
+	button:focus,
+	button:hover {
+		outline: none;
+		box-shadow: none;
+	}
+
+	button:active,
+	button:focus,
+	button:hover {
+		opacity: 0.95;
+	}
+</style>
+
+<div class="modal-dialog">
+	<form id="login-form" class="login-container modal-content">
+		<div class="login-header modal-header">
+			<h5 class="login-title modal-title" id="loginModalLabel">Login <i class="fas fa-sign-in-alt"></i></h5>
+			<i onclick="$('#loginModal').modal('hide')" class="bi bi-x-octagon text-danger" type="button"
+				data-bs-dismiss="modal" aria-label="Close"></i>
+		</div>
+
+		<div class="login-body modal-body">
+			<div class="spinner-border text-primary spinner" role="status" style="display: none">
+				<span class="sr-only">Loading...</span>
+			</div>
+					<form class="login-form">
+						<div class="form-group my-3" style="width: 70%;">
+							<label for="email"><i class="fa fa-envelope"></i> &nbsp;Email</label>
+							<input name="email" type="email" class="form-control" id="email" placeholder="Your Email" required>
+						</div>
+						<div class="form-group my-3" style="width: 70%;">
+							<label for="password"><i class="fa fa-lock"></i> &nbsp;Password</label>
+							<input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+						</div>
+
+						<div class="form-check my-3" style="width: 70%;">
+							<label class="form-check-label"> &nbsp;
+								<a href="/signup" class="text-primary">
+									<i class="fas fa-user-plus"></i>
+									Create Account
+								</a>
+							</label>
+						</div>
+						<button id="login-btn" type="submit" class="btn btn-primary mt-2 login-btn">Login</button>
+					</form>
+
+					<div class="d-flex align-items-center my-3" style="margin: auto; width: 70%;">
+						<hr class="flex-grow-1" style="border-color: #575757">
+						<span class="mx-3" style="font-size: 0.75rem;">Or</span>
+						<hr class="flex-grow-1" style="border-color: #575757">
+					</div>
+
+					<button class="google-btn google-login" style="margin-top: 0;">
+						<img
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/36px-Google_%22G%22_logo.svg.png?20230822192911"
+							alt="Google Logo" width="20" height="20">
+						Continue with Google
+					</button>
+					<button class="google-btn" style="display: none">
+						<img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="Google Logo" width="20"
+							height="20">
+						Continue with Github
+					</button>
+					<!-- <button class="btn btn-light text-dark google-login" style="width: 100%; margin: auto; font-size: 1.25rem; font-weight: 500;">
+					<i class="fab fa-google"></i>&nbsp; Sign in with Google
+				</button> -->
+		</div>
+</div>
+
+
+<script src="/js/login.js"></script>

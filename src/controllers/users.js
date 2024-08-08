@@ -116,17 +116,6 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const updateHour = async (req, res) => {
-	try {
-		let duration = req.body.watchHour || 0;
-		let user = await User.findById(req.user._id);
-		user.watchHour += duration;
-		await user.save();
-		console.log('User watch hour is updated by', duration);
-		res.status(200).json({message: 'update successful'});
-	} catch(err) { console.error(err); }
-}
-
 const updateScore = async (req, res) => {
 	try {
 		let score = req.body.score || 0;
@@ -147,5 +136,4 @@ module.exports = {
 	updateScore,
   editProfile,
   deleteUser,
-	updateHour
 };

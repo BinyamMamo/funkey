@@ -1,0 +1,141 @@
+<style>
+	.search-input #searchText:focus {
+		border-bottom-left-radius: 0 !important;
+		border-bottom-right-radius: 0 !important;
+	}
+
+	.search-input .search-result {
+		overflow-x: hidden;
+		overflow-y: scroll;
+		/* background-color: #27292a; */
+		background-color: #242628;
+
+		display: block;
+		width: 170%;
+		height: 15rem;
+		position: absolute;
+		border-radius: 5px;
+		border-top-left-radius: 0;
+		/* border-top: 1px solid #2229; */
+		border-top: 1px solid #2229;
+		display: none;
+	}
+
+	.search-input .search-result .item {
+		margin: 0.75em 0;
+	}
+
+	.search-input .search-result .item .view-n-rating div {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-evenly;
+		gap: 0.35rem;
+		align-items: center;
+	}
+
+	.search-input .search-result .item .view-n-rating i {
+		position: relative !important;
+		top: auto !important;
+		left: auto !important;
+		color: #5e8de7 !important;
+		display: block !important;
+		font-size: 0.95rem !important;
+	}
+
+	.search-input .search-result .item .view-n-rating span {
+		display: block !important;
+		color: #e1e1e1;
+		font-size: 0.9rem !important;
+	}
+
+	.search-input .clip-thumbnail {
+		position: relative;
+		display: block;
+		width: 3.5rem;
+		height: 3.5rem;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		border-radius: 50%;
+		/* border-radius: 5px; */
+		opacity: 0.85;
+	}
+
+	.search-input .clip-thumbnail .overlay {
+		width: 100%;
+		height: 100%;
+		background-color: #fff3;
+		border-radius: 50%;
+		opacity: 0;
+		transition: 0.7s ease;
+		cursor: pointer;
+	}
+
+	.search-input .clip-thumbnail .overlay:hover {
+		opacity: 0.9;
+	}
+
+	.search-input .clip-thumbnail .overlay,
+	.search-input .clip-thumbnail .overlay i {
+		display: block;
+		position: absolute;
+		left: 50% !important;
+		top: 50% !important;
+		transform: translate(-50%, -50%) !important;
+		color: #27292aaa !important;
+	}
+
+	.search-input .clip-title {
+		font-size: 1rem;
+	}
+</style>
+
+<div class="search-input">
+	<form id="search" action="#">
+		<input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" />
+		<i class="fa fa-search"></i>
+		<div class="search-result" id="searchResults">
+
+			<% musics.forEach(music=> { %>
+
+				<div class="item music-clip"
+					style="background-color: #27292a88; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; padding: 0.4em; gap: 0.15em;">
+					<div class="thumb" style="margin: 0;">
+						<span data-music_id="<%= music._id %>" class="clip-thumbnail"
+							style="background-image: url('<%= music.thumbnail %>')">
+							<span class="overlay">
+
+								<i class="fas fa-play"></i>
+							</span>
+						</span>
+					</div>
+					<div class="down-content"
+						style="width: 100%; padding-left: 0.5em; display: flex; flex-direction: column; justify-content: space-around; gap: 0.5em">
+						<h4 class="clip-title" data-music_id="<%= music._id %>" style="line-height: 1.2; cursor: pointer;">
+							<%= music.title %>
+						</h4>
+						<div class="view-n-rating"
+							style="display: flex; flex-direction: row; justify-content: flex-start; flex-wrap: wrap; gap: 1.15em">
+							<div>
+								<span>
+									<%= music.rating.toFixed(2) %>
+								</span>
+								<i class="fa fa-star"></i>
+							</div>
+							<div>
+								<span>
+									<%= music.views %>
+								</span>
+								<i class="fa fa-users"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<% }); %>
+
+
+		</div>
+	</form>
+</div>

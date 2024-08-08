@@ -1,0 +1,40 @@
+.login-body {
+	z-index: 110;
+	width: 25rem;
+	display: flex;
+	flex-direction: column;
+
+	/* gap: 0.5rem; */
+	align-items: center;
+	justify-content: center;
+	color: #f7f7f7;
+}
+
+#loginModal .form-control:focus {
+	box-shadow: none;
+	background-color: #1f212255 !important;
+	color: #f7f7f7 !important;
+}
+
+#loginModal .form-check {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+#loginModal input {
+	width: 100% !important;
+	padding: 0.5em 1em !important;
+	padding: 1em 2em;
+}
+
+#loginModal .login-btn {
+	background-color: #007bff;
+	border: none;
+	padding: 0.5em 1em;
+	width: 70%;
+}
+
+#loginModal input {
+	width: 100%;
+}

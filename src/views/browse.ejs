@@ -3,722 +3,336 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Funkey | Browse Musics</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Funkey | Browse Musics</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch+Pop&display=swap" rel="stylesheet">
+	<!-- Google Fonts -->
+	<!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet"> -->
+	<link
+		href="https://fonts.googleapis.com/css2?family=Rubik+Glitch+Pop&display=swap&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
 
-  <!-- Bootstrap core CSS -->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+	<!-- Bootstrap core CSS -->
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <!-- Additional CSS Files -->
-  <link rel="stylesheet" href="/css/upload.css">
+	<!-- Additional CSS Files -->
+	<link rel="stylesheet" href="/css/upload.css">
 	<link rel="stylesheet" href="/css/loader-dancing.css">
-  <link rel="stylesheet" href="/css/funkey.css">
-  <link rel="stylesheet" href="/css/homepage.css">
-  <link rel="stylesheet" href="/css/levels.css">
-  <link rel="stylesheet" href="/css/toasts.css">
-  <link rel="stylesheet" href="/css/practice.css">
+	<link rel="stylesheet" href="/css/funkey.css">
+	<link rel="stylesheet" href="/css/homepage.css">
+	<link rel="stylesheet" href="/css/toasts.css">
+	<link rel="stylesheet" href="/css/practice.css">
+	<link rel="stylesheet" href="/css/scroll.css">
 
-  <link rel="shortcut icon" href="assets/icon/funkey.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="assets/icon/funkey.ico" type="image/x-icon">
 
-  <style>
-    .main-nav {
-      padding: 5px 0 !important;
-    }
+	<style>
+		.main-nav {
+			padding: 5px 0 !important;
+		}
 
-    .page-content {
-      margin-top: 2rem !important;
-    }
+		.page-content {
+			margin-top: 2rem !important;
+		}
 
-    .most-popular {
-      margin-top: 0px;
-    }
+		.most-popular {
+			margin-top: 0px;
+		}
 
-    .upload-modal .upload-container {
-      background-color: #1f2122;
-      position: fixed;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+		.upload-modal .upload-container {
+			background-color: #1f2122;
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
 
-      width: 700px;
-      display: flex;
-      flex-direction: column !important;
-      gap: 1em;
-      justify-content: center;
-      align-items: center;
-    }
+			width: 700px;
+			display: flex;
+			flex-direction: column !important;
+			gap: 1em;
+			justify-content: center;
+			align-items: center;
+		}
 
-    .upload-modal .upload-header {
-      background-color: transparent;
-      color: #e1e1e1;
-      border-color: #5e8de720 !important;
-      font-size: 1.5rem;
-      font-weight: normal;
-      width: 100%;
-      text-align: left;
-      padding-left: 1em;
-    }
+		.upload-modal .upload-header {
+			background-color: transparent;
+			color: #e1e1e1;
+			border-color: #5e8de720 !important;
+			font-size: 1.5rem;
+			font-weight: normal;
+			width: 100%;
+			text-align: left;
+			padding-left: 1em;
+		}
 
-    .library-filter li {
-      cursor: pointer;
-      transition: font-weight 0.15s ease;
-    }
+		.library-filter li {
+			cursor: pointer;
+			transition: font-weight 0.15s ease;
+		}
 
-    .library-filter li:hover {
-      font-weight: bold;
-    }
+		.library-filter li:hover {
+			font-weight: bold;
+		}
 
-    .library-filter li:first-child:hover {
-      border-bottom: 1px solid #1f212299;
-    }
-
-    .library-filter li:last-child:hover {
-      border-top: 1px solid #1f212299;
-    }
-
-    .login {
-      padding: 0 !important;
-      height: 1em !important;
-      line-height: 1.2 !important;
-      margin-top: 0.5em;
-    }
-
-    #searchText:focus {
-      border-bottom-left-radius: 0 !important;
-      border-bottom-right-radius: 0 !important;
-    }
-
-    .search-result {
-      overflow-x: hidden;
-      overflow-y: scroll;
-      /* background-color: #27292a; */
-      background-color: #242628;
-
-      display: block;
-      width: 170%;
-      height: 15rem;
-      position: absolute;
-      border-radius: 5px;
-      border-top-left-radius: 0;
-      /* border-top: 1px solid #2229; */
-      border-top: 1px solid #2229;
-      display: none;
-    }
-
-    .search-result .item {
-      margin: 0.75em 0;
-    }
-
-    .search-result .item .view-n-rating div {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: space-evenly;
-      gap: 0.35rem;
-      align-items: center;
-    }
-
-    .search-result .item .view-n-rating i {
-      position: relative !important;
-      top: auto !important;
-      left: auto !important;
-      color: #5e8de7 !important;
-      display: block !important;
-      font-size: 0.95rem !important;
-    }
-
-    .search-result .item .view-n-rating span {
-      display: block !important;
-      color: #e1e1e1;
-      font-size: 0.9rem !important;
-    }
-
-    .clip-thumbnail {
-      position: relative;
-      display: block;
-      width: 3.5rem;
-      height: 3.5rem;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      border-radius: 50%;
-      /* border-radius: 5px; */
-      opacity: 0.85;
-    }
-
-    .clip-thumbnail .overlay {
-      width: 100%;
-      height: 100%;
-      background-color: #fff3;
-      border-radius: 50%;
-      opacity: 0;
-      transition: 0.7s ease;
-      cursor: pointer;
-    }
-
-    .clip-thumbnail .overlay:hover {
-      opacity: 0.9;
-    }
-
-    .clip-thumbnail .overlay,
-    .clip-thumbnail .overlay i {
-      display: block;
-      position: absolute;
-      left: 50% !important;
-      top: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      color: #27292aaa !important;
-    }
-
-    .clip-title {
-      font-size: 1rem;
-    }
-  </style>
+		.login {
+			padding: 0 !important;
+			height: 1em !important;
+			line-height: 1.2 !important;
+			margin-top: 0.5em;
+		}
+	</style>
 </head>
 
 <body>
 
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <nav class="main-nav">
-      <!-- ***** Logo Start ***** -->
-      <a href="/" class="logo">
-        <img src="/assets/images/logo.png" alt="">
-        <h4 class="logo-header">
-          FunKey
-        </h4>
-      </a>
-      <!-- ***** Logo End ***** -->
+	<!-- ***** Preloader Start ***** -->
+	<%- include('partials/preload.ejs') %>
 
-      <!-- ***** Search End ***** -->
-      <div class="search-input">
-        <form id="search" action="#">
-          <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" />
-          <i class="fa fa-search"></i>
-          <div class="search-result" id="searchResults">
+		<!-- ***** Header Area Start ***** -->
+		<header class="header-area header-sticky">
+			<nav class="main-nav">
+				<!-- ***** Logo Start ***** -->
+				<a href="/" class="logo">
+					<img src="/assets/images/logo.png" alt="">
+					<h4 class="logo-header">
+						FunKey
+					</h4>
+				</a>
+				<!-- ***** Logo End ***** -->
 
-            <% musics.forEach(music=> { %>
+				<!-- Search -->
+				<%- include('partials/search.ejs') %>
 
-            <div class="item music-clip" style="background-color: #27292a88; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; padding: 0.4em; gap: 0.15em;">
-              <div class="thumb" style="margin: 0;">
-                <span data-id="<%= music._id %>" class="clip-thumbnail" style="background-image: url('<%= music.thumbnail %>')">
-                  <span class="overlay">
-
-                    <i class="fas fa-play"></i>
-                  </span>
-                </span>
-              </div>
-              <div class="down-content" style="width: 100%; padding-left: 0.5em; display: flex; flex-direction: column; justify-content: space-around; gap: 0.5em">
-                <h4 class="clip-title" data-id="<%= music._id %>" style="line-height: 1.2; cursor: pointer;">
-                  <%= music.title %>
-                </h4>
-                <div class="view-n-rating" style="display: flex; flex-direction: row; justify-content: flex-start; flex-wrap: wrap; gap: 1.15em">
-                  <div>
-                    <span>
-                      <%= music.rating.toFixed(2) %>
-                    </span>
-                    <i class="fa fa-star"></i>
-                  </div>
-                  <div>
-                    <span>
-                      <%= music.views %>
-                    </span>
-                    <i class="fa fa-users"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <% }); %>
-
-
-          </div>
-        </form>
-      </div>
-      <!-- ***** Search End ***** -->
-      <!-- ***** Menu Start ***** -->
-      <ul class="nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/browse" class="active">Browse</a></li>
-        <li><a href="/practice">Practice</a></li>
-        <li><a href="/match">Piano</a></li>
-        <!-- <li><a href="match.html">Match</a></li> -->
-        <% if (!avatar) { %>
-        <li class="login"><a href="/login" class="active">Login</a></li>
-        <% } else { %>
-        <li><a href="/profile">Profile <span class="profile-pic-cont"><img class="profile-pic" src="<%= avatar %>" alt=""></span></a></li>
-        <% } %>
-        <!-- <li><a href="profile.html">Login <img src="assets/images/logo.png" alt=""></a></li> -->
-      </ul>
-      <a class='menu-trigger'>
-        <span>Menu</span>
-      </a>
-      <!-- ***** Menu End ***** -->
-    </nav>
-  </header>
-  <!-- ***** Header Area End ***** -->
+					<!-- ***** Menu Start ***** -->
+					<ul class="nav">
+						<li><a href="/">Home</a></li>
+						<li><a href="/browse" class="active">Browse</a></li>
+						<li><a href="/practice">Practice</a></li>
+						<li><a href="/match">Piano</a></li>
+						<!-- <li><a href="match.html">Match</a></li> -->
+						<% if (!avatar) { %>
+							<li class="login"><a href="/login" class="active">Login</a></li>
+							<% } else { %>
+								<li><a href="/profile">Profile <span class="profile-pic-cont"><img class="profile-pic"
+												src="<%= avatar %>" alt=""></span></a></li>
+								<% } %>
+									<!-- <li><a href="profile.html">Login <img src="assets/images/logo.png" alt=""></a></li> -->
+					</ul>
+					<a class='menu-trigger'>
+						<span>Menu</span>
+					</a>
+					<!-- ***** Menu End ***** -->
+			</nav>
+		</header>
+		<!-- ***** Header Area End ***** -->
 
 
 
-  <!-- container begin -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="page-content">
+		<!-- container begin -->
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="page-content">
 
-          <!-- ***** Most Popular Start ***** -->
-          <div class="most-popular">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="heading-section">
-                  <h4><em>Most Popular</em> Right Now</h4>
-                  <div class="dropdown">
-                    <style>
-                      .switch-sort {
-                        display: block;
-                        padding: 0.2em 0.5em;
-                        border-right: 1px solid #57575757;
-                        transition: 1s;
-                      }
+						<!-- ***** Most Popular Start ***** -->
+						<div class="most-popular">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="heading-section">
+										<!-- Sorting -->
+										<%- include('partials/sorting.ejs') %>
+									</div>
+									<div class="row">
+										<div class="col-lg-3 col-sm-6">
+											<div class="item">
+												<div class="upload" id="uploader" data-toggle="modal" data-target="#uploadModal">
+													<i class="fas fa-cloud-upload-alt"></i>
+													<!-- <i class="fa fa-cloud-upload" aria-hidden="true"></i> -->
+													<!-- <i class="fa fa-upload" aria-hidden="true"></i> -->
+												</div>
 
-                      .switch-sort:hover {
-                        opacity: 0.8;
-                      }
-
-                      .switch-sort:active {
-                        transform: rotate(90deg);
-                        border-right-width: 2px;
-                        opacity: 0.85;
-                      }
-                    </style>
-                    <div class="bg-warning" type="button" style="display: flex;  align-items: center; padding: 0; justify-content: space-evenly; border-radius: 2px;">
-                      <i class="fas fa-sort-alpha-down switch-sort sort-name" data-asc="fa-sort-alpha-down" data-desc="fa-sort-alpha-down-alt" data-sort="alpha" data-order="1" style="display: none"></i>
-
-                      <i class="fas fa-sort-amount-down switch-sort sort-popularity" data-asc="fa-sort-amount-down-alt" data-desc="fa-sort-amount-down" style="display: none" data-sort="popularity" data-order="-1"></i>
-
-                      <i class="fas fa-random switch-sort sort-randomly" style="display: none" data-sort="random" data-order="0"></i>
-
-                      <span class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="padding: 0.2em 0.5em; padding-left: 0.5em; font-weight: 600;">
-                        Sort
-                      </span>
-
-                      <ul class="dropdown-menu bg-dark w-25">
-                        <li class="sort-options dropdown-item bg-dark text-light" data-sortby=".sort-name" onclick="$('.switch-sort').hide(); $('.sort-name').show(); localStorage.setItem('sort-by', '.sort-name')">
-                          <a href="#"><i class="fas fa-sort-alpha-down"></i>&nbsp; Name</a>
-                        </li>
-
-                        <li class="sort-options dropdown-item bg-dark text-light" data-sortby=".sort-popularity" onclick="$('.switch-sort').hide(); $('.sort-popularity').show();  localStorage.setItem('sort-by', '.sort-popularity')">
-                          <a href="#"><i class="fas fa-sort-amount-down"></i>&nbsp; Popularity</a>
-                        </li>
-
-                        <li class="sort-options dropdown-item bg-dark text-light" data-sortby=".sort-randomly" onclick="$('.switch-sort').hide(); $('.sort-randomly').show();  localStorage.setItem('sort-by', '.sort-randomly')">
-                          <a href="#"><i class="fas fa-random"></i>&nbsp; Random</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row">
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <div class="upload" data-toggle="modal" data-target="#uploadModal">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <!-- <i class="fa fa-cloud-upload" aria-hidden="true"></i> -->
-                        <!-- <i class="fa fa-upload" aria-hidden="true"></i> -->
-                      </div>
-
-                      <div class="footnote upload-caption">
-                        <h4 class="text-truncate"><span>Upload Music</span><span>upload your Music</span></h4>
-                        <ul>
-                          <!-- <li><i class="bi bi-collection-play"></i>&nbsp; 0</li> -->
-                          <!-- <li><i class="fa fa-upload"></i>&nbsp; 0</li> -->
-                          <li><i class="fa fa-music"></i>&nbsp; 0</li>
-                          <!-- <li><i class="bi bi-upload"></i>&nbsp; 0</li> -->
-                          <!-- <li><i class="fa fa-cloud-upload"></i>&nbsp; 23</li> -->
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <% musics.forEach(music=> { %>
-
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item music-card">
-                      <div class="thumbnail" data-toggle="modal" data-target="#levelsModal" data-id="<%= music._id %>" data-image-url="<%= music.thumbnail %>">
-                        <div class="play-icon-container">
-                          <i class="bi bi-play-circle"></i>
-                        </div>
-                        <input type="hidden" name="music" value="<%= music._id %>">
-                        <input type="hidden" name="favorite" value="<%= music.favorite %>">
-                      </div>
-
-
-                      <div class="footnote caption">
-                        <h4 class="text-truncate"><span>
-                            <%= music.artist %>
-                          </span><span>
-                            <%= music.title %>
-                          </span></h4>
-                        <ul>
-                          <li><i class="fa fa-star"></i>
-                            <%= music.rating.toFixed(1) %>
-                          </li>
-                          <li><i class="fas fa-users"></i>
-                            <%= music.views %>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <% }); %>
-                </div>
-
-								<!-- pagination -->
-                <div id="pagination">
-									<%- include('partials/pagination.ejs') %>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ***** Most Popular End ***** -->
-
-          <!-- ***** Gaming Library Start ***** -->
-          <div class="gaming-library">
-            <div class="col-lg-12">
-              <div class="heading-section">
-                <h4><em>Your Music</em> Library</h4>
-                <div class="dropdown">
-                  <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">
-                    <i class="fas fa-filter"></i> <b>Filter</b>
-                  </button>
-                  <ul class="dropdown-menu bg-dark w-25 library-filter">
-                    <li class="dropdown-item bg-dark text-light favorites">
-                      <i class="fas fa-star text-warning"></i>&nbsp; Favourites
-                    </li>
-                    <li class="dropdown-item bg-dark text-light uploaded">
-                      <i class="fas fa-cloud-upload-alt text-primary"></i>&nbsp; Uploaded
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="music-library" style="display: block; margin-left: 3em; margin-right: 1em;">
-
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="d-flex align-items-center my-4" style="margin: auto; width: 90%; display: none">
-                <hr class="flex-grow-1" style="border-color: #57575722;">
-                <span class="mx-3"><a class="btn btn-secondary" style="background-color: #5e8de7; border: none; border-radius: 23px;" href="/profile">View Your
-                    Library</a></span>
-                <hr class="flex-grow-1" style="border-color: #57575722;">
-              </div>
-            </div>
-          </div>
-          <!-- ***** Gaming Library End ***** -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <p>Copyright © 2036 <a href="#">Funkey</a> Company. All rights reserved.
-
-            <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-
-
-
-  <!-- Modals -->
-  <div class="modal fade levels-modal" tabindex="-1" id="levelsModal" aria-labelledby="levelsModalLabel" aria-hidden="true">
-    <%- include('levels.ejs') %>
-  </div>
-
-  <!-- Modals 2 -->
-  <div class="modal fade upload-modal" tabindex="-1" id="uploadModal" aria-labelledby="uploadModalLabel" aria-hidden="true">
-    <%- include('upload.ejs') %>
-  </div>
-
-  <!-- Bootstrap JS and dependencies -->
-  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-  <!-- <script src="assets/js/isotope.min.js"></script>
-	<script src="assets/js/owl-carousel.js"></script>
-	<script src="assets/js/tabs.js"></script> -->
-  <script src="/js/popup.js" defer></script>
-  <script src="/js/custom.js" defer></script>
-  <script src="/js/levels.js" defer></script>
-  <script src="/js/upload.js" defer></script>
-  <script src="/js/toasts.js" defer></script>
-
-	<!-- <script src="/js/uploader.js" defer></script> -->
-  <script defer>
-    $(document).ready(function() {
-      // $('#levelsModal').modal({
-      // 	backdrop: true, // Allows closing the modal by clicking outside of it
-      // 	keyboard: true,  // Allows closing the modal by pressing the escape key
-      // 	show: false
-      // });
-
-			document.querySelector('#upload-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    // Your form handling code here
-});
-
-
-      console.log('setting upload nodal');
-      // $('#uploadModal').modal({
-      // 	backdrop: true, // Allows closing the modal by clicking outside of it
-      // 	keyboard: true,  // Allows closing the modal by pressing the escape key
-      // 	show: false
-      // });
-      console.log('setting done');
-      $('.thumbnail, .uploaded-thumbnail').each(function() {
-        var imageUrl = $(this).data('image-url');
-        $(this).css('background-image', 'url(' + imageUrl + ')');
-      });
-
-      // $('#levelsModal').modal('hide');
-      // $('#levelsModal').hide();
-
-
-      $('#searchText').on('focus', function() {
-        $('#searchResults').show();
-      });
-
-      $('#searchText').on('blur', function() {
-        $('#searchResults').hide();
-      });
-
-      $('#searchText').on('input', function(e) {
-        e.preventDefault();
-        const query = $(this).val();
-
-        // if (query.length < 2) { // Optional: avoid sending requests for very short queries
-        // 	// $('#searchResults').html('');
-        // 	return;
-        // }
-
-        $.ajax({
-          url: '/search',
-          type: 'GET',
-          data: {
-            query
-          },
-          success: function(data) {
-            // Display results
-            console.log('data:', data);
-            $('#searchResults').html(data.musics.map(music => `
-						<div class="item music-clip"
-								style="background-color: #27292a88; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; padding: 0.4em; gap: 0.15em;">
-								<div class="thumb" style="margin: 0;">
-									<span data-id="${music._id}" class="clip-thumbnail"
-										style="background-image: url('${music.thumbnail}')">
-										<span class="overlay">
-
-											<i class="fas fa-play"></i>
-										</span>
-									</span>
-								</div>
-								<div class="down-content"
-									style="width: 100%; padding-left: 0.5em; display: flex; flex-direction: column; justify-content: space-around; gap: 0.5em">
-									<h4 class="clip-title" data-id="${music._id}" style="line-height: 1.2; cursor: pointer;">
-										${music.title}
-									</h4>
-									<div class="view-n-rating"
-										style="display: flex; flex-direction: row; justify-content: flex-start; flex-wrap: wrap; gap: 1.15em">
-										<div>
-											<span>
-												${music.rating.toFixed(2)}
-											</span>
-											<i class="fa fa-star"></i>
+												<div class="footnote upload-caption">
+													<h4 class="text-truncate"><span>Upload Music</span><span>upload your Music</span></h4>
+													<ul>
+														<li><i class="fa fa-music"></i>&nbsp; <%= uploadsCount %>
+														</li>
+													</ul>
+												</div>
 											</div>
-											<div>
-											<span>
-												${music.views}
-												</span>
-												<i class="fa fa-users"></i>
 										</div>
+
+										<% musics.forEach(music=> { %>
+
+											<div class="col-lg-3 col-sm-6">
+												<div class="item music-card">
+													<div class="thumbnail" data-toggle="modal" data-target="#levelsModal"
+														data-id="<%= music._id %>" data-image-url="<%= music.thumbnail %>">
+														<div class="play-icon-container">
+															<i class="bi bi-play-circle"></i>
+														</div>
+														<input type="hidden" name="music" value="<%= music._id %>">
+														<input type="hidden" name="favorite" value="<%= music.favorite %>">
+													</div>
+
+
+													<div class="footnote caption">
+														<h4 class="text-truncate"><span>
+																<%= music.artist %>
+															</span><span>
+																<%= music.title %>
+															</span></h4>
+														<ul>
+															<li><i class="fa fa-star"></i>
+																<%= music.rating.toFixed(1) %>
+															</li>
+															<li><i class="fas fa-users"></i>
+																<%= music.views %>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+
+											<% }); %>
+									</div>
+
+									<!-- pagination -->
+									<div id="pagination">
+										<%- include('partials/pagination.ejs') %>
 									</div>
 								</div>
 							</div>
-							`).join(''));
-          },
-          error: function(err) {
-            console.error(err);
-            $('#searchResults').html('Error fetching results');
-          }
-        });
-      });
+						</div>
+						<!-- ***** Most Popular End ***** -->
+
+						<!-- ***** Gaming Library Start ***** -->
+						<div class="gaming-library">
+							<div class="col-lg-12">
+								<div class="heading-section">
+									<h4><em>Your Music</em> Library</h4>
+									<div class="dropdown">
+										<button class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+											type="button">
+											<i class="fas fa-filter"></i> <b>Filter</b>
+										</button>
+										<ul class="dropdown-menu bg-dark w-25 library-filter">
+											<li class="dropdown-item bg-dark text-light favorites">
+												<i class="fas fa-star text-warning"></i>&nbsp; Favourites
+											</li>
+											<li class="dropdown-item bg-dark text-light uploaded">
+												<i class="fas fa-cloud-upload-alt text-primary"></i>&nbsp; Uploaded
+											</li>
+											<li class="dropdown-item bg-dark text-light none">
+												<i class="fas fa-ban text-danger"></i>&nbsp;&nbsp; No Filter
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="music-library" style="display: block; margin-left: 3em; margin-right: 1em;">
+
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="d-flex align-items-center my-4" style="margin: auto; width: 90%; display: none">
+									<hr class="flex-grow-1" style="border-color: #57575722;">
+									<span class="mx-3"><a class="btn btn-secondary"
+											style="background-color: #5e8de7; border: none; border-radius: 23px;" href="/profile">View Your
+											Library</a></span>
+									<hr class="flex-grow-1" style="border-color: #57575722;">
+								</div>
+							</div>
+						</div>
+						<!-- ***** Gaming Library End ***** -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<%- include('partials/footer.ejs') %>
 
 
-      $('.disabled').on('click load', function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-      });
+			<!-- Modals -->
+			<div class="modal fade levels-modal" tabindex="-1" id="levelsModal" aria-labelledby="levelsModalLabel"
+				aria-hidden="true">
+				<%- include('partials/levels.ejs') %>
+			</div>
 
-      // // if ($('.page-no').first().addClass('active'));
-      // if ($('.active').prev().is('.prev'))
-      //   $('.prev').addClass('disabled');
-      // if ($('.active').next().is('.next'))
-      //   $('.next').addClass('disabled');
+			<!-- Modals 2 -->
+			<div class="modal fade upload-modal" tabindex="-1" id="uploadModal" aria-labelledby="uploadModalLabel"
+				aria-hidden="true">
+				<%- include('partials/upload.ejs') %>
+			</div>
 
-      // $('.page-no').on('click', function(event) {
-      //   event.preventDefault();
-      //   if ($(this).is('.active')) return;
-      //   $('.active').removeClass('active');
-      //   $(this).addClass('active');
+			<!-- Modals 2 -->
+			<div class="modal fade upload-modal" tabindex="-1" id="loginModal" aria-labelledby="uploadModalLabel"
+				aria-hidden="true">
+				<%- include('partials/login.ejs') %>
+			</div>
 
-      //   let firstItem = $('.page-no').first();
-      //   let lastItem = $('.page-hellip').prev();
-      //   let endItem = $('.page-hellip').next();
+			<!-- Bootstrap JS and dependencies -->
+			<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-      //   let firstPage = parseInt($(firstItem).text());
-      //   let lastPage = parseInt($(lastItem).text());
-      //   let endPage = parseInt($(endItem).text());
-      //   let currPage = parseInt($(this).text());
+			<script src="/js/toasts.js" defer></script>
 
-      //   if ($(this).is(firstItem) && firstPage == 1) $('.prev').addClass('disabled');
-      //   else $('.prev').removeClass('disabled');
-      //   if ($(this).is(endItem)) $('.next').addClass('disabled');
-      //   else $('.next').removeClass('disabled');
+			<script src="/js/custom.js" defer></script>
+			<script src="/js/levels.js" defer></script>
+			<script src="/js/popup.js" defer></script>
+			<script src="/js/sorting.js" defer></script>
+			<script src="/js/search.js" defer></script>
+			<script src="/js/upload.js" defer></script>
 
+			<!-- <script src="/js/uploader.js" defer></script> -->
+			<script defer>
+				$(document).ready(function () {
+					$('#uploader').on('click', async function (event) {
+						event.preventDefault();
+						console.log('this:', this);
+						let res = await fetch('/api/user/authenticated');
+						console.log('res:', res);
+						let auth = await res.json();
+						console.log('user:', auth);
+						if (!auth.authenticated) {
+							toastWarning('you need to <b>sign in</b> to upload your own musics');
+							setTimeout(() => {
+								$('#loginModal').modal('show');
+							}, 1000);
+						}
+					})
 
-      //   let next = lastPage - currPage;
-      //   let previous = currPage - firstPage;
-      //   next = Math.abs(next);
-      //   previous = Math.abs(previous);
-      //   console.log('next', next);
-
-      //   if (previous < 1 && firstPage > 1) {
-      //     $('.page-hellip').show();
-      //     lastItem.remove();
-      //     let newItem = firstItem.clone(true);
-      //     newItem.removeClass('active');
-      //     $(newItem).find('a').text(parseInt($(firstItem).text()) - 1);
-      //     firstItem.before(newItem);
-      //   }
-
-
-      //   if (next >= 1 || endPage - lastPage < 2) return;
-      //   $('.page-hellip').show();
-      //   firstItem.remove();
-      //   let newItem = lastItem.clone(true);
-      //   newItem.removeClass('active');
-      //   $(newItem).find('a').text(parseInt($(lastItem).text()) + 1);
-      //   lastItem.after(newItem);
-      //   if (endPage - lastPage < 3)
-      //     $('.page-hellip').hide();
-      // });
-
-      // $('.prev').on('click', function(event) {
-      //   event.preventDefault();
-      //   if ($(this).is('.disabled')) return;
-
-      //   let prev = $('.active').prev().first();
-      //   if ($(prev).is('.page-hellip')) prev = $(prev).prev().first();
-      //   $(prev).trigger('click');
-      // });
-
-      // $('.next').on('click', function(event) {
-      //   event.preventDefault();
-      //   if ($(this).is('.disabled')) return;
-
-      //   let next = $('.active').next().first();
-      //   if ($(next).is('.page-hellip')) next = $(next).next().first();
-      //   $(next).trigger('click');
-      // });
+					$('.thumbnail, .uploaded-thumbnail').each(function () {
+						var imageUrl = $(this).data('image-url');
+						$(this).css('background-image', 'url(' + imageUrl + ')');
+					});
+				});
 
 
-      $('.switch-sort').hide();
-      $(`${localStorage.getItem('sort-by')}`).show();
+				// Smooth pagination
+				document.addEventListener("DOMContentLoaded", function () {
+					const urlParams = new URLSearchParams(window.location.search);
 
-      $('.switch-sort').each(function() {
-        let sort = this.dataset.sort;
-        let asc = this.dataset.asc;
-        let desc = this.dataset.desc;
-        let order = localStorage.getItem(`${sort}-order`);
-        if (order == '1') {
-          $(this).addClass(asc);
-          $(this).removeClass(desc);
-        } else if (order == '-1') {
-          $(this).addClass(desc);
-          $(this).removeClass(asc);
-        }
-        $(this).attr('data-order', order);
-      });
-
-      $('.switch-sort').on('click', function(e) {
-        e.preventDefault();
-        sortMusics(this);
-      });
-
-      $('.sort-options').on('click', function(e) {
-        e.preventDefault();
-        sortMusics($(this.dataset.sortby)[0]);
-      });
-
-      function sortMusics(sortItem) {
-        console.log('sortItem:', sortItem);
-        let sort = sortItem.dataset.sort;
-        let order = sortItem.dataset.order;
-        let asc = sortItem.dataset.asc;
-        let desc = sortItem.dataset.desc;
-
-        if (order == '1') {
-          order = '-1';
-          $(sortItem).addClass(desc);
-          $(sortItem).removeClass(asc);
-        } else if (order == '-1') {
-          order = '1';
-          $(sortItem).addClass(asc);
-          $(sortItem).removeClass(desc);
-        }
-
-        $(sortItem).attr('data-order', order);
-        localStorage.setItem(`${sort}-order`, order);
-        setTimeout(() => {
-          location.href = `/browse?sort=${sort}&order=${order}`;
-        }, 500);
-      }
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-      const urlParams = new URLSearchParams(window.location.search);
-
-      // Check if the 'page' query parameter exists
-      if (urlParams.has('page')) {
-        const pagination = document.getElementById("pagination");
-        pagination.scrollIntoView({
-          behavior: 'smooth',
-          block: 'end'
-        });
-      }
-    });
-  </script>
+					// Check if the 'page' query parameter exists
+					if (urlParams.has('page')) {
+						const pagination = document.getElementById("pagination");
+						pagination.scrollIntoView({
+							behavior: 'smooth',
+							block: 'end'
+						});
+					}
+				});
+			</script>
 
 </body>
 
