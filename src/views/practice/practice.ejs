@@ -74,82 +74,84 @@
 </head>
 
 <body>
-	<div onclick="location.href='/'" class="logo" style="cursor: pointer; z-index: 10001;">
-		<img src="assets/images/logo.png" alt="">
-		<!-- <button class="btn btn-outline-light" id="timer">00:00</button> -->
-		<h4 class="logo-header">
-			FunKey
-		</h4>
+	<%- include('partials/preload.ejs') %>
+		<div onclick="location.href='/'" class="logo" style="cursor: pointer; z-index: 10001;">
+			<img src="assets/images/logo.png" alt="">
+			<!-- <button class="btn btn-outline-light" id="timer">00:00</button> -->
+			<h4 class="logo-header">
+				FunKey
+			</h4>
 
-	</div>
-
-	<div class="container text-scroll">
-		<div class="textbox practice-text" id="textbox">
 		</div>
-	</div>
 
-	<div class="spinner-border text-primary spinner" role="status" style="display: none">
-		<span class="sr-only">Loading...</span>
-	</div>
-	<!-- Modals 2 - add fade-->
-	<div class="modal fade upload-modal" tabindex="-1" id="practiceModal" aria-labelledby="uploadModalLabel"
-		aria-hidden="true" data-keyboard="false" and data-backdrop="static">
-		<%- include('practiceMenus.ejs') %>
-	</div>
+		<div class="container text-scroll">
+			<div class="textbox practice-text" id="textbox">
+			</div>
+		</div>
 
-	<!-- <div class="stats-container" style="display: none"> -->
-	<div class="stats-container" style="display: none">
-		<%- include('stats.ejs') %>
-	</div>
+		<div class="spinner-border text-primary spinner" role="status" style="display: none">
+			<span class="sr-only">Loading...</span>
+		</div>
+		<!-- Modals 2 - add fade-->
+		<!-- <div class="modal fade upload-modal" tabindex="-1" id="practiceModal" aria-labelledby="uploadModalLabel" -->
+		<div class="modal upload-modal" tabindex="-1" id="practiceModal" aria-labelledby="uploadModalLabel"
+			aria-hidden="true" data-keyboard="false" and data-backdrop="static">
+			<%- include('practiceMenus.ejs') %>
+		</div>
 
-	<div id="theme-container" style="display: block; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;">
+		<!-- <div class="stats-container" style="display: none"> -->
+		<div class="stats-container" style="display: none">
+			<%- include('stats.ejs') %>
+		</div>
 
-	</div>
+		<div id="theme-container" style="display: block; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;">
+
+		</div>
 
 
-	<!-- Bootstrap JS and dependencies -->
-	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<!-- Bootstrap JS and dependencies -->
+		<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	<script defer>
-		$(document).ready(function () {
+		<script defer>
+			$(document).ready(function () {
 
-			$('#practiceModal').modal({
-				keyboard: false
+				$('#practiceModal').modal({
+					keyboard: false
+				});
+
+				$('#practiceModal').modal('show');
+
+				let theme = localStorage.getItem('theme') || '/practice/partials/fireflies';
+				fetch(theme).then(res => {
+					if (!res.ok)
+						return res.text().then(err => Promise.reject(err));
+					return res.text();
+				}).then(res => {
+					// console.log(res);
+					if (res.error) return;
+					$('#theme-container').html(res);
+				});
 			});
+		</script>
+		<script src="/js/practice.js" defer></script>
+		<script defer>
+			$(document).ready(function () {
+				$('.theme').each(function (index, element) {
+					let img = element.dataset.img;
+					console.log('img data', img);
+					$(element).css('background-image', `url('${img}')`);
+				});
 
-			$('#practiceModal').modal('show');
+				$('#themeCarousel').carousel({
+					pause: true,
+				});
+				$('#themeCarousel').carousel(parseInt(localStorage.getItem('themeCarousel')));
 
-			let theme = localStorage.getItem('theme') || '/practice/partials/fireflies';
-			fetch(theme).then(res => {
-				if (!res.ok)
-					return res.text().then(err => Promise.reject(err));
-				return res.text();
-			}).then(res => {
-				// console.log(res);
-				if (res.error) return;
-				$('#theme-container').html(res);
 			});
-		});
-	</script>
-	<script src="/js/practice.js" defer></script>
-	<script defer>
-		$(document).ready(function () {
-			$('.theme').each(function (index, element) {
-				let img = element.dataset.img;
-				console.log('img data', img);
-				$(element).css('background-image', `url('${img}')`);
-			});
-
-			$('#themeCarousel').carousel({
-				pause: true,
-			});
-			$('#themeCarousel').carousel(parseInt(localStorage.getItem('themeCarousel')));
-
-		});
-	</script>
+		</script>
 
 </body>
 

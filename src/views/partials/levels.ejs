@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/css/levels.css">
+
 <div class="modal-dialog">
 	<form class="modal-content levels-form">
 		<div class="modal-header border-secondary">
@@ -15,10 +17,11 @@
 					</div>
 					<!-- <i class="fas fa-heart text-danger liked"></i> -->
 					<img class="thumbnail-img"
-						src="https://external-preview.redd.it/b5R5gXGYfBVWVIppxnX5T0Bdtt1hJSK7XnUN6ypf_9s.jpg?width=640&crop=smart&auto=webp&s=eb12b986353e8b1bf2bfa6c8928707d8194dfc06"
+						src="/assets/images/default_thumbnail_lq.jpg"
+						data-src="/assets/images/default_thumbnail.jpg"
 						alt="">
 				</div>
-				<div class="level-selector-title">Ed Sheeran - Perfect</div>
+				<div class="level-selector-title music-title">Ed Sheeran - Perfect</div>
 				<!-- Select Level -->
 				<div class="btn-group btn-group-toggle level-buttons" data-toggle="buttons">
 					<label class="btn btn-outline-success brand-bg" data-level="easy">
@@ -67,7 +70,7 @@
 				<!-- Begin Button -->
 				<div style="display: block; width: 100%;">
 					<!-- <button id="start" class="btn btn-outline-info btn-lg mt-3 align-middle" style="display: none;" onclick="start()">BEGIN</button> -->
-					<img class="level-img" src="" alt="" style="display: none;" width="1px">
+					<!-- <img class="level-img-big" src="" alt="" style="display: none;" width="1px"> -->
 					<!-- <button id="start" class="btn btn-lg mt-3 align-middle" style="display: none;" onclick="start()">
 						BEGIN
 					</button> -->
@@ -78,7 +81,7 @@
 		<div class="modal-footer border-0">
 			<!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
 			<!-- <button type="button" class="btn btn-primary">Play</button> -->
-			<button id="start" type="submit" class="btn btn-primary btn-lg">Play</button>
+			<button id="start" type="submit" class="btn btn-primary btn-lg" style="font-weight: bold; display: flex; align-items: center; gap: 0.25em; justify-content: center;"><img class="level-img" src="" alt="" style="display: none; height: 1.75rem; width: auto;" width="1px"> <span>Play</span></button>
 		</div>
 		<input type="hidden" name="music" value="">
 	</form>

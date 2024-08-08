@@ -1,7 +1,4 @@
-// TODO -- THINK ABOUT ADDING A FLAG TO CHECK IF LYRICS IS LOADED BEFORE PLAYING THE MUSIC
-//      -- check if the music has started playing before allowing the user to type
-// let DEFAULT_TEXT = "Lorem ipsum dolor sit amet consectetur adipisicing elit";
-let DEFAULT_TEXT = '...'; // "♪"
+let DEFAULT_TEXT = '♪'; // ""
 let textboxContent = DEFAULT_TEXT;
 
 const WHITESPACE_OPTIONS = ['·', '&nbsp;', '_'];
@@ -285,7 +282,7 @@ function timer() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ watchHour }),
+      body: JSON.stringify({ watchHour, musicId: window.musicId }),
     });
     watchHour = 0;
     console.log('watch hour updatin...');

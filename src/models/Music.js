@@ -39,7 +39,7 @@ const musicSchema = new mongoose.Schema(
     },
     thumbnail: {
       type: String,
-      default: 'assets/images/default_thumbnail.jpg',
+      default: '/assets/images/default_thumbnail.jpg',
     },
     favorite: {
       type: Boolean,
@@ -54,9 +54,6 @@ const musicSchema = new mongoose.Schema(
     timestamps: true, // Automatically adds createdAt and updatedAt
   }
 );
-
-// default: 'https://tse2.mm.bing.net/th?id=OIG2.5dM5XXn27bsOWSTcjIWe&pid=ImgGn'
-
 const Music = mongoose.model('Music', musicSchema);
 
 module.exports = Music;

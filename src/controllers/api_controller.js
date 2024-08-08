@@ -9,13 +9,25 @@ const { getCaptions } = require('../utils/yt_subtitle');
 
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
+const checkAuth = async (req, res) => {
+  try {
+		console.clear();
+    if (req.user && req.user._id)
+      return res.status(200).json({ authenticated: true });
+    return res.status(400).json({ authenticated: false });
+  } catch (err) {
+		console.error(err);
+		return res.status(400).json({ authenticated: false });
+  }
+};
+
 const getMusic = async (req, res) => {
   console.log('getting music...');
   try {
     let musicId = req.params.id;
     let music = await Music.findById(musicId);
     console.log('music:', music);
-    return res.status(200).json({ music, message: 'music fetch successful' });
+    return res.status(200).json(music);
   } catch (err) {
     res.status(400).json(err);
     console.error(err);
@@ -26,9 +38,7 @@ const getMusics = async (req, res) => {
   try {
     let musics = await Music.find();
     console.log('musics:', musics);
-    return res
-      .status(200)
-      .json({ musics, message: 'musics fetched successfuly' });
+    return res.status(200).json(musics);
   } catch (err) {
     res.status(400).json(err);
     console.error(err);
@@ -140,7 +150,7 @@ async function getVideoTitle(videoId) {
   try {
     let info = await ytdl.getInfo(videoId);
 
-    console.log('info:', info);
+    // console.log('info:', info);
     let title = info.videoDetails.title;
 
     return title;
@@ -183,8 +193,8 @@ async function retryFuns(fn1, fun2, retries = 2, delay = 1000) {
   // Try fn1 first
   try {
     let result = await retry(fn1, retries, delay);
-		console.log('result:', result);
-		return result;
+    console.log('result:', result);
+    return result;
   } catch (error) {
     console.log('fn1 failed, trying fn2...');
   }
@@ -221,7 +231,7 @@ async function downloadCaptions(videoUrl) {
       }
     );
 
-		console.log('subtitles:', subtitles);
+    console.log('subtitles:', subtitles);
 
     return subtitles;
   } catch (error) {
@@ -231,6 +241,7 @@ async function downloadCaptions(videoUrl) {
 }
 
 module.exports = {
+  checkAuth,
   getMusic,
   getVideo,
   getLyrics,

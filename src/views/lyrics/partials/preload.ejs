@@ -1,0 +1,90 @@
+<style>
+	.loader-spinner {
+		position: absolute;
+		left: calc(50% - 50px);
+		top: calc(50% - 50px);
+		width: 100px;
+		aspect-ratio: 1;
+		display: grid;
+		border: 4px solid #0000;
+		border-radius: 50%;
+		border-right-color: #25b09b;
+		animation: l15 1s infinite linear;
+	}
+
+	.loader-spinner::before,
+	.loader-spinner::after {
+		content: "";
+		grid-area: 1/1;
+		margin: 2px;
+		border: inherit;
+		border-radius: 50%;
+		animation: l15 2s infinite;
+	}
+
+	.loader-spinner::after {
+		margin: 8px;
+		animation-duration: 3s;
+	}
+
+	@keyframes l15 {
+		100% {
+			transform: rotate(1turn);
+		}
+	}
+
+	.js-preloader {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		background: #1f2122;
+		z-index: 9999;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		opacity: 1;
+		transition: opacity 0.5s ease;
+	}
+
+	.js-preloader.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+</style>
+
+<div id="js-preloader" class="js-preloader">
+	<div class="loader-spinner"></div>
+</div>
+
+<script>
+	// Wait for the window to load
+	window.addEventListener('load', function () {
+		// Create FontFaceObserver instances for each font
+		var kodeMono = new FontFaceObserver('Kode Mono');
+		var orbitron = new FontFaceObserver('Orbitron');
+		var fontAwesome = new FontFaceObserver('Font Awesome 5 Free');
+
+		// Wait for all fonts to be loaded
+		Promise.all([
+			kodeMono.load(),
+			orbitron.load(),
+			fontAwesome.load(),
+		]).then(function () {
+			console.log('All fonts have loaded');
+			// Hide the preloader
+			var preloader = document.getElementById('js-preloader');
+			preloader.classList.add('hidden');
+			setTimeout(function () {
+				preloader.style.display = 'none';
+			}, 500); // Match the duration of the CSS transition
+		}).catch(function (err) {
+			console.error('Error loading fonts:', err);
+			// Even if fonts fail to load, hide the preloader to avoid blocking the UI
+			var preloader = document.getElementById('js-preloader');
+			preloader.classList.add('hidden');
+			setTimeout(function () {
+				preloader.style.display = 'none';
+			}, 500); // Match the duration of the CSS transition
+		});
+	});
+</script>

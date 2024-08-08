@@ -126,76 +126,6 @@ const deleteMusic = async (req, res) => {
   }
 };
 
-const updateViews = async (req, res) => {
-  try {
-    let musicId = req.params.id || null;
-
-    let music = await Music.findById(musicId);
-    if (!music) {
-      res.status(400).json({ message: 'Music not fOund!' });
-      throw new Error('Music not fOund!');
-    }
-
-    await music.updateOne({ $inc: { views: 1 } });
-    res.json({ message: 'succesffuly updated views' });
-  } catch (err) {
-    console.error(err.message);
-  }
-};
-
-const updateRating = async (req, res) => {
-  try {
-    let musicId = req.body.musicId || null;
-    let rating = req.body.rating || null;
-    console.log('updating rating...');
-    console.log('music id', musicId);
-    let music = await Music.findById(musicId);
-    console.log('HERE');
-    if (!music) {
-      res.status(400).json({ message: 'Music not fOund!' });
-      throw new Error('Music not found!');
-    }
-
-    // think about saving the rating on the user side
-    if (rating) {
-      console.log('give rating:', rating);
-      console.log('before rating:', music.rating);
-      music.rating = (parseFloat(rating) + parseFloat(music.rating)) / 2;
-      await music.save();
-      console.log('after rating:', music.rating);
-    } else console.log('invalid rating');
-
-    res.json({ message: 'succesffuly updated rating' });
-  } catch (err) {
-    console.error('error message', err.messsage);
-  }
-};
-
-const toggleFavorite = async (req, res) => {
-  try {
-    let musicId = req.body.id || null;
-    let music = await Music.findById(musicId);
-    if (!music) {
-      res.status(404).json({ message: 'Music not found' });
-      throw new Error('Music not found');
-    }
-
-    music.favorite = music.favorite ? false : true;
-    if (music.favorite) {
-      const currentDate = new Date();
-      const day = currentDate.getDate();
-      const month = currentDate.getMonth() + 1; // Months are zero-indexed, so add 1
-      const year = currentDate.getFullYear();
-
-      music.favoritedAt = `${day}/${month}/${year}`;
-    }
-    await music.save();
-    res.json({ message: 'Music added to favourites successfully!' });
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 const getFavorites = async (req, res) => {
   try {
     let musics = await Music.find({ favorite: true });
@@ -271,8 +201,5 @@ module.exports = {
   uploadMusic,
   renderMusic,
   deleteMusic,
-  updateViews,
   getFavorites,
-  updateRating,
-  toggleFavorite,
 };

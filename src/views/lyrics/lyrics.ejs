@@ -2,111 +2,128 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Keyfun | Lyrics</title>
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-	<link rel="stylesheet" href="/css/basics.css">
-	<link rel="stylesheet" href="/css/lyrics.css">
-	<link rel="stylesheet" href="/css/keyboard.css">
-	<link rel="stylesheet" href="/css/rating.css">
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+	<link rel="stylesheet" href="/css/basics.css" />
+	<link rel="stylesheet" href="/css/lyrics.css" />
+	<link rel="stylesheet" href="/css/keyboard.css" />
+	<link rel="stylesheet" href="/css/rating.css" />
 
-	<link rel="shortcut icon" href="/assets/icon/logo.ico" type="image/x-icon">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Nova+Mono&family=Orbitron:wght@400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=VT323&display=swap" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.1.0/fontfaceobserver.standalone.js"></script>
+
+	<link rel="shortcut icon" href="/assets/icon/logo.ico" type="image/x-icon" />
 </head>
 
 <body>
 
-	<header>
-		<div class="top-left">
-			<img onclick="location.href='/'" class="logo" src="/assets/images/logo.png">
-			<button class="btn btn-outline-light" id="timer">00:00</button>
-			<!-- <button class="btn btn-outline-light" id="wpm">60WPM</button> -->
-		</div>
-	</header>
+	<!-- ***** Preloader Start ***** -->
+	<%- include('partials/preload.ejs') %>
 
-	<!-- Overlay / Loader... -->
-	<div class="overlay-loader" style="display: none;">
-		<div class="spinner-container center" style="display: none;">
-			<div class="spinner-border text-warning" style="opacity: 0.5; width: 3rem; height: 3rem;" role="status">
-				<span class="visually-hidden"></span>
+		<header>
+			<div class="top-left">
+				<img onclick="location.href='/'" class="logo" src="/assets/images/logo.png" />
+				<button class="btn btn-outline-light" id="timer">00:00</button>
+				<!-- <button class="btn btn-outline-light" id="wpm">60WPM</button> -->
+			</div>
+		</header>
+
+		<!-- Overlay / Loader... -->
+		<div class="overlay-loader" style="display: none">
+			<div class="spinner-container center" style="display: none">
+				<div class="spinner-border text-warning" style="opacity: 0.5; width: 3rem; height: 3rem" role="status">
+					<span class="visually-hidden"></span>
+				</div>
+			</div>
+			<div id="play" class="btn" onclick="playMusic(this)" data-id="<%= music._id %>" style="display: none">
+				<i class="bi bi-play-circle text-warning play-icon" style="opacity: 0.7"></i>
 			</div>
 		</div>
-		<div id="play" class="btn" onclick="playMusic(this)" data-id="<%= music._id %>" style="display: none;">
-			<i class="bi bi-play-circle text-warning play-icon" style="opacity: 0.7;"></i>
+
+		<div class="whole-body">
+			<video id="music-video" class="music-video" onseeking="do_seeking()" onseeked="do_seeked()">
+				<source src="<%= music.video %>" type="video/mp4" />
+				Your browser does not support HTML5 video.
+			</video>
+
+			<input type="hidden" name="lyrics" value="<%= music.lyrics %>" />
 		</div>
 
+		<div class="lyrics-container text-light" id="lyrics-container" style="display: none">
+			Error!
+		</div>
 
-	</div>
+		<div class="keyboard-container" id="keyboard-container" style="display: none">
+			<%- include('partials/keyboard.ejs') %>
+		</div>
+		<div class="ratings-parent" style="display: none">
+			<%- include('partials/rating.ejs') %>
+		</div>
 
-	<div class="whole-body">
-		<video id="music-video" class="music-video" onseeking="do_seeking()" onseeked="do_seeked()">
-			<source src="<%= music.video %>" type="video/mp4">
-			Your browser does not support HTML5 video.
-		</video>
+		<div class="stats-container" style="display: none">
+			<%- include('partials/stats.ejs') %>
+		</div>
 
-		<input type="hidden" name="lyrics" value="<%= music.lyrics %>">
+		<label for="volume" style="
+        position: absolute;
+        left: 50%;
+        bottom: 1.5em;
+        transform: translateX(-50%);
+        color: #5e86e7;
+        display: none;
+      ">
+			<input type="range" name="volume" id="volume" min="0" max="1" value="0.5" />
+			<span style="font-size: 1.25rem; color: #f7f7f7">50%</span>
+		</label>
 
-	</div>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	<div class="lyrics-container text-light" id="lyrics-container" style="display: none;">
-		Error!
-	</div>
+		<script>
+			window.musicId = '<%= music._id %>';
 
-	<div class="keyboard-container" id="keyboard-container" style="display: none;">
-		<%- include('keyboard.ejs') %>
-	</div>
-	<div class="ratings-parent" style="display: none;">
-		<%- include('rating.ejs') %>
-	</div>
-	
-	<div class="stats-container" style="display: none">
-		<%- include('stats.ejs') %>
-	</div>
+			console.log('musicId:', musicId);
+		</script>
+		<script src="/js/lyrics.js" defer></script>
+		<script src="/js/styles.js"></script>
+		<script src="/js/keyboard.js"></script>
 
-	<label for="volume" style="position: absolute; left: 50%; bottom: 1.5em; transform: translateX(-50%); color: #5e86e7; display: none;">
-	<input type="range" name="volume" id="volume" min="0" max="1" value="0.5">
-	<span style="font-size: 1.25rem; color: #f7f7f7;">50%</span>
-	</label>
-
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-	<script src="/js/lyrics.js" defer></script>
-	<script src="/js/styles.js"></script>
-	<script src="/js/keyboard.js"></script>
-
-	<script>
-		$(document).ready(function () {
-			$('.rating input[name="rating"]').on('change', function (e) {
-				e.preventDefault();
-				$('.give-btn').attr('data-rating', (-1 * parseInt($(this).val())) + 6);
-			});
-
-			$('.give-btn').click(function (e) {
-				e.preventDefault();
-				let rating = this.dataset.rating;
-
-				if (!rating || rating === '')
-					rating = (-1 * parseInt($('.rating input[name="rating"]').val())) + 6;
-
-				console.log('<%= music._id%>', rating);
-				fetch('/update/rating', {
-					method: 'PUT',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ rating, musicId: '<%= music._id%>' })
+		<script>
+			$(document).ready(function () {
+				$('.rating input[name="rating"]').on('change', function (e) {
+					e.preventDefault();
+					$('.give-btn').attr('data-rating', -1 * parseInt($(this).val()) + 6);
 				});
-				$('.ratings-parent').hide();
-				$('.stats-container').find('.close-stats').hide();
-				$('.stats-container').find('.favor').show();
-				$('.stats-container').find('.replay').show();
-				$('.stats-container').show();
-			})
-		});
-	</script>
+
+				$('.give-btn').click(function (e) {
+					e.preventDefault();
+					let rating = this.dataset.rating;
+
+					if (!rating || rating === '')
+						rating = -1 * parseInt($('.rating input[name="rating"]').val()) + 6;
+
+					console.log('<%= music._id%>', rating);
+					fetch('/update/rating', {
+						method: 'PUT',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ rating, musicId: '<%= music._id%>' }),
+					});
+					$('.ratings-parent').hide();
+					$('.stats-container').find('.close-stats').hide();
+					$('.stats-container').find('.favor').show();
+					$('.stats-container').find('.replay').show();
+					$('.stats-container').show();
+				});
+			});
+		</script>
 </body>
 
 </html>

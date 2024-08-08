@@ -1,0 +1,30 @@
+*::-webkit-scrollbar {
+	color: transparent;
+	width: 20px;
+}
+
+*::-webkit-scrollbar-track {
+	color: transparent;
+	border-radius: 8px;
+	background-color: #1f212222;
+	/* background-image: url("https://i.ibb.co/5150925/tracks.png"); */
+	background-position: -5px;
+	background-repeat: repeat-y;
+	background-size: 50px;
+}
+
+*::-webkit-scrollbar-thumb {
+	color: transparent;
+	border-radius: 8px;
+  background-image: url("https://i.ibb.co/q95CBdZ/train.png");
+    background-position:center center;
+    background-repeat: no-repeat;
+    background-size: 35px;
+		cursor: grab;
+		opacity: 0.5;
+	}
+	
+	*::-webkit-scrollbar-thumb:active {
+	cursor: grabbing;
+
+}
