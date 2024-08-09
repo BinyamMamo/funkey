@@ -13,12 +13,9 @@ $(document).ready(function () {
         body: JSON.stringify({ email, password }),
       });
 
-			console.log('response:', response);
       const data = await response.json();
 
-      if (response.ok) {
-				console.log(data.user);
-				
+      if (response.ok) {				
         // Redirect to homepage
 				toastSuccess(data.message);
         setTimeout(() => {

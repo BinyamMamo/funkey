@@ -1,16 +1,11 @@
 // Page loading animation
 $(window).on('load', function () {
-  console.log('hey I am here');
-  // $('#js-preloader').addClass('loaded');
-  console.log('custom.js');
   // Menu Dropdown Toggle
   if ($('.menu-trigger').length) {
     $('.menu-trigger').on('click', function (e) {
       e.preventDefault();
-      console.log('triggered menu!;');
       $(this).toggleClass('active');
       $('.header-area .nav').slideToggle(200);
-      console.log('finsihed triggered menu!;');
     });
   }
 });

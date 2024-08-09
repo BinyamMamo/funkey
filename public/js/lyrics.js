@@ -41,7 +41,6 @@ $(document).ready(function () {
       let response = this.responseText;
       response = response.split('\n');
 
-      console.log('response', response);
       TITLE = response[0].split('(')[0];
 
       for (let i = 1; i < response.length; i++) {
@@ -70,13 +69,11 @@ $(document).ready(function () {
       fillTextBox(line);
       $('#play').show();
 
-      console.log(lyrics);
     }
   };
 
   let lyricsUrl = $('.whole-body').find('input[type="hidden"]').val();
   // lyricsUrl = lyricsUrl || "/uploads/lyrics.txt";
-  console.log('lyricsUrl', lyricsUrl);
   ajax.open('GET', `${lyricsUrl}`, true);
   ajax.send();
 });
@@ -136,9 +133,7 @@ document.body.ondblclick = (ev) => {
 
 
 document.addEventListener('keydown', function (event) {
-	// console.log('event.key:', event.key);
   if (event.key === 'Escape' || event.key === 'Enter') {
-		console.log('Escape key pressed');
     event.preventDefault();
     pauseEverything(event);
   }
@@ -160,14 +155,12 @@ document.addEventListener('keyup', function (event) {
 function pauseEverything(ev) {
   if (vid && vid.paused) {
     vid.play();
-    console.log('played');
     timer();
     interval_id = setInterval(timer, 100);
     $('.keyboard-container').show();
     $('.stats-container').hide();
   } else if (vid) {
     vid.pause();
-    console.log('paused');
     clearInterval(interval_id);
     interval_id = null;
     let averagey =
@@ -182,7 +175,6 @@ function pauseEverything(ev) {
 		
     $('.stats-container .close-stats').on('click', function (e) {
 			e.preventDefault();
-      console.log('time', time);
       if (!interval_id) {
 				interval_id = setInterval(timer, 100);
       }
@@ -194,11 +186,8 @@ function pauseEverything(ev) {
 }
 
 document.addEventListener('keypress', (ev) => {
-	console.log('event.key:', ev.key);
 	if (ev.key === 'ArrowUp') {
-		console.log('before:', $('#volume').val());
 		$('#volume').val(Math.min($('#volume').val() + 0.1, 1.0));
-		console.log('after:', $('#volume').val());
 	}
 	
 	if (ev.key === 'ArrowDown')
@@ -360,7 +349,6 @@ function timer() {
       // console.log(line);
 
       if (!finished) {
-        console.log('reached here: final');
         update_wpm();
       }
       finished = false;

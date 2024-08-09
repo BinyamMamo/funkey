@@ -3,7 +3,6 @@ $(document).ready(function () {
 
 	$(document).on('keydown', function(event) {
 		const key = event.key.toLowerCase();
-		// console.log('Key pressed:', key);
 
 		pressedKey = $(`.key-${key}`);
 		if (key == " ")
