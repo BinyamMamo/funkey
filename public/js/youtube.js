@@ -79,13 +79,18 @@ $(document).ready(function () {
 				.find('input[name="title"]')
 				.css('animation', 'blink 2s linear infinite');
 
-			let response = await fetch(`/api/yt/details?url=${videoUrl}`, {
-				method: 'POST',
-			});
+			// let response = await fetch(`/api/yt/details?url=${videoUrl}`, {
+			// 	method: 'POST',
+			// });
 
-			let data = await response.json();
-			if (!response.ok) throw new Error(data.error);
-			let details = data;
+			// let data = await response.json();
+			// if (!response.ok) throw new Error(data.error);
+			// let details = data;
+			let details = {
+				artist: 'unkown',
+				title: 'track',
+				video: 'unkown - track'
+			};
 
 			$('#upload-form').find('input[name="artist"]').val(details['artist']);
 			$('#upload-form').find('input[name="artist"]').trigger('input');
