@@ -208,6 +208,21 @@ async function deleteUpload(secure_url) {
   }
 }
 
+const updateLyrics = async(req, res) => {
+	try {
+		let musicId = req.body.musicId;
+		let lyrics = req.body.lyrics;
+		let music = await Music.findById(musicId);
+		if (!music)
+			return res.status(400).json({});
+		music.lyrics = lyrics || music.lyrics;
+		await music.save();
+		return res.status(200).json({message: 'update succesful'});
+	} catch(err) {
+		console.error(err);
+	}
+}
+
 module.exports = {
 	search,
   getMusic,
@@ -215,5 +230,6 @@ module.exports = {
   uploadMusic,
   renderMusic,
   deleteMusic,
+	updateLyrics,
   getFavorites,
 };

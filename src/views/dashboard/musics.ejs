@@ -570,19 +570,21 @@
 		$(document).on('click', '.edit-btn', async function () {
 			let id = this.dataset.id.toString();
 
+			$('#upload-form').find('input[type="file').each((_, item) => {
+				item.form.reset();
+			});
 			$('#upload-form').find('input[name="musicId"]').val(id);
 			let res = await fetch(`/api/music/${id}`);
 			let music = await res.json();
 			$('#upload-form').find('.upload-title').text('Edit Music 🖊️');
-			$('#upload-form').find('input[name="artist"]').val(music.artist);
-			$('#upload-form').find('input[name="title"]').val(music.title);
+
+			console.log('artist:', $('#upload-form').find('input[name="artist"]')[0]);
 			$('#upload-form').find('.uploaded-thumbnail').attr('data-image-url', music.thumbnail);
 			$('#upload-form').find('input[name="thumbnail"]').val(music.thumbnail);
 			$('#upload-form').find('input[name="video"]').val(music.video);
 			$('#upload-form').find('input[name="lyrics"]').val(music.lyrics);
-			$('#upload-form').find('input[type="file').each((_, item) => {
-				item.form.reset();
-			});
+			$('#upload-form').find('input[name="artist"]').val(music.artist);
+			$('#upload-form').find('input[name="title"]').val(music.title);
 
 			$('.uploaded-thumbnail').css('background-image', `url('${music.thumbnail}')`);
 			function handleEdit(name, element) {
@@ -680,8 +682,7 @@
 					const musicId = $(thumbnail).data('id');
 
 					let res = await fetch(`/api/music/${musicId}`);
-					let data = await res.json();
-					let music = data.music;
+					let music = await res.json();
 					$('#lyricsModal .modal-title').text(
 						`${music.artist} - ${music.title}`
 					);
@@ -696,6 +697,15 @@
 					$('#lyricsModal .loader-time').css('animation', 'none');
 					$('#lyricsModal .loader-time').hide();
 					$('#lyricsModal .lyrics-container').val(lyrics);
+					$('#lyricsModal').find('button.save').on('click', function (event) {
+						event.preventDefault();
+						fetch('/music/lyrics', {
+							method: 'PUT', 
+							headers: { 'Content-Type': 'application/json' }, 
+							body: JSON.stringify({ musicId, lyrics:  $('#lyricsModal .lyrics-container').val()}),
+						});
+						location.reload();
+					});
 				});
 			});
 		});
