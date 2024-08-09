@@ -118,6 +118,7 @@ $(document).ready(function () {
     $('.spinner-overlay').show();
 
     let music = {};
+		music.musicId = $('#upload-form').find('input[name="musicId"]').val();
     music.title = $(this).find('input[name="title"]').val();
     music.artist = $(this).find('input[name="artist"]').val();
 

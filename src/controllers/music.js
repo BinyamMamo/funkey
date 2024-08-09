@@ -28,10 +28,24 @@ const getMusics = async (req, res) => {
 const uploadMusic = async (req, res) => {
   try {
     let public = req.user.role === Roles.ADMIN;
-    let { artist, title, video, lyrics, thumbnail } = req.body;
+    let { musicId, artist, title, video, lyrics, thumbnail } = req.body;
 
-		console.log({ artist, title, video, lyrics, thumbnail });
+		console.log({ musicId, artist, title, video, lyrics, thumbnail });
     let userId = req.user._id;
+		let music = null;
+		if (musicId) {
+			music = await Music.findById(musicId);
+			if (music) {
+				music.artist = artist || music.artist;
+				music.title = title || music.title;
+				music.video = video || music.video;
+				music.lyrics = lyrics || music.lyrics;
+				music.thumbnail = thumbnail || music.thumbnail;
+				await music.save();
+				return res.status(201).json({ message: 'Music uploaded succesfully!', music });
+			}
+		}
+
     let musicByTitle = await Music.findOne({
       title: new RegExp(`^${title}$`, 'i'),
     });
@@ -54,7 +68,7 @@ const uploadMusic = async (req, res) => {
       console.log('musicByArtist:', JSON.stringify(musicByArtist));
     }
 
-    let music = new Music({
+    music = new Music({
       artist,
       title,
       video,
