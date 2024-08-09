@@ -1,78 +1,79 @@
 $(document).ready(function () {
 	let LIBRARY_FILTER = 'library';
 
-	function updateMusicLibrary(filter=LIBRARY_FILTER) {
+	function updateMusicLibrary(filter = LIBRARY_FILTER) {
 		fetch(`/${filter}`)
-		.then((res) => {
-			if (!res.ok)
-			return res.json().then((err) => Promise.reject(err));
-			return res.json()
-		}).then((res) => {
-			let musics = res.musics;
-			
-			let musicLibrary = $('.music-library');
-			$(musicLibrary).html('');
-			musics.forEach(music => {
-				musicLibrary.append(`
-					<div class="item music-library" data-fav-id="${ music._id }">
-						<input type="hidden" name="music" value="${ music._id }">
-						<input type="hidden" name="favorite" value="${ music.favorite }">
+			.then((res) => {
+				if (!res.ok)
+					return res.json().then((err) => Promise.reject(err));
+				return res.json()
+			}).then((res) => {
+				let musics = res.musics;
+
+				let musicLibrary = $('.music-library');
+				$(musicLibrary).html('');
+				musics.forEach(music => {
+					musicLibrary.append(`
+					<div class="item music-library" data-fav-id="${music._id}">
+						<input type="hidden" name="music" value="${music._id}">
+						<input type="hidden" name="favorite" value="${music.favorite}">
 						<ul>
-							<li><span class="tiny-thumbnail" data-image-url="${ music.thumbnail }"></span></li>
+							<li><span class="tiny-thumbnail" data-image-url="${music.thumbnail}" style="background-image: url('${music.thumbnail}')"></span></li>
 							<li class="music-details">
-								<h4>${ music.artist }</h4>
-								<span>${ music.title }</span>
+								<h4>${music.artist}</h4>
+								<span>${music.title}</span>
 								</li>
 							<li>
 									<h4>Date Added</h4>
-									<span>${ music.favorite ? music.favoritedAt : '22/06/2036' }</span>
+									<span class="text-truncate">${music.updatedAt}</span>
 									</li>
 							<li>
 								<h4>Rating</h4>
-								<span>${ music.rating.toFixed(1) }</span>
+								<span>${music.rating.toFixed(1)}</span>
 								</li>
 							<li>
 								<h4>Views</h4>
-								<span>${ music.views }</span>
+								<span>${music.views}</span>
 								</li>
 								<li>
 									<h4>Type</h4>
-									<span>${ music.type }</span>
+									<span>${music.type}</span>
 									</li>
 							<li>
-								<div class="btn btn-primary main-button library-play-btn" data-toggle="modal" data-target="#levelsModal" data-music="${ music._id }">Play</div>
+								<div class="btn btn-primary main-button library-play-btn" data-toggle="modal" data-target="#levelsModal" data-music="${music._id}">Play</div>
 							</li>
 						</ul>
 					</div>
 				`);
+				});
 			});
-		});
 		setTimeout(() => {
 			$('.tiny-thumbnail').each(function () {
 				var imageUrl = $(this).data('image-url');
 				$(this).css('background-image', 'url(' + imageUrl + ')');
 			});
 
-			$('.library-play-btn').click(function (e) {
+			$('.library-play-btn').click(async function (e) {
 				let musicId = this.dataset.music;
 				let item = $(`[data-fav-id="${musicId}"]`);
 				let img = $(item).find('.tiny-thumbnail');
 				let artist = $(item).find('.music-details h4').text();
 				let title = $(item).find('.music-details span').text();
 				title = `${artist} - ${title}`;
-		
+
 				$('.level-selector-container img').attr(
 					'src',
 					$(img).attr('data-image-url')
 				);
 				$('.level-selector-title').html(title);
-		
+
 				let music = $(item).find('input[name="music"]').val();
 				$('.levels-form').find('input[name="music"]').val(music);
-				let favorite = $(item).find('input[name="favorite"]').val();
-		
+
+				let res = await fetch(`/library/favorite/${musicId}`);
+				let favorite = await res.json();
 				$('.levels-form').find('.thumbnail-img-overlay i').removeClass('far fas');
-				if (favorite == 'true')
+				if (favorite.music)
 					$('.levels-form').find('.thumbnail-img-overlay i').addClass('fas');
 				else $('.levels-form').find('.thumbnail-img-overlay i').addClass('far');
 			});
@@ -80,53 +81,41 @@ $(document).ready(function () {
 	}
 	updateMusicLibrary();
 
-  $('.thumbnail').click(function () {
-    let item = this.parentElement;
-    let img = $(item).find('.thumbnail img');
-    let title = $(item).find('.footnote h4');
-    title = $(title).prop('innerText').replace(/\n/g, ' - ');
-    $('.level-selector-container img').attr(
-      'src',
-      $(this).attr('data-image-url')
-    );
-    $('.level-selector-title').html(title);
+	$('.thumbnail').click(async function () {
+		let item = this.parentElement;
+		let musicId = this.dataset.id;
+		let img = $(item).find('.thumbnail img');
+		let title = $(item).find('.footnote h4');
+		title = $(title).prop('innerText').replace(/\n/g, ' - ');
+		$('.level-selector-container img').attr(
+			'src',
+			$(this).attr('data-image-url')
+		);
+		$('.level-selector-title').html(title);
 
-    let music = $(this).find('input[name="music"]').val();
-    $('.levels-form').find('input[name="music"]').val(music);
-    let favorite = $(this).find('input[name="favorite"]').val();
+		let music = $(this).find('input[name="music"]').val();
+		$('.levels-form').find('input[name="music"]').val(music);
+		let res = await fetch(`/library/favorite/${musicId}`);
+		let favorite = await res.json();
+		$('.levels-form').find('.thumbnail-img-overlay i').removeClass('far fas');
+		if (favorite.music)
+			$('.levels-form').find('.thumbnail-img-overlay i').addClass('fas');
+		else $('.levels-form').find('.thumbnail-img-overlay i').addClass('far');
+	});
 
-    $('.levels-form').find('.thumbnail-img-overlay i').removeClass('far fas');
-    if (favorite == 'true')
-      $('.levels-form').find('.thumbnail-img-overlay i').addClass('fas');
-    else $('.levels-form').find('.thumbnail-img-overlay i').addClass('far');
-  });
+	$('.thumbnail-img-overlay').on('click', async function (e) {
+		e.preventDefault();
+		$(this).find('i').toggleClass('far fas');
+		let musicId = $('.levels-form').find('input[name="music"]').val();
 
-  $('.thumbnail-img-overlay').on('click', function (e) {
-    e.preventDefault();
-    $(this).find('i').toggleClass('far fas');
-    let musicId = $('.levels-form').find('input[name="music"]').val();
-
-    // let favorite = $(`[data-id="${musicId}"]`).find('input[name="favorite"]');
-    // favorite.val(favorite.val() == 'true' ? 'false' : 'true');
-		// let musicLibrary = $('.music-library');
-		
-		// if (favorite.val() == 'false')
-		// 	musicLibrary.find(`[data-fav-id="${musicId}"]`).remove();
-		// else {
-		// 	updateMusicLibrary();
-		// }
-		
-		fetch('/music/favorite', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ id: musicId }),
-		});
+		console.log('fav musicId:', musicId);
+		fetch(`/library/favorite/toggle/${musicId}`);
 		location.reload();
-  });
+	});
 
-  $('.levels-form').on('submit', function (e) {
-    e.preventDefault();
-    let musicId = $('.levels-form').find('input[name="music"]').val();
+	$('.levels-form').on('submit', function (e) {
+		e.preventDefault();
+		let musicId = $('.levels-form').find('input[name="music"]').val();
 		let capitals = $('.levels-form').find('input[name="capital-letters"]').prop('checked');
 		let punctuation = $('.levels-form').find('input[name="Punctuation"]').prop('checked');
 		let double_spaces = $('.levels-form').find('input[name="double-spaces"]').prop('checked');
@@ -136,21 +125,24 @@ $(document).ready(function () {
 		localStorage.setItem('punctuation', punctuation);
 		localStorage.setItem('double_spaces', double_spaces);
 		localStorage.setItem('speed', speed);
-    window.location.href = `/music/${musicId}`;
-  });
+		window.location.href = `/music/${musicId}`;
+	});
 
 	$('.library-filter').find('.favorites').on('click', function (e) {
 		e.preventDefault();
+		$('.library-filter-title').find('span').text('favorites');
 		LIBRARY_FILTER = 'favorites';
 		updateMusicLibrary();
 	});
 	$('.library-filter').find('.uploaded').on('click', function (e) {
 		e.preventDefault();
+		$('.library-filter-title').find('span').text('uploads');
 		LIBRARY_FILTER = 'uploads';
 		updateMusicLibrary();
 	});
 	$('.library-filter').find('.none').on('click', function (e) {
 		e.preventDefault();
+		$('.library-filter-title').find('span').text('');
 		LIBRARY_FILTER = 'library';
 		updateMusicLibrary();
 	});
