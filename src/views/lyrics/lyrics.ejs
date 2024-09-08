@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Keyfun | Lyrics</title>
 
-	
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
@@ -28,9 +28,32 @@
 	<%- include('partials/preload.ejs') %>
 
 		<header>
+			<style>
+				#timer:hover {
+					background-color: transparent;
+					z-index: 100000 !important;
+					border-width: 2px;
+				}
+
+				#timer:focus {
+					outline: none !important;
+					box-shadow: none;
+				}
+
+				#timer:active {
+					box-shadow: 0 0 0 .2rem rgba(248, 249, 250, .5);
+				}
+
+				#timer {
+					border-color: #fff2;
+					color: #eeed;
+				}
+			</style>
 			<div class="top-left">
-				<img onclick="location.href='/'" class="logo" src="/assets/images/logo.png" />
-				<button class="btn btn-outline-light" id="timer">00:00</button>
+				<img id="logoimg" onclick="location.href='/'" class="logo" src="/assets/images/logo.png" />
+				<button class="btn btn-outline-light"
+					onclick="localStorage.getItem('timerMode') == 'ctup' ? localStorage.setItem('timerMode', 'ctdwn') : localStorage.setItem('timerMode', 'ctup')"
+					id="timer">00:00</button>
 				<!-- <button class="btn btn-outline-light" id="wpm">60WPM</button> -->
 			</div>
 		</header>
@@ -42,14 +65,15 @@
 					<span class="visually-hidden"></span>
 				</div>
 			</div>
-			<div id="play" class="btn" onclick="playMusic(this)" data-id="<%= music._id %>" style="display: none">
-				<i class="bi bi-play-circle text-warning play-icon" style="opacity: 0.7"></i>
+			<div id="play" class="btn" data-id="<%= music._id %>" style="display: none">
+				<i class="bi bi-play-circle text-secondary play-icon" style="opacity: 0.7"></i>
 			</div>
 		</div>
 
 		<div class="whole-body">
-			<video id="music-video" class="music-video" onseeking="do_seeking()" onseeked="do_seeked()">
+			<video id="music-video" class="music-video">
 				<source src="<%= music.video %>" type="video/mp4" />
+				<track id="subtitle-track" label="English" kind="subtitles" srclang="en" data-src="<%= music.lyrics %>" default>
 				Your browser does not support HTML5 video.
 			</video>
 
@@ -57,7 +81,7 @@
 		</div>
 
 		<div class="lyrics-container text-light" id="lyrics-container" style="display: none">
-			Error!
+			♪ ... ♪
 		</div>
 
 		<div class="keyboard-container" id="keyboard-container" style="display: none">
@@ -71,17 +95,56 @@
 			<%- include('partials/stats.ejs') %>
 		</div>
 
-		<label for="volume" style="
+		<h4 id="volume" style="
         position: absolute;
-        left: 50%;
-        bottom: 1.5em;
+        right: 5em;
+        bottom: 2em;
         transform: translateX(-50%);
         color: #5e86e7;
+        display: flex;
+      	font-size: 1.25rem;
+				color: #f7f7f7; 
+				justify-content: center;
+				align-items: center;
+				transition: 1s ease-in-out;
+				">
+			<i style="display: none" class="up fas fa-angle-double-up"></i>
+			<i style="display: none" class="down fas fa-angle-double-down"></i>
+			&nbsp;&nbsp;
+			<span style="font-size: 1.75rem;"></span>
+		</h4>
+
+		<style>
+			@keyframes zoom-in-out {
+				0% {
+					transform: scale(1);
+				}
+
+				100% {
+					transform: scale(1.1);
+				}
+			}
+		</style>
+		<h4 id="seek" style="
+        position: fixed;
+				top: 50%;
+        transform: translateY(-50%);
+        color: #5e86e7;
         display: none;
-      ">
-			<input type="range" name="volume" id="volume" min="0" max="1" value="0.5" />
-			<span style="font-size: 1.25rem; color: #f7f7f7">50%</span>
-		</label>
+				flex: content;
+      	font-size: 1.75rem;
+				color: #f7f7f7; 
+				align-items: center;
+				justify-content: center;
+				opacity: 0.95;
+				animation: zoom-in-out 0.7s normal;
+				">
+			<i class="fwd fas fa-forward"></i>
+			<i class="back fas fa-backward"></i>
+			<!-- &nbsp; -->
+			<!-- /* transition: animation 0.5s ease-in-out; */ -->
+			<span style="font-size: 2rem;"></span>
+		</h4>
 
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

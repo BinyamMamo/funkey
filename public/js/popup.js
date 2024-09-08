@@ -13,6 +13,7 @@ $(document).ready(function () {
 				let musicLibrary = $('.music-library');
 				$(musicLibrary).html('');
 				musics.forEach(music => {
+					let updatedAt = music.updatedAt.toString().split('T')[0];
 					musicLibrary.append(`
 					<div class="item music-library" data-fav-id="${music._id}">
 						<input type="hidden" name="music" value="${music._id}">
@@ -25,7 +26,7 @@ $(document).ready(function () {
 								</li>
 							<li>
 									<h4>Date Added</h4>
-									<span class="text-truncate">${music.updatedAt}</span>
+									<span class="text-truncate">${updatedAt}</span>
 									</li>
 							<li>
 								<h4>Rating</h4>

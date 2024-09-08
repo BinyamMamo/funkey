@@ -35,6 +35,7 @@ router.delete('/deleteMusic', authUser, musicController.deleteMusic);
 router.delete('/deleteUpload', authUser, uploadController.deleteUpload);
 
 router.post('/music', musicController.getMusic);
+router.put('/music/lyrics', musicController.updateLyrics);
 router.get('/search', musicController.search);
 
 module.exports = router;

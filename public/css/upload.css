@@ -6,13 +6,13 @@
   position: relative;
   /* width: 700px; */
   width: 700px;
-	margin: auto;
-	/* background-color: red; */
-	display: flex;
-	flex-direction: column !important;
-	gap: 1em;
-	justify-content: center;
-	align-items: center;
+  margin: auto;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column !important;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
 }
 /* 
 .upload-header {
@@ -33,18 +33,18 @@
 } */
 
 .upload-body {
-	/* background-color: #2ecc71; */
-	position: relative;
-	display: flex;
-	width: 700px;
-	text-align: center;
-	margin: auto;
+  /* background-color: #2ecc71; */
+  position: relative;
+  display: flex;
+  width: 700px;
+  text-align: center;
+  margin: auto;
 
-	flex-direction: row;
-	gap: 1rem;
-	justify-content: space-evenly;
-	align-items: center;
-	margin-top: 0.5em;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 0.5em;
 }
 
 .input-group {
@@ -52,66 +52,66 @@
 }
 
 .input-group input {
-	background-color: #1f2122;
-	border-color: #27292a;
+  background-color: #1f2122;
+  border-color: #27292a;
   padding: 1.25em 1em;
   outline: none !important;
-	color: #eee4;
-	color: #eee7;
+  color: #eee4;
+  color: #eee7;
 }
 
 .input-group input:focus {
-	/* background-color: #1f2122; */
-	background-color: #27292a;
-	border-color: #27292a;
-	outline: none;
-	border: none;
-	color: #eeea;
+  /* background-color: #1f2122; */
+  background-color: #27292a;
+  border-color: #27292a;
+  outline: none;
+  border: none;
+  color: #eeea;
 }
 
 .input-group input:not(:empty) {
-	/* background-color: #1f2122; */
-	background-color: #27292a;
-	border-color: #27292a;
+  /* background-color: #1f2122; */
+  background-color: #27292a;
+  border-color: #27292a;
 }
 
 .input-group input:hover {
   outline: none !important;
 }
 
-
 .left-side,
 .right-side {
-	width: 50%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-	
+
   justify-content: space-between;
   align-items: center;
 }
 
-.left-side *, .right-side * {
-	width: 100%;
+.left-side *,
+.right-side * {
+  width: 100%;
 }
 
 .left-side img {
-	width: 15rem !important;
+  width: 15rem !important;
   /* border-radius: 25px; */
   border-radius: 15px;
 }
 
 .right-side h4 {
-	font-size: 1.75rem;
+  font-size: 1.75rem;
   font-weight: bold;
 }
 
 .drag-drop {
-	display: block;
-	margin-bottom: 15px;
-	padding: 10px;
-	cursor: pointer;
-	
+  display: block;
+  margin-bottom: 15px;
+  padding: 10px;
+  cursor: pointer;
+
   text-wrap: nowrap;
   font-size: 1.15rem;
   text-align: left;
@@ -119,9 +119,9 @@
   color: #575757;
   color: #eee9;
 
-	border-radius: 5px;
-	border: 2px dashed #5e8de7ee;
-	border: 2px dashed #2e71cc22;
+  border-radius: 5px;
+  border: 2px dashed #5e8de7ee;
+  border: 2px dashed #2e71cc22;
   transition: border-style 1s;
 }
 
@@ -139,16 +139,17 @@
 }
 
 .drag-drop span a {
-	color: #5e8de7ee;
+  color: #5e8de7ee;
   color: #5e8de799;
   color: #2e71ccbb;
-	/* font-weight: 500; */
-	transition: font-weight 0.25s ease;
+  /* font-weight: 500; */
+  transition: font-weight 0.25s ease;
 }
 
 .drag-drop span a:hover {
-	color: #2e71cc99;
-	font-weight: bold;
+  text-decoration: none;
+  color: #2e71cc99;
+  font-weight: bold;
 }
 
 /* Upload Footer */
@@ -157,12 +158,12 @@
   justify-content: center;
   align-items: center;
 
-	/* border-top: 1px solid #4442 !important; */
-	border-top: 1px solid #4442 !important;
-	padding-top: 1em;
-	width: 100%;
+  /* border-top: 1px solid #4442 !important; */
+  border-top: 1px solid #4442 !important;
+  padding-top: 1em;
+  width: 100%;
 }
-	/* 
+/* 
 	.upload-footer button {
 		font-size: 1.5rem;
 		font-weight: 500;
@@ -229,12 +230,12 @@
 }
 
 .uploaded-thumbnail {
-	position: relative;
+  position: relative;
   background-image: url('/assets/images/default_thumbnail_lq.jpg');
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
-	
+
   width: 15rem;
   height: 15rem;
   /* border-radius: 23px; */
@@ -242,7 +243,7 @@
 }
 
 .uploaded-thumbnail > * {
-	border-radius: 15px !important;
+  border-radius: 15px !important;
 }
 
 .upload-header button.close {

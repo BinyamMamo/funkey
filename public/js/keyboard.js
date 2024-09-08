@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	let pressedKey = null;
 
-	$(document).on('keydown', function(event) {
+	$(document).on('keydown', function (event) {
 		const key = event.key.toLowerCase();
 
 		pressedKey = $(`.key-${key}`);
@@ -11,7 +11,7 @@ $(document).ready(function () {
 		pressedKey.css("font-size", "var(--keyboard-hover-size)");
 	});
 
-	$(document).on('keyup', function(event) {
+	$(document).on('keyup', function (event) {
 		setTimeout(() => {
 			$(".keys").css("background-color", "var(--keyboard-clr)");
 			$(".keys").css("font-size", "var(--keyboard-size)");

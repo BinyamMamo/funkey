@@ -445,9 +445,9 @@
 					</div>
 					<div class="column">
 						<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">342 <i class="fas fa-users"></i></button> -->
-						<button type="button" class="btn btn-danger text-light play">
+						<a target="_blank" type="button" class="btn btn-danger text-light play">
 							<i class="fas fa-play-circle text-light"></i> &nbsp;Play
-						</button>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -625,7 +625,8 @@
 			});
 
 			// Add event listeners to thumbnails
-			$('.video-thumbnail, .lyrics-thumbnail').each((_, thumbnail) => {
+			$('.video-thumbnail').each((_, thumbnail) => {
+				console.log('sdfsdf');
 				$(thumbnail).on('click', async function (event) {
 					$('#videoModal .modal-title').text('');
 					$('#videoModal .music-rating').text('');
@@ -644,10 +645,8 @@
 					$('#videoModal .modal-title').text(`${artist} - ${title}`);
 					$('#videoModal .rating').find('span').text(rating);
 					$('#videoModal .views').find('span').text(views);
-					$('#videoModal .play').on('click', function (event) {
-						event.preventDefault();
-						location.href = `/music/${musicId}`;
-					});
+					$('#videoModal .play').attr('href', `${location.origin}/music/${musicId}`);
+					console.log('linky:', `${location.origin}/music/${musicId}`);
 					$('#videoModal #videoPlayer').text(views);
 
 					var videoUrl = thumbnail.getAttribute('data-video-url');
@@ -658,6 +657,7 @@
 					$('#levelsModal').modal('show');
 				});
 			});
+			// });
 
 			$('#lyricsModal .edit-lyrics').on('click', function (event) {
 				event.preventDefault();
@@ -700,9 +700,9 @@
 					$('#lyricsModal').find('button.save').on('click', function (event) {
 						event.preventDefault();
 						fetch('/music/lyrics', {
-							method: 'PUT', 
-							headers: { 'Content-Type': 'application/json' }, 
-							body: JSON.stringify({ musicId, lyrics:  $('#lyricsModal .lyrics-container').val()}),
+							method: 'PUT',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ musicId, lyrics: $('#lyricsModal .lyrics-container').val() }),
 						});
 						location.reload();
 					});

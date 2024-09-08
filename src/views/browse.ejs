@@ -120,7 +120,12 @@
 						<li><a href="/match">Piano</a></li>
 						<!-- <li><a href="match.html">Match</a></li> -->
 						<% if (!avatar) { %>
-							<li class="login"><a href="/login" class="active">Login</a></li>
+							<li class="login">
+								<a href="/login" class="active" style="padding: 8px 10px; font-weight: bold;">
+									<i class="fas fa-sign-in-alt"></i>
+									&nbsp;&nbsp;Login
+								</a>
+							</li>
 							<% } else { %>
 								<li><a href="/profile">Profile <span class="profile-pic-cont"><img class="profile-pic"
 												src="<%= avatar %>" alt=""></span></a></li>
@@ -191,10 +196,12 @@
 																<%= music.title %>
 															</span></h4>
 														<ul>
-															<li><i class="fa fa-star"></i>
+															<li>
+																<i class="fa fa-star"></i>
 																<%= music.rating.toFixed(1) %>
 															</li>
-															<li><i class="fas fa-users"></i>
+															<li>
+																<i class="fas fa-users"></i>
 																<%= music.views %>
 															</li>
 														</ul>
@@ -306,9 +313,11 @@
 						console.log('user:', auth);
 						if (!auth.authenticated) {
 							toastWarning('you need to <b>sign in</b> to upload your own musics');
+
 							setTimeout(() => {
-								$('#loginModal').modal('show');
-							}, 1000);
+								location.href = '/login'
+								// $('#loginModal').modal('show');
+							}, 700);
 						}
 					})
 
