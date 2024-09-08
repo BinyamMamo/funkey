@@ -80,36 +80,36 @@ const getDetails = async (req, res) => {
 			};
 		}
 
-		let arr = title.split('-');
-		return {
-			title: arr && arr[0],
-			artist: arr && arr[1],
-			video: title,
-		};
-		// let prompt = `Extract the title and artist name from the following music video title, if possible, and return only a JSON formatted response. Do not add anything else to the output. 
-		// 							Video title: "${title}"\n
-		// 							Output example:
-		// 							{"title": "example title", "artist": "example artist"}`;
+		// let arr = title.split('-');
+		// return {
+		// 	title: arr && arr[0],
+		// 	artist: arr && arr[1],
+		// 	video: title,
+		// };
+		let prompt = `Extract the title and artist name from the following music video title, if possible, and return only a JSON formatted response. Do not add anything else to the output. 
+									Video title: "${title}"\n
+									Output example:
+									{"title": "example title", "artist": "example artist"}`;
 
-		// try {
-		//   let model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+		try {
+			let model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-		//   const result = await model.generateContent(prompt);
-		//   const response = await result.response.text();
-		//   console.log('response:', response);
+			const result = await model.generateContent(prompt);
+			const response = await result.response.text();
+			console.log('response:', response);
 
-		//   const details = JSON.parse(response);
-		//   details['video'] = title;
-		//   return res.json(details);
-		// } catch (err) {
-		//   console.error(err);
-		//   let arr = title.split('-');
-		//   return {
-		//     title: arr && arr[0],
-		//     artist: arr && arr[1],
-		//     video: title,
-		//   };
-		// }
+			const details = JSON.parse(response);
+			details['video'] = title;
+			return res.json(details);
+		} catch (err) {
+			console.error(err);
+			let arr = title.split('-');
+			return {
+				title: arr && arr[0],
+				artist: arr && arr[1],
+				video: title,
+			};
+		}
 	} catch (err) {
 		return res.status(400).json({ error: err.message });
 	}

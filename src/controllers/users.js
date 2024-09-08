@@ -48,13 +48,9 @@ const handleSignup = async (req, res) => {
 
 const editProfile = async (req, res) => {
   try {
-		console.log('req.body:', req.body);
-		console.log('req.file:', req.file);
     const { originalEmail, name, email, avatar } = req.body;
 
-
-		console.log({ originalEmail, name, email, avatar });
-    if (!validEmail(email)) {
+		if (!validEmail(email)) {
 			res.status(400).json({ message: 'Invalid Email' });
       return console.error('Invalid email');
     }
@@ -72,10 +68,8 @@ const editProfile = async (req, res) => {
     user.name = name;
     user.email = email;
     user.avatar = `${avatar}`;
-		console.log({ originalEmail, name, email, avatar });
 
     await user.save();
-		console.log('done////');
     res.status(200).json({ message: 'User registered successfully!', user });
   } catch (err) {
 		res.sendStatus(400);

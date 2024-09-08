@@ -3,7 +3,7 @@
 		display: block;
 		padding: 0.2em 0.5em;
 		border-right: 1px solid #57575757;
-		transition: 1s;
+		transition: 2s ease;
 	}
 
 	.switch-sort:hover {
@@ -11,13 +11,14 @@
 	}
 
 	.switch-sort:active {
-		transform: rotate(90deg);
+		transform: rotate(120deg);
 		border-right-width: 2px;
 		opacity: 0.85;
 	}
 </style>
 
-<h4 class="sort-title random-title title-1 title--1" style="display: none;"><em style="text-decoration: none;">Random</em>&nbsp; <i class="fas fa-random"></i></h4>
+<h4 class="sort-title random-title title-1 title--1" style="display: none;"><em
+		style="text-decoration: none;">Random</em>&nbsp; <i class="fas fa-random"></i></h4>
 <h4 class="sort-title popularity-title title--1" style="display: none;"><em>Popularity</em>&nbsp; Most Popular</h4>
 <h4 class="sort-title popularity-title title-1" style="display: none;"><em>Popularity</em>&nbsp; Least Popular</h4>
 
@@ -27,13 +28,14 @@
 <div class="dropdown">
 	<div id="sorting-container" class="bg-warning" type="button"
 		style="display: flex;  align-items: center; padding: 0; justify-content: space-evenly; border-radius: 2px;">
-		<i class="fas switch-sort sort-name sort-alpha" data-asc="fa-sort-alpha-down"
-			data-desc="fa-sort-alpha-down-alt" data-sort="alpha" data-order="1" style="display: none"></i>
+		<i class="fas switch-sort sort-name sort-alpha" data-asc="fa-sort-alpha-down" data-desc="fa-sort-alpha-down-alt"
+			data-sort="alpha" data-order="1" style="display: none"></i>
 
-		<i class="fas switch-sort sort-popularity" data-asc="fa-sort-amount-down-alt"
-			data-desc="fa-sort-amount-down" style="display: none" data-sort="popularity" data-order="-1"></i>
+		<i class="fas switch-sort sort-popularity" data-asc="fa-sort-amount-down-alt" data-desc="fa-sort-amount-down"
+			style="display: none" data-sort="popularity" data-order="-1"></i>
 
-		<i class="fas fa-random switch-sort sort-randomly sort-random" style="display: none" data-sort="random" data-order="0"></i>
+		<i class="fas fa-random switch-sort sort-randomly sort-random" style="display: none" data-sort="random"
+			data-order="0"></i>
 
 		<span class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
 			style="padding: 0.2em 0.5em; padding-left: 0.5em; font-weight: 600;">

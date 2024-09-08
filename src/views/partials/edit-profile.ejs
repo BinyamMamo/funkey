@@ -74,6 +74,7 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
+		transition: background-image 0.7s ease-in-out;
 	}
 
 	.edit-avatar .avatar-overlay {
@@ -153,9 +154,13 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 							</div>
 							<input type="hidden" name="avatar" value="<%= user.avatar %>" style="display: none">
 						</div>
-						<input id="thumbnail-upload" name="file"  accept="image/*" type="file" style="display: none">
-						<span class="text-white font-weight-bold text-truncate" style="width: 100%; display: block;"><%= user.name %></span>
-						<span class="text-white-50 text-truncate" style="width: 100%; display: block;"><%= user.email %></span>
+						<input id="thumbnail-upload" name="file" accept="image/*" type="file" style="display: none">
+						<span class="text-white font-weight-bold text-truncate" style="width: 100%; display: block;">
+							<%= user.name %>
+						</span>
+						<span class="text-white-50 text-truncate" style="width: 100%; display: block;">
+							<%= user.email %>
+						</span>
 					</div>
 				</div>
 				<div class="col-md-6">

@@ -112,8 +112,8 @@ $(document).ready(function () {
 	async function handleVideo(videoUrl, details) {
 		try {
 			$('#upload-form')
-			.find('.video-drop')
-			.css('animation', 'blink 2s linear infinite');
+				.find('.video-drop')
+				.css('animation', 'blink 2s linear infinite');
 			$('#upload-form').find('.video-drop').find('#download').hide();
 
 			let response = await fetch(`/api/yt/video?url=${videoUrl}`, {
@@ -128,13 +128,13 @@ $(document).ready(function () {
 			if (!video || video === undefined)
 				throw new Error('couldn\'t fetch video');
 			console.log('video:', video);
-			
+
 			$('#upload-form').find('input[name="video"]').val(video);
 			window.handleUpload(
 				{ name: `${details.video}.mp4` },
 				$('#upload-form').find('.video-drop')[0]
 			);
-			
+
 			return video;
 		} catch (err) {
 			console.error(err);

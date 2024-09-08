@@ -8,11 +8,16 @@ const session = require('express-session');
 const apiRoutes = require('./routes/api.routes');
 require('./config/passport-config');
 const cloudinary = require('cloudinary').v2;
+var srt2vtt = require('srt2vtt');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+require('dotenv').config();
+
+const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const connectDB = require('./config/db');
@@ -25,18 +30,18 @@ const app = express();
 connectDB();
 
 app.use(session({
-  secret: 'your_secret_key',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI,
-    collectionName: 'sessions',
-  }),
+	secret: 'your_secret_key',
+	resave: false,
+	saveUninitialized: false,
+	store: MongoStore.create({
+		mongoUrl: process.env.MONGODB_URI,
+		collectionName: 'sessions',
+	}),
 	cookie: {
-    maxAge: 1000 * 60 * 60 * 24,
-    secure: false,
-    httpOnly: true
-  }
+		maxAge: 3600 * 24 * 30,
+		secure: false,
+		httpOnly: true
+	}
 }));
 
 app.use(passport.initialize());
@@ -47,10 +52,10 @@ app.use(flash());
 
 // Middleware to set flash messages and user to locals for access in views
 app.use((req, res, next) => {
-  res.locals.success_messages = req.flash('success');
-  res.locals.error_messages = req.flash('error');
-  res.locals.user = req.user || null;
-  next();
+	res.locals.success_messages = req.flash('success');
+	res.locals.error_messages = req.flash('error');
+	res.locals.user = req.user || null;
+	next();
 });
 
 // Set EJS as the view engine
@@ -68,26 +73,26 @@ app.use(express.static(__dirname));
 
 
 app.get('/signed-upload', (req, res) => {
-  try {
-    const timestamp = Math.round(new Date().getTime() / 1000);
-    const paramsToSign = {
-      timestamp: timestamp,
-      folder: req.query.folder || 'default-folder',
-    };
-    const signature = cloudinary.utils.api_sign_request(
-      paramsToSign,
-      process.env.CLOUDINARY_API_SECRET
-    );
+	try {
+		const timestamp = Math.round(new Date().getTime() / 1000);
+		const paramsToSign = {
+			timestamp: timestamp,
+			folder: req.query.folder || 'default-folder',
+		};
+		const signature = cloudinary.utils.api_sign_request(
+			paramsToSign,
+			process.env.CLOUDINARY_API_SECRET
+		);
 
-    res.json({
-      signature: signature,
-      timestamp: timestamp,
-      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-    });
-  } catch (err) {
-    console.log(err);
-  }
+		res.json({
+			signature: signature,
+			timestamp: timestamp,
+			cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+			api_key: process.env.CLOUDINARY_API_KEY,
+		});
+	} catch (err) {
+		console.log(err);
+	}
 });
 
 app.use('/api', apiRoutes);
@@ -95,7 +100,31 @@ app.use(routes);
 
 // Example route that throws an error
 app.get('/error', (req, res) => {
-  throw new Error('This is a test error');
+	throw new Error('This is a test error');
+});
+
+app.post('/convert', async (req, res) => {
+	const data = req.body.data;
+	let vtt = null;
+	let output = await srt2vtt(data, async (err, vttData) => {
+		if (err) throw new Error(err);
+		const vttString = vttData.toString();
+
+		vtt = vttString;
+		return vtt;
+	});
+	// let prompt = `remove descriptive captions for sound effects, speaker identification and music cues from this subtitle. and also remove any weird symbols. if it is music and nothing is left when the descriptive subtitles are removed, replace them to beats like du du du or na na na or something. repeat the beats to match the duration of the lyrics or difference between the timestamps(they should be like more than three mostly) and alterante them from du du du to na na na and some other that u generated: 
+	// ${vtt}`;
+	// const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+	// const result = await model.generateContent(prompt);
+	// const response = await result.response;
+	// vtt = response.text();
+
+	console.log('vtt:', vtt);
+	// console.log('vtt:', vtt);
+	console.log('output:', output);
+	res.json({ vtt });
 });
 
 // Add the not found handler middleware after all routes
@@ -104,9 +133,10 @@ app.use(errorHandler);
 
 const port = process.env.PORT;
 app.listen(port, () => {
-  console.clear();
-  console.log('\x1Bc'); // Clears the console (Linux only)
-  console.log(`Server is running on http://localhost:${port}`);
+	console.clear();
+
+	console.log('\x1Bc'); // Clears the console (Linux only)
+	console.log(`Server is running on http://localhost:${port}`);
 });
 
 module.exports = app;

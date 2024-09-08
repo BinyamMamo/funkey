@@ -11,7 +11,7 @@
 		transform: translate(-50%, -50%);
 		z-index: 10000;
 	}
-	
+
 	.stats-content {
 		width: 320px;
 		display: flex;
@@ -37,7 +37,7 @@
 		margin-bottom: 10px;
 		transition: 0.25s;
 	}
-	
+
 	button.btn-close:hover {
 		border: none;
 		outline: none;
@@ -63,7 +63,8 @@
 		color: #e75e8dbb;
 	}
 
-	button.close-stats, button.replay {
+	button.close-stats,
+	button.replay {
 		background-color: #5e8de7;
 		border: none;
 		border-radius: 5px;
@@ -77,10 +78,11 @@
 		/* box-shadow: 0px 6px 10px -5px #5e8de7; */
 		/* border: 2px solid #5e8de7; */
 	}
+
 	button.replay {
 		background-color: #5ee78d;
 	}
-	
+
 	button.replay:hover {
 		background-color: #5e8de711;
 		border-color: #5ee78dcc;
@@ -94,7 +96,8 @@
 		color: #5e8de7cc;
 	}
 
-	.close-stats, button.replay {
+	.close-stats,
+	button.replay {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -117,12 +120,14 @@
 </style>
 
 <div class="stats-content" id="statsPopup">
-	<button onclick="$('.stats-container').hide()" class="btn-close">✖</button>
+	<!-- <button onclick="$('.stats-container').hide()" class="btn-close">✖</button> -->
+	<button class="btn-close">✖</button>
 	<h1 class="wpm-display"> 68 wpm </h1>
 	<!-- <img src="https://cdn-icons-png.flaticon.com/512/1047/1047711.png" alt="cookies-img" /> -->
-	<p class="favor" style="display: none"><i class="far fa-heart"></i> Add to favourites</p>
+	<!-- <p class="favor" style="display: none"><i class="far fa-heart"></i> Add to favourites</p> -->
 	<button class="resume close-stats continue"><i class="fas fa-play-circle"></i>Continue</button>
-	<button onclick="location.reload()" class="resume replay" style="display: none"><i class="fas fa-sync-alt"></i> Replay</button>
+	<button onclick="location.reload()" class="resume replay" style="display: none"><i class="fas fa-sync-alt"></i>
+		Replay</button>
 	<!-- <a href="/">Go Home <i class="fas fa-home"></i></a> -->
 	<a href="/browse">Change Music <i class="fas fa-music"></i></a>
 </div>

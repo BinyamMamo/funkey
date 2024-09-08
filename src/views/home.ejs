@@ -218,7 +218,12 @@
 						<li><a href="/practice">Practice</a></li>
 						<li><a href="/piano">Piano</a></li>
 						<% if (!avatar) { %>
-							<li class="login"><a href="/login" class="active">Login</a></li>
+							<li class="login">
+								<a href="/login" class="active" style="padding: 8px 10px; font-weight: bold;">
+									<i class="fas fa-sign-in-alt"></i>
+									&nbsp;&nbsp;Login
+								</a>
+							</li>
 							<% } else { %>
 								<li><a href="/profile">Profile <span class="profile-pic-cont"><img class="profile-pic"
 												src="<%= avatar %>" alt=""></span></a></li>
@@ -287,7 +292,9 @@
 																<%= music.title %>
 															</span></h4>
 														<ul>
-															<li><i class="fa fa-thumbs-up"></i>
+															<li>
+																<!-- <i class="fa fa-thumbs-up"></i> -->
+																<i class="fa fa-star"></i>
 																<%= music.rating.toFixed(1) %>
 															</li>
 															<li><i class="fas fa-users"></i>

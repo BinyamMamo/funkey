@@ -8,73 +8,80 @@
 } */
 
 * {
-	--keyboard-clr: #444;
-	/* --keyboard-hover-clr: #ff6868; */
-	--keyboard-hover-clr: #5e8de7;
-	--keyboard-size: 1.25rem;
-	--keyboard-hover-size: 1.15rem;
+  --keyboard-clr: #444;
+  /* --keyboard-hover-clr: #ff6868; */
+  --keyboard-hover-clr: #5e8de7;
+  --keyboard-size: 1.25rem;
+  --keyboard-hover-size: 1.15rem;
+}
+
+.active-key {
+  background-color: #e7e711 !important;
+  opacity: 1 !important;
 }
 
 .keyboard-container {
-		position: fixed;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-    /* display: grid; */
-    /* place-items: center; */
-    /* min-height: 100vh; */
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* display: grid; */
+  /* place-items: center; */
+  /* min-height: 100vh; */
 }
 
 .keyboard {
-		width: 100vw;
-    display: flex;
-		flex-wrap: nowrap;
-    flex-direction: column;
-    align-items: center;
+  width: 100vw;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
 }
 
 .keyboard-rows {
-	display: flex;
-	flex-wrap: nowrap;
-	/* margin-bottom: 0.25rem; */
+  display: flex;
+  flex-wrap: nowrap;
+  /* margin-bottom: 0.25rem; */
 }
 
 .keys {
-		font-family: "Orbitron", sans-serif;
-    /* background-color: rgb(104, 104, 255); */
-    /* background-color: #68aa68; */
-    background-color: var(--keyboard-clr);
-    border: none;
-    display: inline-block;
-    padding: .5rem 1rem;
-    margin: .3rem;
-    color: #fff;
-    width: fit-content;
-    height: fit-content;
-    border-radius: .5rem;
-		cursor: pointer;
-		transition: 0.25s ease-out;
-	}
-	
+  font-family: 'Orbitron', sans-serif;
+  /* background-color: rgb(104, 104, 255); */
+  /* background-color: #68aa68; */
+  background-color: var(--keyboard-clr);
+  border: none;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 0.3rem;
+  color: #fff;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.25s ease-out;
+}
+
 .keys:hover {
-	/* opacity: 0.85; */
-	background-color: var(--keyboard-hover-clr);
-	/* font-size: 3.5vh; */
-	/* opacity: 0.85; */
+  /* opacity: 0.85; */
+  background-color: var(--keyboard-hover-clr);
+  /* font-size: 3.5vh; */
+  /* opacity: 0.85; */
 }
 
 .regular-keys {
-	/* font-size: 2vw; */
-	font-size: var(--keyboard-size);
+  /* font-size: 2vw; */
+  font-size: var(--keyboard-size);
 }
 
 .delete-key,
 .shift-key,
 .space-key {
-    /* font-size: 2vw; */
-    font-size: var(--keyboard-size);
-		letter-spacing: 3px;
-    text-transform: capitalize;
+  /* font-size: 2vw; */
+  font-size: var(--keyboard-size);
+  letter-spacing: 3px;
+  text-transform: capitalize;
 }
 
-.upper { text-transform: uppercase; }
+.upper {
+  text-transform: uppercase;
+}
