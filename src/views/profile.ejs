@@ -530,12 +530,14 @@
 					$('#edit-form').on('submit', async function (e) {
 						e.preventDefault();
 
+						console.log('files:', $('#thumbnail-upload')[0]);
 						$('.spinner-overlay').show();
-						let image = await uploadFile();
-						$('.edit-avatar').find('input[name="avatar"]').val(image);
-						console.log('this:', this);
-						const formData = new FormData(this);
+						if ($('#thumbnail-upload')[0].files[0]) {
+							let image = await uploadFile();
+							$('.edit-avatar').find('input[name="avatar"]').val(image);
+						}
 
+						const formData = new FormData(this);
 						$.ajax({
 							url: "/profile/edit",
 							type: "PUT",
