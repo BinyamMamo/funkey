@@ -32,103 +32,103 @@
 		--upload-btn-width: 215px;
 	}
 
-  .upload-btn {
-    /* margin: auto; */
-    position: relative;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: center !important;
-    align-items: center;
-    text-align: left;
-    text-decoration: none;
-    gap: 0.5em;
-    text-transform: uppercase;
-    width: var(--upload-btn-width);
-    /* width: 215px; */
-    overflow: hidden;
-    border-radius: 10px;
-    color: #f7f7f7;
-    font-size: 1.5rem;
-    /* background-color: #5e86e7; */
-    color: #5e86e7;
-    border: 2px solid #5e86e799;
-    border: 2px solid #5e86e7;
-    /* background-color: #f7f7f7 !important; */
-    background-color: transparent !important;
-    /* color: #f7f7f7;
+	.upload-btn {
+		/* margin: auto; */
+		position: relative;
+		padding: 10px 20px;
+		display: flex;
+		justify-content: center !important;
+		align-items: center;
+		text-align: left;
+		text-decoration: none;
+		gap: 0.5em;
+		text-transform: uppercase;
+		width: var(--upload-btn-width);
+		/* width: 215px; */
+		overflow: hidden;
+		border-radius: 10px;
+		color: #f7f7f7;
+		font-size: 1.5rem;
+		/* background-color: #5e86e7; */
+		color: #5e86e7;
+		border: 2px solid #5e86e799;
+		border: 2px solid #5e86e7;
+		/* background-color: #f7f7f7 !important; */
+		background-color: transparent !important;
+		/* color: #f7f7f7;
     border: 1px solid #f7f7f7; */
-    /* border: 2px solid #fff9; */
-    cursor: pointer;
-    transition: 1s ease;
-    border: none;
-  }
+		/* border: 2px solid #fff9; */
+		cursor: pointer;
+		transition: 1s ease;
+		border: none;
+	}
 
 
 
-  .upload-btn span {
-    display: block;
-    position: relative;
-    letter-spacing: 3px;
-    z-index: 1;
-    font-weight: bolder;
-    text-align: left;
-  }
-  
-  .upload-btn i {
-    display: block;
-    position: relative;
-    z-index: 100;
-  }
+	.upload-btn span {
+		display: block;
+		position: relative;
+		letter-spacing: 3px;
+		z-index: 1;
+		font-weight: bolder;
+		text-align: left;
+	}
+
+	.upload-btn i {
+		display: block;
+		position: relative;
+		z-index: 100;
+	}
 
 
-  .upload-btn .liquid {
-    position: absolute;
-    /* top: calc(calc(var(--upload-btn-width) / -2) - 15px); */
-    top: 100px;
-    left: 0;
-    width: 100%;
-    height: var(--upload-btn-width);
-    /* background-color: #4973ff; */
-    background-color: #5e86e7;
-    /* box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5); */
-    transition: 0.5s;
-    color: #f7f7f7;
-    border-color: #5e86e7;
-    transition: 0.8s ease-out;
-  }
+	.upload-btn .liquid {
+		position: absolute;
+		/* top: calc(calc(var(--upload-btn-width) / -2) - 15px); */
+		top: 100px;
+		left: 0;
+		width: 100%;
+		height: var(--upload-btn-width);
+		/* background-color: #4973ff; */
+		background-color: #5e86e7;
+		/* box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5); */
+		transition: 0.5s;
+		color: #f7f7f7;
+		border-color: #5e86e7;
+		transition: 0.8s ease-out;
+	}
 
 
-  .upload-btn .liquid::after,
-  .upload-btn .liquid::before {
-    content: '';
-    width: 200%;
-    height: 200%;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -75%);
-    /* background: #000; */
-  }
+	.upload-btn .liquid::after,
+	.upload-btn .liquid::before {
+		content: '';
+		width: 200%;
+		height: 200%;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%, -75%);
+		/* background: #000; */
+	}
 
 
-  .upload-btn .liquid::before {
-    border-radius: 45%;
-    background: rgba(31, 33, 34, 1);
-    /* background: rgba(250, 250, 250, 1); */
-    animation: animate 5s linear infinite;
-  }
-  
-  .upload-btn .liquid::after {
-    border-radius: 40%;
-    background: rgba(31, 33, 34, 0.5);
-    /* background: rgba(250, 250, 250, 0.5); */
-    animation: animate 10s linear infinite;
-  }
+	.upload-btn .liquid::before {
+		border-radius: 45%;
+		background: rgba(31, 33, 34, 1);
+		/* background: rgba(250, 250, 250, 1); */
+		animation: animate 5s linear infinite;
+	}
+
+	.upload-btn .liquid::after {
+		border-radius: 40%;
+		background: rgba(31, 33, 34, 0.5);
+		/* background: rgba(250, 250, 250, 0.5); */
+		animation: animate 10s linear infinite;
+	}
 
 	.upload-btn:hover .liquid {
 		top: -120px;
 	}
-	
+
 	.upload-btn:hover {
 		color: #f7f7f7;
 	}
@@ -155,7 +155,6 @@
 	#upload-form .progress-text {
 		color: #e1e1e1;
 	}
-
 </style>
 
 <div class="modal-dialog">
@@ -227,7 +226,8 @@
 					<i class="fas fa-file-alt" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
 					<span>Drop Lyrics here, or <a href="javascript:void(0)">browse</a>
 						<!-- <input class="drop-browse" type="file" name="video" accept="text/*" style="display: none">. -->
-						<input class="drop-browse" type="file" name="lyrics-upload" accept="text/*" style="display: none">.
+						<input class="drop-browse" type="file" name="lyrics-upload" accept="text/plain,.srt,.vtt"
+							style="display: none">.
 					</span>
 					<input type="hidden" name="lyrics" value="">
 					<div class="file-details" style="display: none">
